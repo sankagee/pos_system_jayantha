@@ -4514,40 +4514,7 @@ public void getProductPropeties(){
 }
     private void jTable4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable4MouseClicked
        getProductPropeties();
-   //change the table header names 
-   DefaultTableModel df1 =(DefaultTableModel)jTable7.getModel();
-              df1.setRowCount(0);
-        
-        TableColumnModel cm=jTable7.getTableHeader().getColumnModel();
-            while(cm.getColumnCount()>0){
-                cm.removeColumn(cm.getColumn(0));
-            }
-            cm.addColumn(new TableColumn(0,100));
-            cm.getColumn(0).setHeaderValue("Item_Name");
-            
-             cm.addColumn(new TableColumn(1,100));
-            cm.getColumn(1).setHeaderValue("Type of unit");
-            
-             cm.addColumn(new TableColumn(2,100));
-            cm.getColumn(2).setHeaderValue("Quantity");
-            
-             cm.addColumn(new TableColumn(3,100));
-            cm.getColumn(3).setHeaderValue("qty(luuse)");
-            
-            cm.addColumn(new TableColumn(4,100));
-            cm.getColumn(4).setHeaderValue("Total Kg");
-            
-             cm.addColumn(new TableColumn(5,100));
-            cm.getColumn(5).setHeaderValue("Price");
-            
-             cm.addColumn(new TableColumn(6,100));
-            cm.getColumn(6).setHeaderValue("Total Price");
-            
-             cm.addColumn(new TableColumn(7,100));
-            cm.getColumn(7).setHeaderValue("pid");
-            
-               cm.addColumn(new TableColumn(8,100));
-            cm.getColumn(8).setHeaderValue("luuse type");
+ 
 //            
 //            jTable7.getColumnModel().getColumn(7).setMinWidth(0);
 //        jTable7.getColumnModel().getColumn(7).setMaxWidth(0);
@@ -4789,25 +4756,27 @@ public void getProductPropeties(){
           jTextField16.setText("");   
     }
     //add data to deliver table
-    public void insertToDeliver(){
+    public void insertToDeliver(String cat,String kg,String qua,String totalKg,String price,String totalP){
     
          String name=jTextField7.getText();
        String mn=jTextField8.getText();
        String ln=jTextField9.getText();
        SimpleDateFormat g1 = new SimpleDateFormat("yyyy-MM-dd");
     String dat = g1.format(jDateChooser2.getDate());
-        String cat=jTextField11.getText();
-        String kg=jTextField12.getText();
-        String qua=jTextField13.getText();
-        String totalKg=jTextField14.getText();
-        String price=jTextField15.getText();
-        String totalP=jTextField16.getText();
+    String route=jComboBox2.getSelectedItem().toString();
+    String collector=jTextField45.getText();
+//        String cat=jTextField11.getText();
+//        String kg=jTextField12.getText();
+//        String qua=jTextField13.getText();
+//        String totalKg=jTextField14.getText();
+//        String price=jTextField15.getText();
+//        String totalP=jTextField16.getText();
         try {
-            String insert="INSERT INTO deliver(name,mobile_number,date,lorry_number,category,type_of_kg,quantity,total_kg,price_of_1kg,total_price)"
-                    + "VALUES('"+name+"','"+mn+"','"+dat+"','"+ln+"','"+cat+"','"+kg+"','"+qua+"','"+totalKg+"','"+price+"','"+totalP+"')";
+            String insert="INSERT INTO deliver(name,mobile_number,date,lorry_number,category,type_of_kg,quantity,total_kg,price_of_1kg,total_price,route,collector)"
+                    + "VALUES('"+name+"','"+mn+"','"+dat+"','"+ln+"','"+cat+"','"+kg+"','"+qua+"','"+totalKg+"','"+price+"','"+totalP+"','"+route+"','"+collector+"')";
             pst=conn.prepareStatement(insert);
             pst.execute();
-            JOptionPane.showMessageDialog(this, "Data added to table");
+          
         } catch (Exception e) {
              JOptionPane.showMessageDialog(this, e);
         }
@@ -5032,6 +5001,10 @@ public void getProductPropeties(){
                                    String newluse="";
                                    String switchName="null";
                                    for(int i=0;i<newRC;i++){
+                                       
+                                       //get dealer name,mobile number,lorry number...etc
+                                         
+                                       
                                        String ktype=(String)df2.getValueAt(i, 1);
                                         String item=(String)df2.getValueAt(i, 0);
                                        String qty=(String)df2.getValueAt(i, 2);
@@ -5041,6 +5014,7 @@ public void getProductPropeties(){
                                                     newluse=luuseqty;
                                                 }else{
                                                      nqty=qty;
+                                                     newluse=qty;
                                                 }
                                         String lVaue=(String)df2.getValueAt(i, 8);
                                 switch (lVaue) {
@@ -5069,7 +5043,8 @@ public void getProductPropeties(){
      
                                                       
                                       insertDataStock(cred,item,ktype,nqty,tkg,pp,tpp,move,cdate,getUser);
-                                      insertToDeliver();
+                                      
+                                      //insertToDeliver(cat,kg,qua,totalKg,price,totalP);
                                    }//loop end here
                                    String cred="Deliver/Detor"; 
                                    getSalesData(cred);
@@ -5758,7 +5733,8 @@ String type="";
     }//GEN-LAST:event_jButton40ActionPerformed
 
     private void jTable10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable10MouseClicked
-         TableColumnModel cm=jTable8.getTableHeader().getColumnModel();
+       //add quantitiy (IN or OUT) to the table when user bress the jtable10 row
+        TableColumnModel cm=jTable8.getTableHeader().getColumnModel();
             while(cm.getColumnCount()>0){
                 cm.removeColumn(cm.getColumn(0));
             }
@@ -6245,12 +6221,40 @@ try {
     }//GEN-LAST:event_jButton43ActionPerformed
 
     private void jButton44ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton44ActionPerformed
-        int r=jTable3.getSelectedRow();
-        int rr=jTable4.getSelectedRow();
+          //change the table header names 
+   DefaultTableModel df1 =(DefaultTableModel)jTable7.getModel();
+              df1.setRowCount(0);
         
-        String name=jTable3.getValueAt(r, 1).toString();
-        String type=jTable4.getValueAt(rr, 0).toString();
-        JOptionPane.showMessageDialog(this, name+"........ "+type);
+        TableColumnModel cm=jTable7.getTableHeader().getColumnModel();
+            while(cm.getColumnCount()>0){
+                cm.removeColumn(cm.getColumn(0));
+            }
+            cm.addColumn(new TableColumn(0,100));
+            cm.getColumn(0).setHeaderValue("Item_Name");
+            
+             cm.addColumn(new TableColumn(1,100));
+            cm.getColumn(1).setHeaderValue("Type of unit");
+            
+             cm.addColumn(new TableColumn(2,100));
+            cm.getColumn(2).setHeaderValue("Quantity");
+            
+             cm.addColumn(new TableColumn(3,100));
+            cm.getColumn(3).setHeaderValue("qty(luuse)");
+            
+            cm.addColumn(new TableColumn(4,100));
+            cm.getColumn(4).setHeaderValue("Total Kg");
+            
+             cm.addColumn(new TableColumn(5,100));
+            cm.getColumn(5).setHeaderValue("Price");
+            
+             cm.addColumn(new TableColumn(6,100));
+            cm.getColumn(6).setHeaderValue("Total Price");
+            
+             cm.addColumn(new TableColumn(7,100));
+            cm.getColumn(7).setHeaderValue("pid");
+            
+               cm.addColumn(new TableColumn(8,100));
+            cm.getColumn(8).setHeaderValue("luuse type");
     }//GEN-LAST:event_jButton44ActionPerformed
 
 public void setSubcat(String c){
