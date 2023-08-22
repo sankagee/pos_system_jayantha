@@ -55,7 +55,7 @@ public class MainPage extends javax.swing.JFrame {
         txtQuantity.setEnabled(false);
         getCurrentDateTime();
         getCreditorData();
-        createCreId();
+        
         fetchCreditordat();
         //fetchProductData();
    
@@ -97,28 +97,7 @@ public class MainPage extends javax.swing.JFrame {
         }
     }
 
-    public void createCreId() {
-
-//        try {
-//            java.sql.Statement p = conn.createStatement();
-//            rs = p.executeQuery("SELECT Max(creditor_id)FROM creditor_table");
-//            rs.next();
-//
-//            rs.getString("Max(creditor_id)");
-//            if (rs.getString("Max(creditor_id)") == null) {
-//
-//                creditorId = "000000001";
-//
-//            } else {
-//                long id = Long.parseLong(rs.getString("Max(creditor_id)").substring(2, rs.getString("Max(creditor_id)").length()));
-//                id++;
-//                creditorId = String.format("%09d", id);
-//
-//            }
-//
-//        } catch (NumberFormatException | SQLException e) {
-//        }
-    }
+ 
 //fetch creditor table
     public void fetchData() {
         String name = txtCreditorName.getText();
