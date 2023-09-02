@@ -186,7 +186,7 @@ public class MainPage extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
- 
+// commt 
  }
     /**
      * This method is called from within the constructor to initialize the form.
