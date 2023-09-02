@@ -1393,7 +1393,7 @@ public void setCreditorAriusAmount(String creditor,String date ,String arius_amo
         p2.setBackground(new java.awt.Color(204, 204, 255));
         p2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txtCreditorName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtCreditorName.setFont(new java.awt.Font("Iskoola Pota", 0, 12)); // NOI18N
         txtCreditorName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCreditorNameActionPerformed(evt);
@@ -4172,7 +4172,7 @@ public void setCreditorAriusAmount(String creditor,String date ,String arius_amo
                 .addGroup(topmenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton33)
                     .addComponent(jButton34))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         tmenu.setLayout(new java.awt.CardLayout());
@@ -8928,7 +8928,7 @@ public void insertDataStock(String dname,String Iname,String kg,String qua,Strin
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
+                if ("Nibas".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
