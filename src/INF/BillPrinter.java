@@ -11,6 +11,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 
 public class BillPrinter {
@@ -115,14 +118,6 @@ public class BillPrinter {
                        
                         
                     while(rs.next()){
-//                        g2d.drawString(itemNameHeader, 40, y);
-//                g2d.drawString(unitHeader, 200, y);
-//                g2d.drawString(quantityHeader, 240, y);
-//                g2d.drawString(luuse, 300, y);
-//                g2d.drawString(totalqty, 340, y);
-//                g2d.drawString(price, 420, y);
-//                g2d.drawString(tp, 480, y);
-                    
                         String inv=rs.getString("inv");
                         String it=rs.getString("item");
                         String unit=rs.getString("unit");
@@ -146,15 +141,22 @@ public class BillPrinter {
                     }
                 } catch (Exception e) {
                 }
-
+                DecimalFormat decimalFormat = new DecimalFormat("#,###.00");
               
               g2d.drawString(dashedLine.repeat(lineWidth), 40, y);
                 y += 10;
-                g2d.drawString(billamounttitlee+"රු." +bilamount, 400, y);
+                 double bilamountDouble = Double.parseDouble(bilamount);
+                 String formattedbilamount = decimalFormat.format(bilamountDouble);
+                g2d.drawString(billamounttitlee+" රු." +formattedbilamount, 400, y);
                 y += 10;
-                g2d.drawString(ariustitleeeeeee+"රු." +arius, 400, y);
+                 double ariusDouble = Double.parseDouble(arius);
+                 String formattedArius = decimalFormat.format(ariusDouble);
+                g2d.drawString(ariustitleeeeeee+" රු." +formattedArius, 400, y);
                 y += 10;
-                g2d.drawString(tsriusssssssssss+"රු." +totalArius, 400, y);
+                
+                double totalAriusDouble = Double.parseDouble(totalArius);
+                String formattedTotalArius = decimalFormat.format(totalAriusDouble);
+                g2d.drawString(tsriusssssssssss+" රු." +formattedTotalArius, 400, y);
                 y += 10;
                 
                 
