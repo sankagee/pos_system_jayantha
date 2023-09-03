@@ -447,7 +447,32 @@ public class MainPage extends javax.swing.JFrame {
         }
     
     }
-    
+ //send data to sale_bill_list table
+
+    public void insertDataToSales_Bill_list(String bill,String dealer,String name,String amount){
+                SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
+                String addDate = d.format(jDateChooser2.getDate());
+                  String n = jTextField7.getText();
+             
+        try {
+                    String sq ="SELECT * FROM sales_bill_list WHERE dealer_name='"+name+"' AND dealer='"+dealer+"' AND bil_num='"+bill+"'";
+                    pst = conn.prepareStatement(sq);
+                    rs = pst.executeQuery();
+                    
+                      if(rs.next()){
+                      
+                          
+                      
+                      }else{
+                          String sd="INSERT INTO sales_bill_list(bil_num,date,dealer,dealer_name,bil_amount)"
+                                  + "VALUES('"+bill+"','"+cdate+"','"+dealer+"','"+name+"','"+amount+"')";
+                          pst=conn.prepareStatement(sd);
+                          pst.execute();
+                      
+                      }
+        } catch (Exception e) {
+        }
+    }
  //add or update arius table
     public void addOrUpdateariusTable(String dealer,String n,String date,String sum_of_arius ){
       
@@ -6145,6 +6170,8 @@ public void getProductPropeties(){
                                    }
                                    String cred="Salt"; 
                                    getSalesData(cred);
+                                   //send data to sale_bill_list
+                                   insertDataToSales_Bill_list(jLabel85.getText(),cred,jTextField7.getText(),jLabel86.getText());
                                     addOrUpdateariusTable(cred,jTextField7.getText(),cdate,jLabel90.getText());
                                     printBill();
                                     invID();
@@ -6241,7 +6268,8 @@ public void getProductPropeties(){
                                    }//loop end here
                                    String cred="Deliver/Detor"; 
                                    getSalesData(cred);
-                                   
+                                    //send data to sale_bill_list
+                                   insertDataToSales_Bill_list(jLabel85.getText(),cred,jTextField7.getText(),jLabel86.getText());
                                    addOrUpdateariusTable(cred,jTextField7.getText(),cdate,jLabel90.getText());
                                    printBill();
                                    invID();
@@ -6331,7 +6359,8 @@ public void getProductPropeties(){
                                    }//loop end here
                                    String cred="Customer"; 
                                    getSalesData(cred);
-                                   
+                                    //send data to sale_bill_list
+                                   insertDataToSales_Bill_list(jLabel85.getText(),cred,jTextField7.getText(),jLabel86.getText());
                                     addOrUpdateariusTable(cred,jTextField7.getText(),cdate,jLabel90.getText());
                                     printBill();
                                     invID();
@@ -6422,7 +6451,8 @@ public void getProductPropeties(){
                                    }//loop end here
                                    String cred="Shop"; 
                                    getSalesData(cred);
-                                  
+                                   //send data to sale_bill_list
+                                   insertDataToSales_Bill_list(jLabel85.getText(),cred,jTextField7.getText(),jLabel86.getText());
                                     addOrUpdateariusTable(cred,jTextField7.getText(),cdate,jLabel90.getText());
                                      printBill();
                                      invID();
