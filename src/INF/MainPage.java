@@ -3365,6 +3365,7 @@ public void setCreditorAriusAmount(String creditor,String date ,String arius_amo
 
         tbp1.setBackground(new java.awt.Color(255, 255, 255));
 
+        jTable12.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable12.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
@@ -4172,7 +4173,7 @@ public void setCreditorAriusAmount(String creditor,String date ,String arius_amo
                 .addGroup(topmenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton33)
                     .addComponent(jButton34))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         tmenu.setLayout(new java.awt.CardLayout());
@@ -8928,7 +8929,7 @@ public void insertDataStock(String dname,String Iname,String kg,String qua,Strin
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nibas".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
