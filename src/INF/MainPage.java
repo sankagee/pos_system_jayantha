@@ -13,7 +13,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 import java.awt.event.KeyEvent;
 import java.awt.print.Printable;
 import static java.awt.print.Printable.PAGE_EXISTS;
@@ -56,21 +55,21 @@ public class MainPage extends javax.swing.JFrame {
     ResultSet rs1 = null;
     String creditorId = null;
     String pid = null;
-    String ctime="";
-    String cdate="";
-    String Usertype="";
-    double toCreditorArius=0.0;
-    
+    String ctime = "";
+    String cdate = "";
+    String Usertype = "";
+    double toCreditorArius = 0.0;
+
     public MainPage() throws SQLException {
         initComponents();
         conn = DBConnect.connect();
         txtQuantity.setEnabled(false);
         getCurrentDateTime();
         //getCreditorData();
-        
+
         fetchCreditordat();
         //fetchProductData();
-   
+
         fetchEmpty();
         jTextField11.setText("Salt");
         jTextField5.setEditable(false);
@@ -79,13 +78,13 @@ public class MainPage extends javax.swing.JFrame {
         jkg.addItem("-select-");
         jkg.setSelectedIndex(0);
         jRadioButton1.setSelected(true);
-        
+
         jRadioButton5.setSelected(true);
         jRadioButton9.setSelected(true);
         jTextField48.setEditable(false);
         jTextField47.setEditable(false);
-       jButton3.setBackground(Color.yellow);
-         jButton3.setBackground(Color.yellow);
+        jButton3.setBackground(Color.yellow);
+        jButton3.setBackground(Color.yellow);
         jButton1.setBackground(Color.white);
         jButton13.setBackground(Color.white);
         jButton15.setBackground(Color.white);
@@ -95,46 +94,46 @@ public class MainPage extends javax.swing.JFrame {
         jButton24.setBackground(Color.white);
         jButton25.setBackground(Color.white);
         jButton32.setBackground(Color.white);
-        
+
         invID();
-        
+
     }
-    public void getUserD(String name,String uType) {
+
+    public void getUserD(String name, String uType) {
         jLabel20.setText(name);
-        this.Usertype=uType;
-        if(uType.equals("User")){
-                        jButton14.setVisible(false);//add or update arius table
-                        jButton23.setVisible(false);
-                        jButton24.setVisible(false);
-                        jButton25.setVisible(false);
-                        jLabel6.setVisible(false);
-                        jLabel18.setVisible(false);
-                        txtPrice.setVisible(false);
-                        jLabel59.setVisible(false);
-                        jTextField33.setVisible(false);
-                        jTextField4.setVisible(false);
-                        jButton5.setVisible(false);
-                        jButton32.setVisible(false);
-                        jTextField48.setVisible(false);
-                        jTextField47.setVisible(false);
-                        jTextField49.setVisible(false);
-                        jButton42.setVisible(false);
-                        
-        jTable1.getColumnModel().getColumn(8).setMinWidth(0);
-        jTable1.getColumnModel().getColumn(8).setMaxWidth(0);
-        
-        jTable1.getColumnModel().getColumn(9).setMinWidth(0);
-        jTable1.getColumnModel().getColumn(9).setMaxWidth(0);
-        
-        jTable1.getColumnModel().getColumn(10).setMinWidth(0);
-        jTable1.getColumnModel().getColumn(10).setMaxWidth(0);
-        
-         jTable1.getColumnModel().getColumn(11).setMinWidth(0);
-        jTable1.getColumnModel().getColumn(11).setMaxWidth(0);
+        this.Usertype = uType;
+        if (uType.equals("User")) {
+            jButton14.setVisible(false);//add or update arius table
+            jButton23.setVisible(false);
+            jButton24.setVisible(false);
+            jButton25.setVisible(false);
+            jLabel6.setVisible(false);
+            jLabel18.setVisible(false);
+            txtPrice.setVisible(false);
+            jLabel59.setVisible(false);
+            jTextField33.setVisible(false);
+            jTextField4.setVisible(false);
+            jButton5.setVisible(false);
+            jButton32.setVisible(false);
+            jTextField48.setVisible(false);
+            jTextField47.setVisible(false);
+            jTextField49.setVisible(false);
+            jButton42.setVisible(false);
+
+            jTable1.getColumnModel().getColumn(8).setMinWidth(0);
+            jTable1.getColumnModel().getColumn(8).setMaxWidth(0);
+
+            jTable1.getColumnModel().getColumn(9).setMinWidth(0);
+            jTable1.getColumnModel().getColumn(9).setMaxWidth(0);
+
+            jTable1.getColumnModel().getColumn(10).setMinWidth(0);
+            jTable1.getColumnModel().getColumn(10).setMaxWidth(0);
+
+            jTable1.getColumnModel().getColumn(11).setMinWidth(0);
+            jTable1.getColumnModel().getColumn(11).setMaxWidth(0);
         }
     }
 
- 
 //fetch creditor table
     public void fetchData() {
         String name = txtCreditorName.getText();
@@ -149,10 +148,11 @@ public class MainPage extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, e);
         }
     }
+
     //fetch empty product data
-    public void fetchEmpty(){
-     try {
-            String s = "SELECT * FROM creditor_table WHERE creditor_name='"+0000+"'";
+    public void fetchEmpty() {
+        try {
+            String s = "SELECT * FROM creditor_table WHERE creditor_name='" + 0000 + "'";
             pst = conn.prepareStatement(s);
             rs = pst.executeQuery();
             jTable1.setModel(DbUtils.resultSetToTableModel(rs));
@@ -161,12 +161,13 @@ public class MainPage extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
-    
+
     }
 //fetch added product data
- public void fetchProductData(String c , String d){
- try {
-            String s = "SELECT * FROM creditor_table WHERE creditor_name='"+c+"' AND date='"+d+"'";
+
+    public void fetchProductData(String c, String d) {
+        try {
+            String s = "SELECT * FROM creditor_table WHERE creditor_name='" + c + "' AND date='" + d + "'";
             pst = conn.prepareStatement(s);
             rs = pst.executeQuery();
             jTable1.setModel(DbUtils.resultSetToTableModel(rs));
@@ -176,39 +177,39 @@ public class MainPage extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, e);
         }
 // commt 
- }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
- //auto generate inv id
-  public void invID(){
-    
-       try {
-           Statement c = conn.createStatement();
-           rs = c.executeQuery("SELECT Max(inv) FROM bill");
-           rs.next();
-           
-           rs.getString("Max(inv)");
-           if(rs.getString("Max(inv)") == null){
-           
-           jLabel85.setText("000000001");
-           }else{
-           
-           Long id = Long.parseLong(rs.getString("Max(inv)").substring(2,rs.getString("Max(inv)").length()));
-           id++;
-           jLabel85.setText(String.format("%09d", id));
-           
-           
-           }
-       } catch (SQLException ex) {
-           JOptionPane.showMessageDialog(null, ex);
-       }
+    //auto generate inv id
+    public void invID() {
+
+        try {
+            Statement c = conn.createStatement();
+            rs = c.executeQuery("SELECT Max(inv) FROM bill");
+            rs.next();
+
+            rs.getString("Max(inv)");
+            if (rs.getString("Max(inv)") == null) {
+
+                jLabel85.setText("000000001");
+            } else {
+
+                Long id = Long.parseLong(rs.getString("Max(inv)").substring(2, rs.getString("Max(inv)").length()));
+                id++;
+                jLabel85.setText(String.format("%09d", id));
+
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
     }
+
     public void setDataCre() throws ParseException {
-        
-        
+
         int row = jTable1.getSelectedRow();
         String id = jTable1.getValueAt(row, 0).toString();
         String creditor_name = jTable1.getValueAt(row, 1).toString();
@@ -219,35 +220,31 @@ public class MainPage extends javax.swing.JFrame {
         String totalkg = jTable1.getValueAt(row, 6).toString();
         Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse((String) jTable1.getValueAt(row, 7).toString());
         String price = jTable1.getValueAt(row, 9).toString();
-        
+
         String totalprice = jTable1.getValueAt(row, 10).toString();
 //        String status=jTable1.getValueAt(row, 10).toString();
 
         jLabel11.setText(id);
         txtCreditorName.setText(creditor_name);
         jTextField3.setText(lorrynum);
-        
-        
+
         jcategory.setSelectedItem(cat);
-       
-         
+
         jkg.addItem(kg);
-        
+
         jkg.setSelectedItem(kg);
-      
+
         jTextField2.setText(qun);
         jTextField5.setText(totalkg);
 
         jDateChooser1.setDate(date1);
         txtPrice.setText(price);
         jTextField4.setText(totalprice);
-        
+
     }
 
     //fetch category
     public void fetchCatInProduct() {
-
-        
 
         try {
             String f1 = "SELECT category_name FROM category GROUP BY category_name";
@@ -260,88 +257,85 @@ public class MainPage extends javax.swing.JFrame {
                 jcategory.addItem(c);
 
             }
-            
+
         } catch (Exception e) {
             //JOptionPane.showMessageDialog(this , e);
         }
 
-       
-  
     }
+
     // fetch data to sale list tab
-    public void setDataToSaleList()throws SQLException{
-                    String sq ="SELECT * FROM set_sales ORDER BY status desc";
-                    pst = conn.prepareStatement(sq);
-                    rs = pst.executeQuery();
-                    jTable11.setModel(DbUtils.resultSetToTableModel(rs));
-    
+    public void setDataToSaleList() throws SQLException {
+        String sq = "SELECT * FROM set_sales ORDER BY status desc";
+        pst = conn.prepareStatement(sq);
+        rs = pst.executeQuery();
+        jTable11.setModel(DbUtils.resultSetToTableModel(rs));
+
     }
 //fetch data to creditor table after checking
-    public void fetchCreditordat() throws SQLException{
-    
-                    String sq ="SELECT id,name,lorry_number,date,status  FROM set_status ORDER BY date desc";
-                    pst = conn.prepareStatement(sq);
-                    rs = pst.executeQuery();
-                    jTable2.setModel(DbUtils.resultSetToTableModel(rs));
-    
+
+    public void fetchCreditordat() throws SQLException {
+
+        String sq = "SELECT id,name,lorry_number,date,status  FROM set_status ORDER BY date desc";
+        pst = conn.prepareStatement(sq);
+        rs = pst.executeQuery();
+        jTable2.setModel(DbUtils.resultSetToTableModel(rs));
+
     }
+
     //insert data to luuse table in database
-    public void insertLuuse(String cat,String unit,String qty,String lusekg,String tl,String date,String move){
-    
+    public void insertLuuse(String cat, String unit, String qty, String lusekg, String tl, String date, String move) {
+
         try {
-            String sql="INSERT INTO luuse(cat_name,type_of_kg,quantity,luuse_kg,total_luuse,date,move)"
-                    + "VALUES('"+cat+"','"+unit+"','"+qty+"','"+lusekg+"','"+tl+"','"+date+"','"+move+"')";
-            pst=conn.prepareStatement(sql);
+            String sql = "INSERT INTO luuse(cat_name,type_of_kg,quantity,luuse_kg,total_luuse,date,move)"
+                    + "VALUES('" + cat + "','" + unit + "','" + qty + "','" + lusekg + "','" + tl + "','" + date + "','" + move + "')";
+            pst = conn.prepareStatement(sql);
             pst.execute();
         } catch (Exception e) {
         }
-    
-    
-    
-    
+
     }
+
     //code end here
     //insert data to sales table
-    public void insertDataToSales(String dealer,String Ktype,String qty,String totalQty,String p,Double Tp,String cat){
-        String name=jTextField7.getText();
-        String mn=jTextField8.getText();
-        String ln=jTextField9.getText();
+    public void insertDataToSales(String dealer, String Ktype, String qty, String totalQty, String p, Double Tp, String cat) {
+        String name = jTextField7.getText();
+        String mn = jTextField8.getText();
+        String ln = jTextField9.getText();
         SimpleDateFormat g1 = new SimpleDateFormat("yyyy-MM-dd");
         String dat = g1.format(jDateChooser2.getDate());
-       
-      
-        String status="pending";
-        String route=jComboBox2.getSelectedItem().toString();
-        String collectr=jTextField45.getText();
-        String bill=jLabel85.getText();
+
+        String status = "pending";
+        String route = jComboBox2.getSelectedItem().toString();
+        String collectr = jTextField45.getText();
+        String bill = jLabel85.getText();
         try {
-             String insert="INSERT INTO sales_list(bill,dealer,dealer_name,mobile,lorry_number,date,category,type_kg,quantity,total_kg,price_per_1kg,total_price,route,collector,status)"
-                     + "VALUES('"+bill+"','"+dealer+"','"+name+"','"+mn+"','"+ln+"','"+dat+"','"+cat+"','"+Ktype+"','"+qty+"','"+totalQty+"','"+p+"','"+Tp+"','"+route+"','"+collectr+"','"+status+"')";
+            String insert = "INSERT INTO sales_list(bill,dealer,dealer_name,mobile,lorry_number,date,category,type_kg,quantity,total_kg,price_per_1kg,total_price,route,collector,status)"
+                    + "VALUES('" + bill + "','" + dealer + "','" + name + "','" + mn + "','" + ln + "','" + dat + "','" + cat + "','" + Ktype + "','" + qty + "','" + totalQty + "','" + p + "','" + Tp + "','" + route + "','" + collectr + "','" + status + "')";
             pst = conn.prepareStatement(insert);
             pst.execute();
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
-         
-               
-                   
-    //getSalesData(dealer);
+
+        //getSalesData(dealer);
     }
+
     //cleare all the fileds after done sales
-    public void clearFields(){
-    
-    jRadioButton1.setSelected(true);
-     try {
-                String sql="SELECT DISTINCT name as Names_of_customers FROM detor";
-                pst =conn.prepareStatement(sql);
-                rs=pst.executeQuery();
-                jTable24.setModel(DbUtils.resultSetToTableModel(rs));
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e);
-            }
-    
-     jTextField17.setText("");
+    public void clearFields() {
+
+        jRadioButton1.setSelected(true);
+        try {
+            String sql = "SELECT DISTINCT name as Names_of_customers FROM detor";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            jTable24.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
+
+        jTextField17.setText("");
         jTextField21.setText("");
         jTextField18.setText("");
         jTextField19.setText("");
@@ -353,10 +347,11 @@ public class MainPage extends javax.swing.JFrame {
         jTextField46.setText("");
         jTextField15.setText("");
         jTextField16.setText("");
-        jCheckBox1.setSelected(false);jCheckBox2.setSelected(false);
-       jTextField12.setText("");
-       jTextField13.setText("");
-       jTextField14.setText("");
+        jCheckBox1.setSelected(false);
+        jCheckBox2.setSelected(false);
+        jTextField12.setText("");
+        jTextField13.setText("");
+        jTextField14.setText("");
         jButton46.setEnabled(true);
         jButton43.setEnabled(false);
         jComboBox2.setSelectedIndex(0);
@@ -364,332 +359,324 @@ public class MainPage extends javax.swing.JFrame {
         jLabel86.setText("0.0");
         jLabel88.setText("0.0");
         jLabel90.setText("0.0");
-    
+
     }
+
     //get sales data and set it in set sales table
-    public void getSalesData(String dealer){
-                SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
-                String addDate = d.format(jDateChooser2.getDate());
-                  String n = jTextField7.getText();
-               try {
-              
-                String bill_no=jLabel85.getText();
-                String st ="pending";
-                String sum_of_arius="";
-                String j = "SELECT bill,dealer,dealer_name,mobile,lorry_number,date,category,type_kg,quantity,total_kg,price_per_1kg,sum(total_price),route,collector,status FROM sales_list WHERE dealer='"+dealer+"' AND status='"+st+"' AND dealer_name='"+n+"' AND date='"+addDate+"' AND bill='"+bill_no+"'";
-                pst = conn.prepareStatement(j);
+    public void getSalesData(String dealer) {
+        SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
+        String addDate = d.format(jDateChooser2.getDate());
+        String n = jTextField7.getText();
+        try {
+
+            String bill_no = jLabel85.getText();
+            String st = "pending";
+            String sum_of_arius = "";
+            String j = "SELECT bill,dealer,dealer_name,mobile,lorry_number,date,category,type_kg,quantity,total_kg,price_per_1kg,sum(total_price),route,collector,status FROM sales_list WHERE dealer='" + dealer + "' AND status='" + st + "' AND dealer_name='" + n + "' AND date='" + addDate + "' AND bill='" + bill_no + "'";
+            pst = conn.prepareStatement(j);
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+                String cname = rs.getString("dealer_name");
+                String dt = rs.getString("date");
+                String dealer1 = rs.getString("dealer");
+                String sta = rs.getString("status");
+                String bill = rs.getString("bill");
+                sum_of_arius = rs.getString("sum(total_price)");
+
+                String sq = "SELECT * FROM set_sales WHERE dealer_name='" + cname + "' AND date='" + dt + "' AND dealer='" + dealer1 + "'";
+                pst = conn.prepareStatement(sq);
                 rs = pst.executeQuery();
-                
-                 if(rs.next()){
-                    String cname = rs.getString("dealer_name");
-                    String dt = rs.getString("date");
-                    String dealer1 = rs.getString("dealer");
-                    String sta = rs.getString("status");
-                    String bill=rs.getString("bill");
-                    sum_of_arius=rs.getString("sum(total_price)");
-                    
-                    String sq ="SELECT * FROM set_sales WHERE dealer_name='"+cname+"' AND date='"+dt+"' AND dealer='"+dealer1+"'";
-                    pst = conn.prepareStatement(sq);
-                    rs = pst.executeQuery();
-                            
-                            if(rs.next()){
-                             String cn = rs.getString("dealer_name");
-                             String dtt = rs.getString("date");
-                             String bill2=rs.getString("bill_number");
-                             String update="UPDATE set_sales SET status='"+"pending"+"' WHERE dealer_name='"+cn+"' AND date='"+dtt+"' AND bill_number='"+bill2+"'";
-                             pst = conn.prepareStatement(update);
-                             pst.execute();
-                            
-                            }else{
-                            
-                             String insert="INSERT INTO set_sales(bill_number,dealer,dealer_name,date,status)VALUES('"+bill+"','"+dealer+"','"+n+"','"+dt+"','"+sta+"')";
-                             pst = conn.prepareStatement(insert);
-                             pst.execute();
-                            
-                           
-                            }
-                 }else{
+
+                if (rs.next()) {
+                    String cn = rs.getString("dealer_name");
+                    String dtt = rs.getString("date");
+                    String bill2 = rs.getString("bill_number");
+                    String update = "UPDATE set_sales SET status='" + "pending" + "' WHERE dealer_name='" + cn + "' AND date='" + dtt + "' AND bill_number='" + bill2 + "'";
+                    pst = conn.prepareStatement(update);
+                    pst.execute();
+
+                } else {
+
+                    String insert = "INSERT INTO set_sales(bill_number,dealer,dealer_name,date,status)VALUES('" + bill + "','" + dealer + "','" + n + "','" + dt + "','" + sta + "')";
+                    pst = conn.prepareStatement(insert);
+                    pst.execute();
+
+                }
+            } else {
                 String n1 = jTextField7.getText();
-                String st1 ="completed";
-                String j1 = "SELECT SELECT bill,dealer,dealer_name,mobile,lorry_number,date,category,type_kg,quantity,total_kg,price_per_1kg,sum(total_price),route,collector,status FROM sales_list WHERE dealer='"+dealer+"' AND status='"+st1+"' AND dealer_name='"+n1+"' AND date='"+addDate+"'";
+                String st1 = "completed";
+                String j1 = "SELECT SELECT bill,dealer,dealer_name,mobile,lorry_number,date,category,type_kg,quantity,total_kg,price_per_1kg,sum(total_price),route,collector,status FROM sales_list WHERE dealer='" + dealer + "' AND status='" + st1 + "' AND dealer_name='" + n1 + "' AND date='" + addDate + "'";
                 pst = conn.prepareStatement(j1);
                 rs = pst.executeQuery();
-                 
-                  if(rs.next()){
+
+                if (rs.next()) {
                     String cname = rs.getString("dealer_name");
                     String dt = rs.getString("date");
                     String dealer1 = rs.getString("dealer");
                     String sta = rs.getString("status");
-                    String bill=rs.getString("bill");
-                   sum_of_arius=rs.getString("sum(total_price)");
-                    String sq ="SELECT * FROM set_sales WHERE dealer_name='"+cname+"' AND date='"+dt+"' AND dealer='"+dealer1+"'";
+                    String bill = rs.getString("bill");
+                    sum_of_arius = rs.getString("sum(total_price)");
+                    String sq = "SELECT * FROM set_sales WHERE dealer_name='" + cname + "' AND date='" + dt + "' AND dealer='" + dealer1 + "'";
                     pst = conn.prepareStatement(sq);
                     rs = pst.executeQuery();
-                    
-                      if(rs.next()){
-                            String cn = rs.getString("dealer_name");
-                            String dtt = rs.getString("date");
-                            String update="UPDATE set_sales SET status='"+"complted"+"' WHERE dealer_name='"+cn+"' AND date='"+dtt+"' AND bill_number='"+bill+"'";
-                            pst = conn.prepareStatement(update);
-                            pst.execute();
-                            }else{
-                            
-                             String insert="INSERT INTO set_sales(bill_number,dealer,dealer_name,date,status)VALUES('"+bill+"','"+dealer+"','"+n+"','"+dt+"','"+sta+"')";
-                             pst = conn.prepareStatement(insert);
-                             pst.execute();
-                            
-                            
-                            }
-                  }
-                 }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
-        }
-    
-    }
-    
- //add or update arius table
-    public void addOrUpdateariusTable(String dealer,String n,String date,String sum_of_arius ){
-      
-        
-        try {
-            
-                String j = "SELECT dealer,dealer_name,date,total_price FROM sales_list WHERE dealer='"+dealer+"' AND dealer_name='"+n+"'";
-                pst = conn.prepareStatement(j);
-                rs = pst.executeQuery();
-                    if(rs.next()){
-                   String dealer1=rs.getString("dealer");
-                   String name=rs.getString("dealer_name");
-                  
-                    String sq="SELECT dealer,name,date,arius_amount,complete_amount FROM arius_amount WHERE dealer='"+dealer1+"' AND name='"+name+"'";
-                    pst = conn.prepareStatement(sq);
-                    rs = pst.executeQuery();
-                    
-                        if(rs.next()){
-                            UpdateAriusTable(name,cdate,sum_of_arius,dealer1);
-                        }else{
-                        
-                            insertDataToArius(dealer1,name,cdate,sum_of_arius);
-                        }
-                    
+
+                    if (rs.next()) {
+                        String cn = rs.getString("dealer_name");
+                        String dtt = rs.getString("date");
+                        String update = "UPDATE set_sales SET status='" + "complted" + "' WHERE dealer_name='" + cn + "' AND date='" + dtt + "' AND bill_number='" + bill + "'";
+                        pst = conn.prepareStatement(update);
+                        pst.execute();
+                    } else {
+
+                        String insert = "INSERT INTO set_sales(bill_number,dealer,dealer_name,date,status)VALUES('" + bill + "','" + dealer + "','" + n + "','" + dt + "','" + sta + "')";
+                        pst = conn.prepareStatement(insert);
+                        pst.execute();
+
                     }
-        } catch (Exception e) {
-        }
-    
-    }
-    //insert data to arius amout table
-    public void insertDataToArius(String dealer,String name,String date,String arius_amount){
-    
-        
-           try {
-            String sql="INSERT INTO arius_amount(dealer,name,date,arius_amount)VALUES('"+dealer+"','"+name+"','"+date+"','"+arius_amount+"')";
-            pst = conn.prepareStatement(sql);
-            pst.execute();
+                }
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
- //code end here   
+
     }
-  //update arius table
-    public void UpdateAriusTable(String name,String date,String arius_amoun,String dealer){
-        
-        
-        try {
-            String sql="UPDATE arius_amount SET arius_amount='"+arius_amoun+"' WHERE name='"+name+"' AND dealer='"+dealer+"'";
-            pst = conn.prepareStatement(sql);
-            pst.execute();
-        } catch (Exception e) {
-             JOptionPane.showMessageDialog(this, e);
-        }
-    }
-  
-//code end here
-    
-    //check if there is any pending order under perticular creditor
-    public void getCreditorData(String n,String addDate) {
+
+    //add or update arius table
+    public void addOrUpdateariusTable(String dealer, String n, String date, String sum_of_arius) {
 
         try {
-            
-               
-                String st ="pending";
-                String j = "SELECT creditor_name,lorry_number,date,status FROM creditor_details WHERE status='"+st+"' AND creditor_name='"+n+"' AND date='"+addDate+"' ";
-                pst = conn.prepareStatement(j);
+
+            String j = "SELECT dealer,dealer_name,date,total_price FROM sales_list WHERE dealer='" + dealer + "' AND dealer_name='" + n + "'";
+            pst = conn.prepareStatement(j);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                String dealer1 = rs.getString("dealer");
+                String name = rs.getString("dealer_name");
+
+                String sq = "SELECT dealer,name,date,arius_amount,complete_amount FROM arius_amount WHERE dealer='" + dealer1 + "' AND name='" + name + "'";
+                pst = conn.prepareStatement(sq);
                 rs = pst.executeQuery();
-            
-                    if(rs.next()){
+
+                if (rs.next()) {
+                    UpdateAriusTable(name, cdate, sum_of_arius, dealer1);
+                } else {
+
+                    insertDataToArius(dealer1, name, cdate, sum_of_arius);
+                }
+
+            }
+        } catch (Exception e) {
+        }
+
+    }
+
+    //insert data to arius amout table
+    public void insertDataToArius(String dealer, String name, String date, String arius_amount) {
+
+        try {
+            String sql = "INSERT INTO arius_amount(dealer,name,date,arius_amount)VALUES('" + dealer + "','" + name + "','" + date + "','" + arius_amount + "')";
+            pst = conn.prepareStatement(sql);
+            pst.execute();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
+        //code end here   
+    }
+    //update arius table
+
+    public void UpdateAriusTable(String name, String date, String arius_amoun, String dealer) {
+
+        try {
+            String sql = "UPDATE arius_amount SET arius_amount='" + arius_amoun + "' WHERE name='" + name + "' AND dealer='" + dealer + "'";
+            pst = conn.prepareStatement(sql);
+            pst.execute();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
+    }
+
+//code end here
+    //check if there is any pending order under perticular creditor
+    public void getCreditorData(String n, String addDate) {
+
+        try {
+
+            String st = "pending";
+            String j = "SELECT creditor_name,lorry_number,date,status FROM creditor_details WHERE status='" + st + "' AND creditor_name='" + n + "' AND date='" + addDate + "' ";
+            pst = conn.prepareStatement(j);
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+                String cname = rs.getString("creditor_name");
+                String dt = rs.getString("date");
+                String ln = rs.getString("lorry_number");
+                String sta = rs.getString("status");
+
+                String sq = "SELECT * FROM set_status WHERE name='" + cname + "' AND date='" + dt + "'";
+                pst = conn.prepareStatement(sq);
+                rs = pst.executeQuery();
+
+                if (rs.next()) {
+                    String cn = rs.getString("name");
+                    String dtt = rs.getString("date");
+                    String update = "UPDATE set_status SET status='" + "pending" + "' WHERE name='" + cn + "' AND date='" + dtt + "'";
+                    pst = conn.prepareStatement(update);
+                    pst.execute();
+                    //UpdateAriusCreditorTable(String name,String date,String arius_amoun);
+                } else {
+                    String insert = "INSERT INTO set_status(name,lorry_number,date,status)VALUES('" + cname + "','" + ln + "','" + dt + "','" + sta + "')";
+                    pst = conn.prepareStatement(insert);
+                    pst.execute();
+
+                }
+            } else {
+
+                String st1 = "completed";
+                String j1 = "SELECT creditor_name,lorry_number,date,status FROM creditor_details WHERE status='" + st1 + "' AND creditor_name='" + n + "' AND date='" + addDate + "' ";
+                pst = conn.prepareStatement(j1);
+                rs = pst.executeQuery();
+
+                if (rs.next()) {
                     String cname = rs.getString("creditor_name");
                     String dt = rs.getString("date");
                     String ln = rs.getString("lorry_number");
                     String sta = rs.getString("status");
-                    
-                    String sq ="SELECT * FROM set_status WHERE name='"+cname+"' AND date='"+dt+"'";
+
+                    String sq = "SELECT * FROM set_status WHERE name='" + cname + "' AND date='" + dt + "'";
                     pst = conn.prepareStatement(sq);
                     rs = pst.executeQuery();
-                    
-                        if(rs.next()){
-                            String cn = rs.getString("name");
-                            String dtt = rs.getString("date");
-                            String update="UPDATE set_status SET status='"+"pending"+"' WHERE name='"+cn+"' AND date='"+dtt+"'";
-                            pst = conn.prepareStatement(update);
-                            pst.execute();
-                            //UpdateAriusCreditorTable(String name,String date,String arius_amoun);
-                        }else{
-                             String insert="INSERT INTO set_status(name,lorry_number,date,status)VALUES('"+cname+"','"+ln+"','"+dt+"','"+sta+"')";
-                             pst = conn.prepareStatement(insert);
-                             pst.execute();
-                        
-                        }
-                }else{
-                
-                
-                String st1 ="completed";
-                String j1 = "SELECT creditor_name,lorry_number,date,status FROM creditor_details WHERE status='"+st1+"' AND creditor_name='"+n+"' AND date='"+addDate+"' ";
-                pst = conn.prepareStatement(j1);
-                rs = pst.executeQuery(); 
-                
-                    if(rs.next()){
-                        String cname = rs.getString("creditor_name");
-                        String dt = rs.getString("date");
-                        String ln = rs.getString("lorry_number");
-                        String sta = rs.getString("status");
-                        
-                         String sq ="SELECT * FROM set_status WHERE name='"+cname+"' AND date='"+dt+"'";
-                         pst = conn.prepareStatement(sq);
-                         rs = pst.executeQuery();
-                         
-                          if(rs.next()){
-                                String cn = rs.getString("name");
-                                String dtt = rs.getString("date");
-                                String update="UPDATE set_status SET status='"+"completed"+"' WHERE name='"+cn+"' AND date='"+dtt+"'";
-                                pst = conn.prepareStatement(update);
-                                pst.execute();
-                        }else{
-                             String insert="INSERT INTO set_status(name,lorry_number,date,status)VALUES('"+cname+"','"+ln+"','"+dt+"','"+sta+"')";
-                             pst = conn.prepareStatement(insert);
-                             pst.execute();
-                        
-                        }
+
+                    if (rs.next()) {
+                        String cn = rs.getString("name");
+                        String dtt = rs.getString("date");
+                        String update = "UPDATE set_status SET status='" + "completed" + "' WHERE name='" + cn + "' AND date='" + dtt + "'";
+                        pst = conn.prepareStatement(update);
+                        pst.execute();
+                    } else {
+                        String insert = "INSERT INTO set_status(name,lorry_number,date,status)VALUES('" + cname + "','" + ln + "','" + dt + "','" + sta + "')";
+                        pst = conn.prepareStatement(insert);
+                        pst.execute();
+
                     }
                 }
-            
+            }
+
             fetchCreditordat();
-            
+
         } catch (Exception e) {
-            
+
             System.out.println(e);
         }
-
 
     }
 
 //add and update creditor arius amount when update price in creditor table
-public void setCreditorAriusAmountUpdate(String creditor,String date){
+    public void setCreditorAriusAmountUpdate(String creditor, String date) {
 
-    double arius_total=0.0;
-    double complete=0.0;
-    double currentArius=0.0;
-    try {
-        
+        double arius_total = 0.0;
+        double complete = 0.0;
+        double currentArius = 0.0;
+        try {
+
             try {
-                String sql="SELECT creditor_name,sum(total_price) FROM creditor_table WHERE creditor_name='"+creditor+"'";
-                pst =conn.prepareStatement(sql);
-                rs=pst.executeQuery();
-                    if(rs.next()){
-                         String name=rs.getString("creditor_name");
-                         String arius_amoun=rs.getString("sum(total_price)");
-                         currentArius=Double.parseDouble(arius_amoun);
-                                 
-                         String sq="SELECT * FROM arius_creditor_amount WHERE name='"+creditor+"'";
-                         pst =conn.prepareStatement(sq);
-                         rs=pst.executeQuery();
-                            if(rs.next()){
-                               String compl=rs.getString("complete");
-                               complete=Double.parseDouble(compl);
-                               arius_total=currentArius-complete;
-                                 UpdateAriusCreditorTable2(name,arius_total);
-                                
-                            }
-                       
-                       
+                String sql = "SELECT creditor_name,sum(total_price) FROM creditor_table WHERE creditor_name='" + creditor + "'";
+                pst = conn.prepareStatement(sql);
+                rs = pst.executeQuery();
+                if (rs.next()) {
+                    String name = rs.getString("creditor_name");
+                    String arius_amoun = rs.getString("sum(total_price)");
+                    currentArius = Double.parseDouble(arius_amoun);
+
+                    String sq = "SELECT * FROM arius_creditor_amount WHERE name='" + creditor + "'";
+                    pst = conn.prepareStatement(sq);
+                    rs = pst.executeQuery();
+                    if (rs.next()) {
+                        String compl = rs.getString("complete");
+                        complete = Double.parseDouble(compl);
+                        arius_total = currentArius - complete;
+                        UpdateAriusCreditorTable2(name, arius_total);
+
                     }
-                    
+
+                }
+
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e);
             }
-    
-    } catch (Exception e) {
+
+        } catch (Exception e) {
+        }
+
     }
-
-
-}
 //add and update creditor arius table
-public void setCreditorAriusAmount(String creditor,String date ,String arius_amoun){
-    
-       
-            try {
-                String sql="SELECT creditor_name,total_price FROM creditor_table WHERE creditor_name='"+creditor+"'";
-                pst =conn.prepareStatement(sql);
-                rs=pst.executeQuery();
-                    if(rs.next()){
-                         String name=rs.getString("creditor_name");
-                       
-                        
-                         String sq="SELECT * FROM arius_creditor_amount WHERE name='"+creditor+"'";
-                         pst =conn.prepareStatement(sq);
-                         rs=pst.executeQuery();
-                         
-                            if(rs.next()){
-                               
-                                 UpdateAriusCreditorTable(creditor,arius_amoun);
-                                
-                                
-                            }else{
-                               
-                                 insertDataToAriusCreditor(creditor,date,arius_amoun);
-                                 
-                            }
-                       
-                       
-                    }
-                    
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e);
+
+    public void setCreditorAriusAmount(String creditor, String date, String arius_amoun) {
+
+        try {
+            String sql = "SELECT creditor_name,total_price FROM creditor_table WHERE creditor_name='" + creditor + "'";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                String name = rs.getString("creditor_name");
+
+                String sq = "SELECT * FROM arius_creditor_amount WHERE name='" + creditor + "'";
+                pst = conn.prepareStatement(sq);
+                rs = pst.executeQuery();
+
+                if (rs.next()) {
+
+                    UpdateAriusCreditorTable(creditor, arius_amoun);
+
+                } else {
+
+                    insertDataToAriusCreditor(creditor, date, arius_amoun);
+
+                }
+
             }
-    
-    
-    }
-  //insert data to arius amout creditor table
-    public void insertDataToAriusCreditor(String name,String date,String arius_amount){
-    
-           try {
-            String sql="INSERT INTO arius_creditor_amount(name,date,arius_amount)VALUES('"+name+"','"+date+"','"+arius_amount+"')";
-            pst = conn.prepareStatement(sql);
-            pst.execute();
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
- //code end here   
+
     }
-  //update arius crediot table
-    public void UpdateAriusCreditorTable(String name,String arius_amoun){
+    //insert data to arius amout creditor table
+
+    public void insertDataToAriusCreditor(String name, String date, String arius_amount) {
+
         try {
-            String sql="UPDATE arius_creditor_amount SET arius_amount='"+arius_amoun+"' WHERE name='"+name+"'";
+            String sql = "INSERT INTO arius_creditor_amount(name,date,arius_amount)VALUES('" + name + "','" + date + "','" + arius_amount + "')";
+            pst = conn.prepareStatement(sql);
+            pst.execute();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
+        //code end here   
+    }
+    //update arius crediot table
+
+    public void UpdateAriusCreditorTable(String name, String arius_amoun) {
+        try {
+            String sql = "UPDATE arius_creditor_amount SET arius_amount='" + arius_amoun + "' WHERE name='" + name + "'";
             pst = conn.prepareStatement(sql);
             pst.execute();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
     }
+
     // update creditor arius amount in update creditor step
-     public void UpdateAriusCreditorTable2(String name,Double arius_amoun){
+    public void UpdateAriusCreditorTable2(String name, Double arius_amoun) {
         try {
-            String sql="UPDATE arius_creditor_amount SET arius_amount='"+arius_amoun+"' WHERE name='"+name+"'";
+            String sql = "UPDATE arius_creditor_amount SET arius_amount='" + arius_amoun + "' WHERE name='" + name + "'";
             pst = conn.prepareStatement(sql);
             pst.execute();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
     }
+
     //code end here   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -4277,10 +4264,10 @@ public void setCreditorAriusAmount(String creditor,String date ,String arius_amo
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
 
-        String h=jTextField1.getText();
-        
+        String h = jTextField1.getText();
+
         try {
-            String s = "SELECT * FROM  set_status WHERE name LIKE '%"+h+"%' OR lorry_number LIKE '%"+h+"%' ORDER BY date desc";
+            String s = "SELECT * FROM  set_status WHERE name LIKE '%" + h + "%' OR lorry_number LIKE '%" + h + "%' ORDER BY date desc";
             pst = conn.prepareStatement(s);
             rs = pst.executeQuery();
             jTable2.setModel(DbUtils.resultSetToTableModel(rs));
@@ -4296,10 +4283,10 @@ public void setCreditorAriusAmount(String creditor,String date ,String arius_amo
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
-       String h=jTextField1.getText();
-        
+        String h = jTextField1.getText();
+
         try {
-            String s = "SELECT * FROM  set_status WHERE name LIKE '%"+h+"%' OR lorry_number LIKE '%"+h+"%' ORDER BY date desc";
+            String s = "SELECT * FROM  set_status WHERE name LIKE '%" + h + "%' OR lorry_number LIKE '%" + h + "%' ORDER BY date desc";
             pst = conn.prepareStatement(s);
             rs = pst.executeQuery();
             jTable2.setModel(DbUtils.resultSetToTableModel(rs));
@@ -4320,7 +4307,7 @@ public void setCreditorAriusAmount(String creditor,String date ,String arius_amo
         int row = jTable2.getSelectedRow();
         String name1 = jTable2.getValueAt(row, 1).toString();
         try {
-            
+
             Date fDate = new SimpleDateFormat("yyyy-MM-dd").parse((String) jTable2.getValueAt(row, 3).toString());
             SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
             String fda = d.format(fDate);
@@ -4331,135 +4318,128 @@ public void setCreditorAriusAmount(String creditor,String date ,String arius_amo
             fetchCatInProduct();
             jTable1.getColumnModel().getColumn(1).setMinWidth(170);
             jTable1.getColumnModel().getColumn(1).setMaxWidth(170);
-        
-        if(Usertype.equals("User")){
-        jTable1.getColumnModel().getColumn(8).setMinWidth(0);
-        jTable1.getColumnModel().getColumn(8).setMaxWidth(0);
-        jTable1.getColumnModel().getColumn(9).setMinWidth(0);
-        jTable1.getColumnModel().getColumn(9).setMaxWidth(0);
-                 jTable1.getColumnModel().getColumn(10).setMinWidth(0);
-        jTable1.getColumnModel().getColumn(10).setMaxWidth(0);
-        
-        }
-        
+
+            if (Usertype.equals("User")) {
+                jTable1.getColumnModel().getColumn(8).setMinWidth(0);
+                jTable1.getColumnModel().getColumn(8).setMaxWidth(0);
+                jTable1.getColumnModel().getColumn(9).setMinWidth(0);
+                jTable1.getColumnModel().getColumn(9).setMaxWidth(0);
+                jTable1.getColumnModel().getColumn(10).setMinWidth(0);
+                jTable1.getColumnModel().getColumn(10).setMaxWidth(0);
+
+            }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
         //get crditor arius amountand set it       CASE WHEN movement = 'IN' THEN quantity ELSE 0 END
-        String arius_amountnew="0";
+        String arius_amountnew = "0";
         try {
-            String sd="SELECT sum(arius_amount) FROM arius_creditor_amount WHERE name='"+name1+"'";
-            pst =conn.prepareStatement(sd);
-            rs =pst.executeQuery();
-            if(rs.next()){
-            
-            String arius_amount=rs.getString("sum(arius_amount)");
-            arius_amountnew=arius_amount;
-            
-            if(arius_amountnew==null){
-            
-            //JOptionPane.showMessageDialog(this, "0");
-            jTextField47.setText("0");
-            }else{
-           // JOptionPane.showMessageDialog(this, arius_amountnew);
-            jTextField47.setText(arius_amountnew);
-            }
-            
-            
+            String sd = "SELECT sum(arius_amount) FROM arius_creditor_amount WHERE name='" + name1 + "'";
+            pst = conn.prepareStatement(sd);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+
+                String arius_amount = rs.getString("sum(arius_amount)");
+                arius_amountnew = arius_amount;
+
+                if (arius_amountnew == null) {
+
+                    //JOptionPane.showMessageDialog(this, "0");
+                    jTextField47.setText("0");
+                } else {
+                    // JOptionPane.showMessageDialog(this, arius_amountnew);
+                    jTextField47.setText(arius_amountnew);
+                }
+
             }
         } catch (Exception e) {
         }
     }//GEN-LAST:event_jTable2MouseClicked
-public void getProductdata(){
-            try {
+    public void getProductdata() {
+        try {
             String s = "SELECT * FROM  product_sales";
             pst = conn.prepareStatement(s);
             rs = pst.executeQuery();
             jTable3.setModel(DbUtils.resultSetToTableModel(rs));
-           
-    
-    } catch (Exception e) {
+
+        } catch (Exception e) {
+        }
+
     }
-
-
-}
 //select data from product properties
-public void getKiloPackets(){
 
-    int row=jTable3.getSelectedRow();
-    String id =jTable3.getValueAt(row, 0).toString();
-    
-     try {
-            String s = "SELECT type_of_kg,quantity,rest_of_quantity as luuse,total_quantity as total_kg,price_per_1kg,p_id FROM   product_properties WHERE p_id='"+id+"'";
+    public void getKiloPackets() {
+
+        int row = jTable3.getSelectedRow();
+        String id = jTable3.getValueAt(row, 0).toString();
+
+        try {
+            String s = "SELECT type_of_kg,quantity,rest_of_quantity as luuse,total_quantity as total_kg,price_per_1kg,p_id FROM   product_properties WHERE p_id='" + id + "'";
             pst = conn.prepareStatement(s);
             rs = pst.executeQuery();
             jTable4.setModel(DbUtils.resultSetToTableModel(rs));
-            
+
             jTable4.getColumnModel().getColumn(4).setMinWidth(0);
             jTable4.getColumnModel().getColumn(4).setMaxWidth(0);
-                 jTable4.getColumnModel().getColumn(5).setMinWidth(0);
-        jTable4.getColumnModel().getColumn(5).setMaxWidth(0);
-    } catch (Exception e) {
+            jTable4.getColumnModel().getColumn(5).setMinWidth(0);
+            jTable4.getColumnModel().getColumn(5).setMaxWidth(0);
+        } catch (Exception e) {
+        }
+
     }
-    
-
-
-}
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
         rightPanel.removeAll();
         rightPanel.add(p3);
         rightPanel.repaint();
         rightPanel.revalidate();
         jTextField45.setVisible(false);
-        
-        jComboBox2.setVisible(false); jLabel82.setVisible(false);
-       jRadioButton1.setSelected(true);
-                jButton47.setVisible(true);
-             jButton39.setVisible(false);jTable3.setEnabled(false);
-             jButton41.setEnabled(false);
-        
+
+        jComboBox2.setVisible(false);
+        jLabel82.setVisible(false);
+        jRadioButton1.setSelected(true);
+        jButton47.setVisible(true);
+        jButton39.setVisible(false);
+        jTable3.setEnabled(false);
+        jButton41.setEnabled(false);
+
         getProductdata();
         try {
-         
-            String s = "SELECT type_of_kg,quantity,rest_of_quantity as luuse,total_quantity as total_kg FROM   product_properties WHERE p_id='"+"ww"+"'";
+
+            String s = "SELECT type_of_kg,quantity,rest_of_quantity as luuse,total_quantity as total_kg FROM   product_properties WHERE p_id='" + "ww" + "'";
             pst = conn.prepareStatement(s);
             rs = pst.executeQuery();
             jTable4.setModel(DbUtils.resultSetToTableModel(rs));
-           
 
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, e);
-    }
-       
-       try {
-            String select="SELECT * FROM detor ORDER BY id DESC";
-            pst =conn.prepareStatement(select);
-            rs=pst.executeQuery();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
+
+        try {
+            String select = "SELECT * FROM detor ORDER BY id DESC";
+            pst = conn.prepareStatement(select);
+            rs = pst.executeQuery();
             jTable7.setModel(DbUtils.resultSetToTableModel(rs));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
-       
-       try {
-                String sql="SELECT DISTINCT name as Names_of_customers FROM detor";
-                pst =conn.prepareStatement(sql);
-                rs=pst.executeQuery();
-                jTable24.setModel(DbUtils.resultSetToTableModel(rs));
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e);
-            }
-       
-       
-      jButton43.setEnabled(false);
-      jButton46.setEnabled(true);
-      
-       
-       
-      
-      jTable3.getColumnModel().getColumn(0).setMinWidth(0);
-      jTable3.getColumnModel().getColumn(0).setMaxWidth(0);
-      
-       jButton3.setBackground(Color.white);
+
+        try {
+            String sql = "SELECT DISTINCT name as Names_of_customers FROM detor";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            jTable24.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
+
+        jButton43.setEnabled(false);
+        jButton46.setEnabled(true);
+
+        jTable3.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable3.getColumnModel().getColumn(0).setMaxWidth(0);
+
+        jButton3.setBackground(Color.white);
         jButton1.setBackground(Color.white);
         jButton13.setBackground(Color.white);
         jButton15.setBackground(Color.yellow);
@@ -4470,33 +4450,32 @@ public void getKiloPackets(){
         jButton25.setBackground(Color.white);
         jButton32.setBackground(Color.white);
     }//GEN-LAST:event_jButton15ActionPerformed
-public void getProductdata2(){
-            try {
+    public void getProductdata2() {
+        try {
             String s = "SELECT * FROM  product_sales";
             pst = conn.prepareStatement(s);
             rs = pst.executeQuery();
             jTable9.setModel(DbUtils.resultSetToTableModel(rs));
-           
-    
-    } catch (Exception e) {
+
+        } catch (Exception e) {
+        }
+
     }
-
-
-}
 //fetch data to table in stock 
-public void fetchDataStock(){
-     try {
-         String s = "SELECT * FROM stock ORDER BY id DESC";
+
+    public void fetchDataStock() {
+        try {
+            String s = "SELECT * FROM stock ORDER BY id DESC";
             pst = conn.prepareStatement(s);
             rs = pst.executeQuery();
             jTable8.setModel(DbUtils.resultSetToTableModel(rs));
-    } catch (Exception e) {
+        } catch (Exception e) {
+        }
+
     }
 
-}
-
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-          rightPanel.removeAll();
+        rightPanel.removeAll();
         rightPanel.add(p5);
         rightPanel.repaint();
         rightPanel.revalidate();
@@ -4505,24 +4484,23 @@ public void fetchDataStock(){
         fetchDataStock();
         getProductdata2();
         try {
-         
-            String s = "SELECT type_of_kg,quantity,rest_of_quantity as luuse,total_quantity as total_kg,price_per_1kg FROM   product_properties WHERE p_id='"+"ww"+"'";
+
+            String s = "SELECT type_of_kg,quantity,rest_of_quantity as luuse,total_quantity as total_kg,price_per_1kg FROM   product_properties WHERE p_id='" + "ww" + "'";
             pst = conn.prepareStatement(s);
             rs = pst.executeQuery();
             jTable10.setModel(DbUtils.resultSetToTableModel(rs));
-           
-    
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, e);
-    }
-         jTable9.getColumnModel().getColumn(0).setMinWidth(50);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
+        jTable9.getColumnModel().getColumn(0).setMinWidth(50);
         jTable9.getColumnModel().getColumn(0).setMaxWidth(50);
         jTable8.getColumnModel().getColumn(0).setMinWidth(50);
         jTable8.getColumnModel().getColumn(0).setMaxWidth(50);
-         jTable10.getColumnModel().getColumn(4).setMinWidth(0);
+        jTable10.getColumnModel().getColumn(4).setMinWidth(0);
         jTable10.getColumnModel().getColumn(4).setMaxWidth(0);
-        
-         jButton3.setBackground(Color.white);
+
+        jButton3.setBackground(Color.white);
         jButton1.setBackground(Color.white);
         jButton13.setBackground(Color.white);
         jButton15.setBackground(Color.white);
@@ -4539,17 +4517,17 @@ public void fetchDataStock(){
         rightPanel.add(p4);
         rightPanel.repaint();
         rightPanel.revalidate();
-         
-         try {
-            String sq ="SELECT bill_number,dealer,dealer_name,date FROM set_sales ORDER BY status desc";
-                    pst = conn.prepareStatement(sq);
-                    rs = pst.executeQuery();
-                    jTable5.setModel(DbUtils.resultSetToTableModel(rs));
+
+        try {
+            String sq = "SELECT bill_number,dealer,dealer_name,date FROM set_sales ORDER BY status desc";
+            pst = conn.prepareStatement(sq);
+            rs = pst.executeQuery();
+            jTable5.setModel(DbUtils.resultSetToTableModel(rs));
         } catch (Exception e) {
         }
-         getDataFromReturnTable();
-         
-         jButton3.setBackground(Color.white);
+        getDataFromReturnTable();
+
+        jButton3.setBackground(Color.white);
         jButton1.setBackground(Color.white);
         jButton13.setBackground(Color.yellow);
         jButton15.setBackground(Color.white);
@@ -4583,13 +4561,8 @@ public void fetchDataStock(){
         jButton24.setBackground(Color.white);
         jButton25.setBackground(Color.white);
         jButton32.setBackground(Color.white);
-        
-        
-        
-        
-        
-        
-        
+
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -4602,8 +4575,8 @@ public void fetchDataStock(){
         fetchCatInProduct();
         jTable1.getColumnModel().getColumn(1).setMinWidth(170);
         jTable1.getColumnModel().getColumn(1).setMaxWidth(170);
-        
-         jButton3.setBackground(Color.white);
+
+        jButton3.setBackground(Color.white);
         jButton1.setBackground(Color.yellow);
         jButton13.setBackground(Color.white);
         jButton15.setBackground(Color.white);
@@ -4695,7 +4668,7 @@ public void fetchDataStock(){
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(this, e);
                     }
-                            jcategory.removeAllItems();
+                    jcategory.removeAllItems();
                     fetchCatInProduct();
                 }
 
@@ -4723,12 +4696,12 @@ public void fetchDataStock(){
             jTextField5.setText("");
 
         }
-try {
-             int h=Integer.parseInt(txtQuantity.getText());
-            
+        try {
+            int h = Integer.parseInt(txtQuantity.getText());
+
         } catch (NumberFormatException e) {
-             
-             txtQuantity.setText("");
+
+            txtQuantity.setText("");
         }
     }//GEN-LAST:event_txtQuantityKeyReleased
 
@@ -4746,16 +4719,16 @@ try {
             jTextField5.setText("");
 
         }
- try {
-             int h=Integer.parseInt(jTextField2.getText());
-            
+        try {
+            int h = Integer.parseInt(jTextField2.getText());
+
         } catch (NumberFormatException e) {
-             
-             jTextField2.setText("");
+
+            jTextField2.setText("");
         }
         String a1 = jkg.getSelectedItem().toString();
-boolean check=jr2.isSelected();
-        if (check==true) {
+        boolean check = jr2.isSelected();
+        if (check == true) {
 
             int e = Integer.parseInt(txtQuantity.getText());
             int y = Integer.parseInt(jTextField2.getText());
@@ -4778,31 +4751,30 @@ boolean check=jr2.isSelected();
 
         String catT = jcategory.getSelectedItem().toString();
         setSubcat(catT);
-        
-         String t = jkg.getSelectedItem().toString();
 
-       
-txtQuantity.setText("");
-jr1.setSelected(true);
-jTextField2.setText("");
-jTextField5.setText("");
-txtQuantity.setEditable(false);
-txtQuantity.setEnabled(false);
+        String t = jkg.getSelectedItem().toString();
+
+        txtQuantity.setText("");
+        jr1.setSelected(true);
+        jTextField2.setText("");
+        jTextField5.setText("");
+        txtQuantity.setEditable(false);
+        txtQuantity.setEnabled(false);
         //        jkg.removeAllItems();
         //        try {
-            //            String catT = jcategory.getSelectedItem().toString();
-            //            String s = "SELECT * FROM catqua WHERE cat='" + catT + "'";
-            //            pst = conn.prepareStatement(s);
-            //            rs = pst.executeQuery();
-            //
-            //            while (rs.next()) {
-                //                String cat = rs.getString("qua");
-                //                jkg.addItem(cat);
-                //
-                //            }
-            //            jkg.addItem("other");
-            //        } catch (Exception e) {
-            //        }
+        //            String catT = jcategory.getSelectedItem().toString();
+        //            String s = "SELECT * FROM catqua WHERE cat='" + catT + "'";
+        //            pst = conn.prepareStatement(s);
+        //            rs = pst.executeQuery();
+        //
+        //            while (rs.next()) {
+        //                String cat = rs.getString("qua");
+        //                jkg.addItem(cat);
+        //
+        //            }
+        //            jkg.addItem("other");
+        //        } catch (Exception e) {
+        //        }
 
     }//GEN-LAST:event_jButton11ActionPerformed
 
@@ -4831,9 +4803,9 @@ txtQuantity.setEnabled(false);
 
         fetchEmpty();
         jkg.removeAllItems();
-                 jr1.setSelected(true);
-            txtQuantity.setEnabled(false);
-            txtQuantity.setEditable(false);
+        jr1.setSelected(true);
+        txtQuantity.setEnabled(false);
+        txtQuantity.setEditable(false);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -4846,16 +4818,16 @@ txtQuantity.setEnabled(false);
         String status = null;
         String lorryNum = jTextField3.getText();
         String tokg = jTextField5.getText();
-        Date dat=jDateChooser1.getDate();
+        Date dat = jDateChooser1.getDate();
         String toprice = null;
         String nquantiy = jTextField2.getText();
-        String bil_num=jTextField33.getText();
+        String bil_num = jTextField33.getText();
         SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
         String fdate = d.format(jDateChooser1.getDate());
-        if (creditorname.equals("")||lorryNum.equals("")||nquantiy.equals("")||price.equals("")||dat==null||bil_num.equals("")) {
+        if (creditorname.equals("") || lorryNum.equals("") || nquantiy.equals("") || price.equals("") || dat == null || bil_num.equals("")) {
             JOptionPane.showMessageDialog(this, "Please fill the empty fields");
 
-        }else {
+        } else {
             int msg = JOptionPane.showConfirmDialog(this, "Do You Want To Update Price");
 
             if (msg == 0) {
@@ -4881,7 +4853,7 @@ txtQuantity.setEnabled(false);
                     }
 
                     try {
-                        String s = "UPDATE creditor_table SET bill_number='"+bil_num+"',price='" + price + "',total_price='" + toprice + "',status='" + status + "' WHERE creditor_id='" + id + "'";
+                        String s = "UPDATE creditor_table SET bill_number='" + bil_num + "',price='" + price + "',total_price='" + toprice + "',status='" + status + "' WHERE creditor_id='" + id + "'";
                         pst = conn.prepareStatement(s);
                         pst.execute();
 
@@ -4897,58 +4869,50 @@ txtQuantity.setEnabled(false);
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(this, e);
                     }
-                  
+
                     try {
-                   
-                   String getCat="SELECT * FROM product_sales WHERE category_name='"+cat+"'";
-                   pst = conn.prepareStatement(getCat);
-                   rs = pst.executeQuery();
-                   if(rs.next()){
-                   String cn=rs.getString("category_name");
-                   int newTid= rs.getInt("id");
-                        String getKg="SELECT type_of_kg FROM  product_properties WHERE type_of_kg='"+kg+"' AND p_id='"+newTid+"'";
-                        pst = conn.prepareStatement(getKg);
+
+                        String getCat = "SELECT * FROM product_sales WHERE category_name='" + cat + "'";
+                        pst = conn.prepareStatement(getCat);
                         rs = pst.executeQuery();
-                        
-                     
-                            if(rs.next()){
-                                
-                                
-                                        String quaUpdate="UPDATE product_properties SET rest_of_quantity='"+"0"+"',price_per_1kg='"+price+"' WHERE p_id='"+newTid+"' AND type_of_kg='"+kg+"'";
-                                       
-                                        pst =conn.prepareStatement(quaUpdate);
-                                        pst.execute();
-                                        
-                                    }
-                           
-                   }
+                        if (rs.next()) {
+                            String cn = rs.getString("category_name");
+                            int newTid = rs.getInt("id");
+                            String getKg = "SELECT type_of_kg FROM  product_properties WHERE type_of_kg='" + kg + "' AND p_id='" + newTid + "'";
+                            pst = conn.prepareStatement(getKg);
+                            rs = pst.executeQuery();
 
+                            if (rs.next()) {
 
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, e);
-                }
-               
+                                String quaUpdate = "UPDATE product_properties SET rest_of_quantity='" + "0" + "',price_per_1kg='" + price + "' WHERE p_id='" + newTid + "' AND type_of_kg='" + kg + "'";
+
+                                pst = conn.prepareStatement(quaUpdate);
+                                pst.execute();
+
+                            }
+
+                        }
+
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(this, e);
+                    }
+
 //                    try {
 //                        String sw="";
 //                        pst=conn.prepareStatement(sw);
 //                        rs=pst.executeQuery();
 //                    } catch (Exception e) {
 //                    }
-   
-                    
-                    
-                 
-                    
                     fetchData();
-                    fetchProductData(creditorname,fdate);
-                    getCreditorData(creditorname,fdate);
-                String getUser=jLabel20.getText();
-                String move=" Price Updated";
-                String cred="creditor";
-                double tpp=Double.parseDouble(toprice);
-                insertDataStock(cred,cat,kg,nquantiy,tokg,price,tpp,move,fdate,getUser);
-                //setCreditorAriusAmountUpdate(creditorname,fdate);
-                JOptionPane.showMessageDialog(null, "Updated...");
+                    fetchProductData(creditorname, fdate);
+                    getCreditorData(creditorname, fdate);
+                    String getUser = jLabel20.getText();
+                    String move = " Price Updated";
+                    String cred = "creditor";
+                    double tpp = Double.parseDouble(toprice);
+                    insertDataStock(cred, cat, kg, nquantiy, tokg, price, tpp, move, fdate, getUser);
+                    //setCreditorAriusAmountUpdate(creditorname,fdate);
+                    JOptionPane.showMessageDialog(null, "Updated...");
                     txtCreditorName.requestFocus();
                     jTextField2.setText("");
                     jTextField5.setText("");
@@ -4956,7 +4920,7 @@ txtQuantity.setEnabled(false);
                     jkg.removeAllItems();
                     //jcategory.setSelectedIndex(0);
                     txtQuantity.setText("");
-                   
+
                     txtPrice.setText("");
                     jr1.setSelected(true);
                     txtQuantity.setEnabled(false);
@@ -4965,126 +4929,122 @@ txtQuantity.setEnabled(false);
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, e);
                 }
-                 //count total bill amount
-  
-                int rowcount=jTable1.getRowCount();
-                 DefaultTableModel df = (DefaultTableModel)jTable1.getModel();
-                double tot=0.00;
-                String val="";
-                for(int i=0;i<rowcount;i++){
-                    val=(String)df.getValueAt(i, 10);
-                  tot=tot+Double.parseDouble(val);
-                
+                //count total bill amount
+
+                int rowcount = jTable1.getRowCount();
+                DefaultTableModel df = (DefaultTableModel) jTable1.getModel();
+                double tot = 0.00;
+                String val = "";
+                for (int i = 0; i < rowcount; i++) {
+                    val = (String) df.getValueAt(i, 10);
+                    tot = tot + Double.parseDouble(val);
+
                 }
                 jTextField48.setText(String.valueOf(tot));
-                Double tarius=tot+Double.parseDouble(jTextField47.getText());
-                toCreditorArius=tarius;
+                Double tarius = tot + Double.parseDouble(jTextField47.getText());
+                toCreditorArius = tarius;
                 jTextField49.setText(String.valueOf(tarius));
             }
 
         }
 
     }//GEN-LAST:event_jButton5ActionPerformed
-public void deleteSetStatus(String creditorname, String dat){
+    public void deleteSetStatus(String creditorname, String dat) {
 
-    try {
-        String g="SELECT * FROM creditor_details WHERE creditor_name='"+creditorname+"' AND date='"+dat+"'";
-        pst =conn.prepareStatement(g);
-        rs=pst.executeQuery();
-        if(rs.next()){
-       
-        }else{
-            String del="DELETE FROM set_status WHERE name='"+creditorname+"' AND date='"+dat+"'";
-            pst = conn.prepareStatement(del);
-            pst.execute();
-            fetchCreditordat();
+        try {
+            String g = "SELECT * FROM creditor_details WHERE creditor_name='" + creditorname + "' AND date='" + dat + "'";
+            pst = conn.prepareStatement(g);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+
+            } else {
+                String del = "DELETE FROM set_status WHERE name='" + creditorname + "' AND date='" + dat + "'";
+                pst = conn.prepareStatement(del);
+                pst.execute();
+                fetchCreditordat();
+            }
+        } catch (Exception e) {
         }
-    } catch (Exception e) {
-    }
 
-}
+    }
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         String creditorname = txtCreditorName.getText();
         String cat = jcategory.getSelectedItem().toString();
 
         String kg = null;
-        String kg2=jkg.getSelectedItem().toString();
+        String kg2 = jkg.getSelectedItem().toString();
         String price = txtPrice.getText();
         String status = null;
         String lorryNum = jTextField3.getText();
         String tokg = jTextField5.getText();
         String toprice = null;
         String nquantiy = jTextField2.getText();
-      SimpleDateFormat g1 = new SimpleDateFormat("yyyy-MM-dd");
-                String dat = g1.format(jDateChooser1.getDate());
-        if (creditorname.equals("")||lorryNum.equals("")||nquantiy.equals("")||price.equals("")) {
+        SimpleDateFormat g1 = new SimpleDateFormat("yyyy-MM-dd");
+        String dat = g1.format(jDateChooser1.getDate());
+        if (creditorname.equals("") || lorryNum.equals("") || nquantiy.equals("") || price.equals("")) {
             JOptionPane.showMessageDialog(this, "Please fill the empty fields");
 
-        }else{
+        } else {
 
-            int msg =JOptionPane.showConfirmDialog(this, "Do You Want To Delete ?");
-            if(msg ==0){
+            int msg = JOptionPane.showConfirmDialog(this, "Do You Want To Delete ?");
+            if (msg == 0) {
                 try {
                     int id = Integer.parseInt(jLabel11.getText());
-                    String sq = "DELETE FROM creditor_table WHERE creditor_id='"+id+"'";
+                    String sq = "DELETE FROM creditor_table WHERE creditor_id='" + id + "'";
                     pst = conn.prepareStatement(sq);
                     pst.execute();
-                    
-                     
+
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, e);
                 }
-                 try {
-                   
-                   String getCat="SELECT * FROM product_sales WHERE category_name='"+cat+"'";
-                   pst = conn.prepareStatement(getCat);
-                   rs = pst.executeQuery();
-                   if(rs.next()){
-                   String cn=rs.getString("category_name");
-                   int newTid= rs.getInt("id");
-                        String getKg="SELECT type_of_kg FROM product_properties WHERE type_of_kg='"+kg2+"' AND p_id='"+newTid+"'";
+                try {
+
+                    String getCat = "SELECT * FROM product_sales WHERE category_name='" + cat + "'";
+                    pst = conn.prepareStatement(getCat);
+                    rs = pst.executeQuery();
+                    if (rs.next()) {
+                        String cn = rs.getString("category_name");
+                        int newTid = rs.getInt("id");
+                        String getKg = "SELECT type_of_kg FROM product_properties WHERE type_of_kg='" + kg2 + "' AND p_id='" + newTid + "'";
                         pst = conn.prepareStatement(getKg);
                         rs = pst.executeQuery();
-                        
-                     
-                            if(rs.next()){
-                              
-                                
-                                        String quaUpdate="UPDATE product_properties SET quantity=quantity-'"+jTextField2.getText()+"',total_quantity=total_quantity-'"+jTextField5.getText()+"' WHERE p_id='"+newTid+"' AND type_of_kg='"+kg2+"'";
-                                       
-                                        pst =conn.prepareStatement(quaUpdate);
-                                        pst.execute();
-                                        
-                                    }
-                           
-                   }
 
+                        if (rs.next()) {
+
+                            String quaUpdate = "UPDATE product_properties SET quantity=quantity-'" + jTextField2.getText() + "',total_quantity=total_quantity-'" + jTextField5.getText() + "' WHERE p_id='" + newTid + "' AND type_of_kg='" + kg2 + "'";
+
+                            pst = conn.prepareStatement(quaUpdate);
+                            pst.execute();
+
+                        }
+
+                    }
 
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, e);
                 }
-                 deleteSetStatus(creditorname,dat);
-                    fetchData();
-                    fetchProductData(creditorname,dat);
-                    String getUser=jLabel20.getText();
-                String move=" Deleted";
-                String cred="creditorname";
-               double tpp=Double.parseDouble(jTextField4.getText());
-                insertDataStock(cred,cat,kg2,nquantiy,tokg,price,tpp,move,cdate,getUser);
-                    JOptionPane.showMessageDialog(this, "Deleted..");
+                deleteSetStatus(creditorname, dat);
+                fetchData();
+                fetchProductData(creditorname, dat);
+                String getUser = jLabel20.getText();
+                String move = " Deleted";
+                String cred = "creditorname";
+                double tpp = Double.parseDouble(jTextField4.getText());
+                insertDataStock(cred, cat, kg2, nquantiy, tokg, price, tpp, move, cdate, getUser);
+                JOptionPane.showMessageDialog(this, "Deleted..");
 
-                    txtCreditorName.requestFocus();
-                    txtCreditorName.setText("");
-                   jTextField2.setText("");
-                    jTextField5.setText("");
-                    jTextField4.setText("");
-                    jkg.removeAllItems();
-                    jcategory.setSelectedIndex(0);
-                    txtQuantity.setText("");
-                    jTextField3.setText("");
-                    jDateChooser1.setDate(null);
-                    txtPrice.setText("");
-                    jLabel11.setText("");
+                txtCreditorName.requestFocus();
+                txtCreditorName.setText("");
+                jTextField2.setText("");
+                jTextField5.setText("");
+                jTextField4.setText("");
+                jkg.removeAllItems();
+                jcategory.setSelectedIndex(0);
+                txtQuantity.setText("");
+                jTextField3.setText("");
+                jDateChooser1.setDate(null);
+                txtPrice.setText("");
+                jLabel11.setText("");
             }
 
         }
@@ -5097,182 +5057,171 @@ public void deleteSetStatus(String creditorname, String dat){
         String tokg = jTextField5.getText();
         String toprice = null;
         String nquantiy = jTextField2.getText();
-        Date dat2=jDateChooser1.getDate();
+        Date dat2 = jDateChooser1.getDate();
         String p = txtPrice.getText();
-        String b =jLabel11.getText();
-        boolean check=jr2.isSelected();
-        String testQuq=txtQuantity.getText();
-        String bil_num="";
-       
-         String category = jcategory.getSelectedItem().toString();
+        String b = jLabel11.getText();
+        boolean check = jr2.isSelected();
+        String testQuq = txtQuantity.getText();
+        String bil_num = "";
 
-                String price = null;
-                String kg = null;
-                String status = null;
+        String category = jcategory.getSelectedItem().toString();
 
-                
-                //get price
-                if (p.equals("")) {
-                    price = "0.00";
-                    toprice = "0.00";
-                    status = "pending";
-                    bil_num="null";
-                } else {
-                    price = txtPrice.getText();
-                    toprice = jTextField4.getText();
-                    bil_num=jTextField33.getText();
-                    status = "completed";
-                }
+        String price = null;
+        String kg = null;
+        String status = null;
 
-                //get quantity
-                boolean yes = txtQuantity.isEnabled();
-                if (yes == true) {
-                    kg = txtQuantity.getText();
-                } else {
-                    kg = jkg.getSelectedItem().toString();
-                }
+        //get price
+        if (p.equals("")) {
+            price = "0.00";
+            toprice = "0.00";
+            status = "pending";
+            bil_num = "null";
+        } else {
+            price = txtPrice.getText();
+            toprice = jTextField4.getText();
+            bil_num = jTextField33.getText();
+            status = "completed";
+        }
 
-                int categoryindex = jcategory.getSelectedIndex();
-                int qtyindex = jcategory.getSelectedIndex();
-                SimpleDateFormat g = new SimpleDateFormat("yyyy-MM-dd");
-                    String date = g.format(jDateChooser1.getDate());
-                String getBIll=jTextField33.getText();
-        if (dat2==null||creditorName.equals("")||lorryNum.equals("")||nquantiy.equals("")) {
+        //get quantity
+        boolean yes = txtQuantity.isEnabled();
+        if (yes == true) {
+            kg = txtQuantity.getText();
+        } else {
+            kg = jkg.getSelectedItem().toString();
+        }
+
+        int categoryindex = jcategory.getSelectedIndex();
+        int qtyindex = jcategory.getSelectedIndex();
+        SimpleDateFormat g = new SimpleDateFormat("yyyy-MM-dd");
+        String date = g.format(jDateChooser1.getDate());
+        String getBIll = jTextField33.getText();
+        if (dat2 == null || creditorName.equals("") || lorryNum.equals("") || nquantiy.equals("")) {
             JOptionPane.showMessageDialog(this, "Please fill the empty fields");
 
-        }else if(!b.equals("")){
-            JOptionPane.showMessageDialog(this, "Can not add same data again and again. If you want to add a new data then press"+"'CANCEL'"+"button to RESET fields.");
-        }else if (check==true) {
-            if(testQuq.equals("")){
-                        JOptionPane.showMessageDialog(this, "Please fill the empty fields");
-                    }else{
-            int msg = JOptionPane.showConfirmDialog(this, "Do you want to add this product ?");
+        } else if (!b.equals("")) {
+            JOptionPane.showMessageDialog(this, "Can not add same data again and again. If you want to add a new data then press" + "'CANCEL'" + "button to RESET fields.");
+        } else if (check == true) {
+            if (testQuq.equals("")) {
+                JOptionPane.showMessageDialog(this, "Please fill the empty fields");
+            } else {
+                int msg = JOptionPane.showConfirmDialog(this, "Do you want to add this product ?");
 
-            if (msg == 0) {
+                if (msg == 0) {
 
-               
-               try {
-                    
+                    try {
 
-                    String s = "INSERT INTO creditor_table(creditor_name,lorry_number,category,kg,quantiy,total_kg,date,bill_number,price,total_price,status)VALUES('" + creditorName + "','" + lorryNum + "','" + category + "','" + kg + "','" + nquantiy + "','" + tokg + "','" + date + "','"+bil_num+"'," + price + "','" + toprice + "','" + status + "')";
+                        String s = "INSERT INTO creditor_table(creditor_name,lorry_number,category,kg,quantiy,total_kg,date,bill_number,price,total_price,status)VALUES('" + creditorName + "','" + lorryNum + "','" + category + "','" + kg + "','" + nquantiy + "','" + tokg + "','" + date + "','" + bil_num + "'," + price + "','" + toprice + "','" + status + "')";
 
-                    pst = conn.prepareStatement(s,Statement.RETURN_GENERATED_KEYS);
-                    pst.execute();
+                        pst = conn.prepareStatement(s, Statement.RETURN_GENERATED_KEYS);
+                        pst.execute();
 
-                    int id1;
+                        int id1;
 
-                    try (ResultSet generatedKeys = pst.getGeneratedKeys()) {
-                        if (generatedKeys.next()) {
-                            id1 = generatedKeys.getInt(1);
-                            String sq = "INSERT INTO creditor_details(creditor_name,lorry_number,date,status,id)VALUES('" + creditorName + "','" + lorryNum + "','" + date + "','" + status + "','" +id1+ "')";
+                        try ( ResultSet generatedKeys = pst.getGeneratedKeys()) {
+                            if (generatedKeys.next()) {
+                                id1 = generatedKeys.getInt(1);
+                                String sq = "INSERT INTO creditor_details(creditor_name,lorry_number,date,status,id)VALUES('" + creditorName + "','" + lorryNum + "','" + date + "','" + status + "','" + id1 + "')";
 
-                            pst = conn.prepareStatement(sq);
-                            pst.execute();
+                                pst = conn.prepareStatement(sq);
+                                pst.execute();
+                            }
                         }
+
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(this, e);
+
                     }
 
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, e);
+                    try {
 
-                }
-                
-               try {
-                   
-                   String getCat="SELECT * FROM product_sales WHERE category_name='"+category+"'";
-                   pst = conn.prepareStatement(getCat);
-                   rs = pst.executeQuery();
-                   if(rs.next()){
-                   String cn=rs.getString("category_name");
-                   int newTid= rs.getInt("id");
-                        String getKg="SELECT type_of_kg FROM  product_properties WHERE type_of_kg='"+kg+"' AND p_id='"+newTid+"'";
-                        pst = conn.prepareStatement(getKg);
+                        String getCat = "SELECT * FROM product_sales WHERE category_name='" + category + "'";
+                        pst = conn.prepareStatement(getCat);
                         rs = pst.executeQuery();
-                        
-                     
-                            if(rs.next()){
-                                
-                                
-                                        String quaUpdate="UPDATE product_properties SET quantity=quantity+'"+nquantiy+"',rest_of_quantity='"+"0"+"',total_quantity=total_quantity+'"+tokg+"',price_per_1kg='"+price+"' WHERE p_id='"+newTid+"' AND type_of_kg='"+kg+"'";
-                                       
-                                        pst =conn.prepareStatement(quaUpdate);
-                                        pst.execute();
-                                        
-                                    }else{
-                                    
-                                        String sr = "INSERT INTO product_properties(type_of_kg,quantity,rest_of_quantity,total_quantity,price_per_1kg,p_id)VALUES('" + kg + "','" + nquantiy + "','" + "0"+ "','" + tokg + "','"+price+"','" +newTid+ "')";
-                                        pst = conn.prepareStatement(sr);
-                                        pst.execute();
-                                    }
-                            
-                            
-                  
-                   }else{
-                       
-                             String sq = "INSERT INTO product_sales(category_name)VALUES('" + category + "')";
-                             pst = conn.prepareStatement(sq,Statement.RETURN_GENERATED_KEYS);
-                             pst.execute();
-                            
-                            int id2;
-                              try (ResultSet generatedKeys = pst.getGeneratedKeys()) {
-                                 if (generatedKeys.next()) {
-                                id2 = generatedKeys.getInt(1);
-                                int norest=0;
-                                String sr = "INSERT INTO product_properties(type_of_kg,quantity,rest_of_quantity,total_quantity,price_per_1kg,p_id)VALUES('" + kg + "','" + nquantiy + "','" + norest + "','" + tokg + "','"+price+"','" +id2+ "')";
+                        if (rs.next()) {
+                            String cn = rs.getString("category_name");
+                            int newTid = rs.getInt("id");
+                            String getKg = "SELECT type_of_kg FROM  product_properties WHERE type_of_kg='" + kg + "' AND p_id='" + newTid + "'";
+                            pst = conn.prepareStatement(getKg);
+                            rs = pst.executeQuery();
 
+                            if (rs.next()) {
+
+                                String quaUpdate = "UPDATE product_properties SET quantity=quantity+'" + nquantiy + "',rest_of_quantity='" + "0" + "',total_quantity=total_quantity+'" + tokg + "',price_per_1kg='" + price + "' WHERE p_id='" + newTid + "' AND type_of_kg='" + kg + "'";
+
+                                pst = conn.prepareStatement(quaUpdate);
+                                pst.execute();
+
+                            } else {
+
+                                String sr = "INSERT INTO product_properties(type_of_kg,quantity,rest_of_quantity,total_quantity,price_per_1kg,p_id)VALUES('" + kg + "','" + nquantiy + "','" + "0" + "','" + tokg + "','" + price + "','" + newTid + "')";
                                 pst = conn.prepareStatement(sr);
                                 pst.execute();
+                            }
+
+                        } else {
+
+                            String sq = "INSERT INTO product_sales(category_name)VALUES('" + category + "')";
+                            pst = conn.prepareStatement(sq, Statement.RETURN_GENERATED_KEYS);
+                            pst.execute();
+
+                            int id2;
+                            try ( ResultSet generatedKeys = pst.getGeneratedKeys()) {
+                                if (generatedKeys.next()) {
+                                    id2 = generatedKeys.getInt(1);
+                                    int norest = 0;
+                                    String sr = "INSERT INTO product_properties(type_of_kg,quantity,rest_of_quantity,total_quantity,price_per_1kg,p_id)VALUES('" + kg + "','" + nquantiy + "','" + norest + "','" + tokg + "','" + price + "','" + id2 + "')";
+
+                                    pst = conn.prepareStatement(sr);
+                                    pst.execute();
+                                }
+                            }
+
                         }
+
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(this, e);
                     }
-                   
-                  }
+                    getCreditorData(creditorName, date);
 
+                    fetchProductData(creditorName, date);
 
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, e);
+                    String getUser = jLabel20.getText();
+                    String move = "IN";
+                    String cred = "creditor";
+                    double tpp = Double.parseDouble(toprice);
+                    insertDataStock(cred, category, kg, nquantiy, tokg, price, tpp, move, cdate, getUser);
+                    JOptionPane.showMessageDialog(this, "Product added");
+                    txtCreditorName.requestFocus();
+                    jTextField2.setText("");
+                    jTextField5.setText("");
+                    jTextField4.setText("");
+                    jkg.removeAllItems();
+                    //jcategory.setSelectedIndex(0);
+                    txtQuantity.setText("");
+                    txtPrice.setText("");
+
                 }
-                getCreditorData(creditorName,date);
-               
-                fetchProductData(creditorName,date);
-                
-                
-                String getUser=jLabel20.getText();
-                String move="IN";
-                String cred="creditor";
-                double tpp=Double.parseDouble(toprice);
-                insertDataStock(cred,category,kg,nquantiy,tokg,price,tpp,move,cdate,getUser);
-                JOptionPane.showMessageDialog(this, "Product added");
-                txtCreditorName.requestFocus();
-                jTextField2.setText("");
-                jTextField5.setText("");
-                jTextField4.setText("");
-                jkg.removeAllItems();
-                //jcategory.setSelectedIndex(0);
-                txtQuantity.setText("");
-                txtPrice.setText("");
-
             }
-            }
-        }else {
+        } else {
 
             int msg = JOptionPane.showConfirmDialog(this, "Do you want to add this product ?");
 
             if (msg == 0) {
 
-               
-               try {
-                    
+                try {
 
                     String s = "INSERT INTO creditor_table(creditor_name,lorry_number,category,kg,quantiy,total_kg,date,price,total_price,status)VALUES('" + creditorName + "','" + lorryNum + "','" + category + "','" + kg + "','" + nquantiy + "','" + tokg + "','" + date + "','" + price + "','" + toprice + "','" + status + "')";
 
-                    pst = conn.prepareStatement(s,Statement.RETURN_GENERATED_KEYS);
+                    pst = conn.prepareStatement(s, Statement.RETURN_GENERATED_KEYS);
                     pst.execute();
 
                     int id1;
 
-                    try (ResultSet generatedKeys = pst.getGeneratedKeys()) {
+                    try ( ResultSet generatedKeys = pst.getGeneratedKeys()) {
                         if (generatedKeys.next()) {
                             id1 = generatedKeys.getInt(1);
-                            String sq = "INSERT INTO creditor_details(creditor_name,lorry_number,date,status,id)VALUES('" + creditorName + "','" + lorryNum + "','" + date + "','" + status + "','" +id1+ "')";
+                            String sq = "INSERT INTO creditor_details(creditor_name,lorry_number,date,status,id)VALUES('" + creditorName + "','" + lorryNum + "','" + date + "','" + status + "','" + id1 + "')";
 
                             pst = conn.prepareStatement(sq);
                             pst.execute();
@@ -5283,69 +5232,64 @@ public void deleteSetStatus(String creditorname, String dat){
                     JOptionPane.showMessageDialog(this, e);
 
                 }
-                
-               try {
-                   
-                   String getCat="SELECT * FROM product_sales WHERE category_name='"+category+"'";
-                   pst = conn.prepareStatement(getCat);
-                   rs = pst.executeQuery();
-                   if(rs.next()){
-                   String cn=rs.getString("category_name");
-                   int newTid= rs.getInt("id");
-                        String getKg="SELECT type_of_kg FROM  product_properties WHERE type_of_kg='"+kg+"' AND p_id='"+newTid+"'";
+
+                try {
+
+                    String getCat = "SELECT * FROM product_sales WHERE category_name='" + category + "'";
+                    pst = conn.prepareStatement(getCat);
+                    rs = pst.executeQuery();
+                    if (rs.next()) {
+                        String cn = rs.getString("category_name");
+                        int newTid = rs.getInt("id");
+                        String getKg = "SELECT type_of_kg FROM  product_properties WHERE type_of_kg='" + kg + "' AND p_id='" + newTid + "'";
                         pst = conn.prepareStatement(getKg);
                         rs = pst.executeQuery();
-                        
-                     
-                            if(rs.next()){
-                                
-                                
-                                        String quaUpdate="UPDATE product_properties SET quantity=quantity+'"+nquantiy+"',rest_of_quantity='"+"0"+"',total_quantity=total_quantity+'"+tokg+"',price_per_1kg='"+price+"' WHERE p_id='"+newTid+"' AND type_of_kg='"+kg+"'";
-                                       
-                                        pst =conn.prepareStatement(quaUpdate);
-                                        pst.execute();
-                                        
-                                    }else{
-                                    
-                                        String sr = "INSERT INTO product_properties(type_of_kg,quantity,rest_of_quantity,total_quantity,price_per_1kg,p_id)VALUES('" + kg + "','" + nquantiy + "','" + "0"+ "','" + tokg + "','"+price+"','" +newTid+ "')";
-                                        pst = conn.prepareStatement(sr);
-                                        pst.execute();
-                                    }
-                            
-                            
-                  
-                   }else{
-                       
-                             String sq = "INSERT INTO product_sales(category_name)VALUES('" + category + "')";
-                             pst = conn.prepareStatement(sq,Statement.RETURN_GENERATED_KEYS);
-                             pst.execute();
-                            
-                            int id2;
-                              try (ResultSet generatedKeys = pst.getGeneratedKeys()) {
-                                 if (generatedKeys.next()) {
+
+                        if (rs.next()) {
+
+                            String quaUpdate = "UPDATE product_properties SET quantity=quantity+'" + nquantiy + "',rest_of_quantity='" + "0" + "',total_quantity=total_quantity+'" + tokg + "',price_per_1kg='" + price + "' WHERE p_id='" + newTid + "' AND type_of_kg='" + kg + "'";
+
+                            pst = conn.prepareStatement(quaUpdate);
+                            pst.execute();
+
+                        } else {
+
+                            String sr = "INSERT INTO product_properties(type_of_kg,quantity,rest_of_quantity,total_quantity,price_per_1kg,p_id)VALUES('" + kg + "','" + nquantiy + "','" + "0" + "','" + tokg + "','" + price + "','" + newTid + "')";
+                            pst = conn.prepareStatement(sr);
+                            pst.execute();
+                        }
+
+                    } else {
+
+                        String sq = "INSERT INTO product_sales(category_name)VALUES('" + category + "')";
+                        pst = conn.prepareStatement(sq, Statement.RETURN_GENERATED_KEYS);
+                        pst.execute();
+
+                        int id2;
+                        try ( ResultSet generatedKeys = pst.getGeneratedKeys()) {
+                            if (generatedKeys.next()) {
                                 id2 = generatedKeys.getInt(1);
-                                int norest=0;
-                                String sr = "INSERT INTO product_properties(type_of_kg,quantity,rest_of_quantity,total_quantity,price_per_1kg,p_id)VALUES('" + kg + "','" + nquantiy + "','" + norest + "','" + tokg + "','"+price+"','" +id2+ "')";
+                                int norest = 0;
+                                String sr = "INSERT INTO product_properties(type_of_kg,quantity,rest_of_quantity,total_quantity,price_per_1kg,p_id)VALUES('" + kg + "','" + nquantiy + "','" + norest + "','" + tokg + "','" + price + "','" + id2 + "')";
 
                                 pst = conn.prepareStatement(sr);
                                 pst.execute();
+                            }
                         }
-                    }
-                   
-                  }
 
+                    }
 
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, e);
                 }
-                getCreditorData(creditorName,date);
-                fetchProductData(creditorName,date);
-                
-                String getUser=jLabel20.getText();
-                String move="IN";
-                String cred="creditor";
-               double tpp=Double.parseDouble(toprice);
-                insertDataStock(cred,category,kg,nquantiy,tokg,price,tpp,move,cdate,getUser);
+                getCreditorData(creditorName, date);
+                fetchProductData(creditorName, date);
+
+                String getUser = jLabel20.getText();
+                String move = "IN";
+                String cred = "creditor";
+                double tpp = Double.parseDouble(toprice);
+                insertDataStock(cred, category, kg, nquantiy, tokg, price, tpp, move, cdate, getUser);
                 JOptionPane.showMessageDialog(this, "Product added");
                 txtCreditorName.requestFocus();
                 jTextField2.setText("");
@@ -5366,12 +5310,12 @@ public void deleteSetStatus(String creditorname, String dat){
         if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
             jTextField4.setText("");
         }
-try {
-             int h=Integer.parseInt(txtPrice.getText());
-            
+        try {
+            int h = Integer.parseInt(txtPrice.getText());
+
         } catch (NumberFormatException e) {
-             
-             txtPrice.setText("");
+
+            txtPrice.setText("");
         }
         int ta = Integer.parseInt(jTextField5.getText());
         int per = Integer.parseInt(txtPrice.getText());
@@ -5385,11 +5329,11 @@ try {
     }//GEN-LAST:event_txtPriceActionPerformed
 
     private void jkgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jkgActionPerformed
-       
+
     }//GEN-LAST:event_jkgActionPerformed
 
     private void jcategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcategoryActionPerformed
- 
+
     }//GEN-LAST:event_jcategoryActionPerformed
 
     private void jcategoryMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcategoryMouseReleased
@@ -5412,224 +5356,227 @@ try {
 
     private void jr2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jr2ActionPerformed
         // TODO add your handling code here:
-      setRaadiobutEnable();
+        setRaadiobutEnable();
     }//GEN-LAST:event_jr2ActionPerformed
-public void setRaadiobutEnable(){
+    public void setRaadiobutEnable() {
 
-    boolean jr =jr1.isSelected();
-    boolean j2=jr2.isSelected();
-   
-    if(jr ==true){
-     txtQuantity.setEnabled(false);
-        txtQuantity.setEditable(false);
-        txtQuantity.setText("");
-        jTextField2.setText("");
-                jTextField5.setText("");
-    }else{
-    txtQuantity.setEnabled(true);
-        txtQuantity.setEditable(true);
-        jTextField2.setText("");
-                jTextField5.setText("");
+        boolean jr = jr1.isSelected();
+        boolean j2 = jr2.isSelected();
+
+        if (jr == true) {
+            txtQuantity.setEnabled(false);
+            txtQuantity.setEditable(false);
+            txtQuantity.setText("");
+            jTextField2.setText("");
+            jTextField5.setText("");
+        } else {
+            txtQuantity.setEnabled(true);
+            txtQuantity.setEditable(true);
+            jTextField2.setText("");
+            jTextField5.setText("");
+        }
     }
-}
     private void jr1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jr1ActionPerformed
         setRaadiobutEnable();
     }//GEN-LAST:event_jr1ActionPerformed
-public void getProductDataTosalesTAble(){
+    public void getProductDataTosalesTAble() {
 
-    int row=jTable3.getSelectedRow();
-    String category =jTable3.getValueAt(row, 1).toString();
-    
-    jTextField11.setText(category);
+        int row = jTable3.getSelectedRow();
+        String category = jTable3.getValueAt(row, 1).toString();
 
+        jTextField11.setText(category);
 
-
-}
+    }
 /// get total quantity
-public void getTotalQuantity2(){
-DefaultTableModel df =(DefaultTableModel)jTable10.getModel();
-int row=jTable10.getRowCount();
-int gettotal=0;
-for(int i=0;i<row;i++){
 
-    gettotal=gettotal+(int)df.getValueAt(i, 3);
-}
- 
-  jLabel42.setText(String.valueOf(gettotal));
-    
+    public void getTotalQuantity2() {
+        DefaultTableModel df = (DefaultTableModel) jTable10.getModel();
+        int row = jTable10.getRowCount();
+        int gettotal = 0;
+        for (int i = 0; i < row; i++) {
 
-}
-public void getTotalQuantity(){
-DefaultTableModel df =(DefaultTableModel)jTable4.getModel();
-int row=jTable4.getRowCount();
-int gettotal=0;
-for(int i=0;i<row;i++){
+            gettotal = gettotal + (int) df.getValueAt(i, 3);
+        }
 
-    gettotal=gettotal+(int)df.getValueAt(i, 3);
-}
- 
-  //jLabel3.setText(String.valueOf(gettotal));
-    
+        jLabel42.setText(String.valueOf(gettotal));
 
-}
+    }
+
+    public void getTotalQuantity() {
+        DefaultTableModel df = (DefaultTableModel) jTable4.getModel();
+        int row = jTable4.getRowCount();
+        int gettotal = 0;
+        for (int i = 0; i < row; i++) {
+
+            gettotal = gettotal + (int) df.getValueAt(i, 3);
+        }
+
+        //jLabel3.setText(String.valueOf(gettotal));
+    }
     private void jTable3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable3MouseClicked
-     
+
         getKiloPackets();
-       getTotalQuantity();
-       getProductDataTosalesTAble();
+        getTotalQuantity();
+        getProductDataTosalesTAble();
     }//GEN-LAST:event_jTable3MouseClicked
-public void getProductPropeties(){
+    public void getProductPropeties() {
 
-    int row=jTable4.getSelectedRow();
-    
-    String kg=jTable4.getValueAt(row, 0).toString();
-     String p=jTable4.getValueAt(row, 4).toString();
-    jTextField12.setText(kg);
-   // jTextField15.setText(p);
+        int row = jTable4.getSelectedRow();
 
-}
+        String kg = jTable4.getValueAt(row, 0).toString();
+        String p = jTable4.getValueAt(row, 4).toString();
+        jTextField12.setText(kg);
+        // jTextField15.setText(p);
+
+    }
     private void jTable4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable4MouseClicked
-       getProductPropeties();
- 
+        getProductPropeties();
+
 //            
 //            jTable7.getColumnModel().getColumn(7).setMinWidth(0);
 //        jTable7.getColumnModel().getColumn(7).setMaxWidth(0);
     }//GEN-LAST:event_jTable4MouseClicked
 //changing sellers
-    
-    public void selectSellers(){
-    
-        boolean detorq =jRadioButton1.isSelected();
-        boolean deliver =jRadioButton2.isSelected();
-         boolean customer =jRadioButton3.isSelected();
-         boolean shop =jRadioButton4.isSelected();
-    
-    if(detorq == true){
-        jTextField9.setEnabled(true);
-        jTextField9.setEditable(true);
-        jTextField9.setText("");
-        jTextField11.setText("Salt");
-        jTextField7.setEnabled(true);
-        jTextField7.setEditable(true);
-        jTextField8.setEnabled(true);
-        jTextField8.setEditable(true);
-        jTextField45.setVisible(false);
-       jComboBox2.setVisible(false); jLabel82.setVisible(false);
-        
-        try {
-            String select="SELECT * FROM detor ORDER BY id DESC";
-            pst =conn.prepareStatement(select);
-            rs=pst.executeQuery();
-            jTable7.setModel(DbUtils.resultSetToTableModel(rs));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
-        }
-    
-    }else if(deliver){
-     jTextField7.setEnabled(true);
-        jTextField7.setEditable(true);
-        jTextField8.setEnabled(true);
-        jTextField8.setEditable(true);
-        jTextField11.setText("");
-     jTextField9.setEnabled(true);
-        jTextField9.setEditable(true);
-        
-        jTextField45.setVisible(true);
-       jComboBox2.setVisible(true); jLabel82.setVisible(true);
-        try {
-            String select="SELECT * FROM deliver ORDER BY id DESC";
-            pst =conn.prepareStatement(select);
-            rs=pst.executeQuery();
-            jTable7.setModel(DbUtils.resultSetToTableModel(rs));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
-        }
-    }else if(customer){
-        jTextField9.setEnabled(false);
-        jTextField9.setEditable(false);
-        jTextField9.setText("");
-        jTextField11.setText("");
-        jTextField7.setEnabled(true);
-        jTextField7.setEditable(true);
-        jTextField8.setEnabled(true);
-        jTextField8.setEditable(true);jTextField45.setVisible(false);
-       jComboBox2.setVisible(false); jLabel82.setVisible(false);
-        try {
-            String select="SELECT * FROM customer ORDER BY id DESC";
-            pst =conn.prepareStatement(select);
-            rs=pst.executeQuery();
-            jTable7.setModel(DbUtils.resultSetToTableModel(rs));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
-        }
-    }else if(shop==true){
-    
-        jTextField9.setEnabled(false);
-        jTextField9.setEditable(false);
-        jTextField7.setEnabled(false);
-        jTextField7.setEditable(false);
-        jTextField8.setEnabled(false);
-        jTextField8.setEditable(false);
-        jTextField9.setText("");
-        jTextField8.setText("");
-        jTextField7.setText("");jTextField11.setText("");jTextField45.setVisible(false);
-       jComboBox2.setVisible(false);
-       jLabel82.setVisible(false);
-      
-       try {
-            String sele="SELECT * FROM shop ORDER BY id DESC";
-            pst =conn.prepareStatement(sele);
-            rs=pst.executeQuery();
-            jTable7.setModel(DbUtils.resultSetToTableModel(rs));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+
+    public void selectSellers() {
+
+        boolean detorq = jRadioButton1.isSelected();
+        boolean deliver = jRadioButton2.isSelected();
+        boolean customer = jRadioButton3.isSelected();
+        boolean shop = jRadioButton4.isSelected();
+
+        if (detorq == true) {
+            jTextField9.setEnabled(true);
+            jTextField9.setEditable(true);
+            jTextField9.setText("");
+            jTextField11.setText("Salt");
+            jTextField7.setEnabled(true);
+            jTextField7.setEditable(true);
+            jTextField8.setEnabled(true);
+            jTextField8.setEditable(true);
+            jTextField45.setVisible(false);
+            jComboBox2.setVisible(false);
+            jLabel82.setVisible(false);
+
+            try {
+                String select = "SELECT * FROM detor ORDER BY id DESC";
+                pst = conn.prepareStatement(select);
+                rs = pst.executeQuery();
+                jTable7.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e);
+            }
+
+        } else if (deliver) {
+            jTextField7.setEnabled(true);
+            jTextField7.setEditable(true);
+            jTextField8.setEnabled(true);
+            jTextField8.setEditable(true);
+            jTextField11.setText("");
+            jTextField9.setEnabled(true);
+            jTextField9.setEditable(true);
+
+            jTextField45.setVisible(true);
+            jComboBox2.setVisible(true);
+            jLabel82.setVisible(true);
+            try {
+                String select = "SELECT * FROM deliver ORDER BY id DESC";
+                pst = conn.prepareStatement(select);
+                rs = pst.executeQuery();
+                jTable7.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e);
+            }
+        } else if (customer) {
+            jTextField9.setEnabled(false);
+            jTextField9.setEditable(false);
+            jTextField9.setText("");
+            jTextField11.setText("");
+            jTextField7.setEnabled(true);
+            jTextField7.setEditable(true);
+            jTextField8.setEnabled(true);
+            jTextField8.setEditable(true);
+            jTextField45.setVisible(false);
+            jComboBox2.setVisible(false);
+            jLabel82.setVisible(false);
+            try {
+                String select = "SELECT * FROM customer ORDER BY id DESC";
+                pst = conn.prepareStatement(select);
+                rs = pst.executeQuery();
+                jTable7.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e);
+            }
+        } else if (shop == true) {
+
+            jTextField9.setEnabled(false);
+            jTextField9.setEditable(false);
+            jTextField7.setEnabled(false);
+            jTextField7.setEditable(false);
+            jTextField8.setEnabled(false);
+            jTextField8.setEditable(false);
+            jTextField9.setText("");
+            jTextField8.setText("");
+            jTextField7.setText("");
+            jTextField11.setText("");
+            jTextField45.setVisible(false);
+            jComboBox2.setVisible(false);
+            jLabel82.setVisible(false);
+
+            try {
+                String sele = "SELECT * FROM shop ORDER BY id DESC";
+                pst = conn.prepareStatement(sele);
+                rs = pst.executeQuery();
+                jTable7.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e);
+            }
+
         }
 
-    }
-    
     }
     private void jTextField13KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField13KeyReleased
-        
-        if(evt.getKeyCode()==KeyEvent.VK_BACK_SPACE){
-        jTextField14.setText("");
-        jTextField16.setText("");
+
+        if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+            jTextField14.setText("");
+            jTextField16.setText("");
         }
 
- try {
-             int h=Integer.parseInt(jTextField13.getText());
-            
+        try {
+            int h = Integer.parseInt(jTextField13.getText());
+
         } catch (NumberFormatException e) {
-             
-             jTextField13.setText("");
+
+            jTextField13.setText("");
         }
-            boolean addUse=jCheckBox1.isSelected();
-            boolean getUse=jCheckBox2.isSelected();
-             if(addUse==false && getUse==false){
-                  int kg=Integer.parseInt(jTextField12.getText());
-                        int qua=Integer.parseInt(jTextField13.getText());
+        boolean addUse = jCheckBox1.isSelected();
+        boolean getUse = jCheckBox2.isSelected();
+        if (addUse == false && getUse == false) {
+            int kg = Integer.parseInt(jTextField12.getText());
+            int qua = Integer.parseInt(jTextField13.getText());
 
-                     int total=0;
-                     total=(kg*qua);
+            int total = 0;
+            total = (kg * qua);
 
-                     jTextField14.setText(String.valueOf(total));
+            jTextField14.setText(String.valueOf(total));
 
-                     int tkg=Integer.parseInt(jTextField14.getText());
-                     int p=Integer.parseInt(jTextField15.getText());
+            int tkg = Integer.parseInt(jTextField14.getText());
+            int p = Integer.parseInt(jTextField15.getText());
 
-                     int top=(tkg * p);
-                     jTextField16.setText(String.valueOf(top));
-             
-             }else{
-                int qua=Integer.parseInt(jTextField13.getText());
-                jTextField14.setText(String.valueOf(qua));
-                
-                     int tkg=Integer.parseInt(jTextField14.getText());
-                     int p=Integer.parseInt(jTextField15.getText());
+            int top = (tkg * p);
+            jTextField16.setText(String.valueOf(top));
 
-                     int top=(tkg * p);
-                     jTextField16.setText(String.valueOf(top));
-                
-             }
+        } else {
+            int qua = Integer.parseInt(jTextField13.getText());
+            jTextField14.setText(String.valueOf(qua));
+
+            int tkg = Integer.parseInt(jTextField14.getText());
+            int p = Integer.parseInt(jTextField15.getText());
+
+            int top = (tkg * p);
+            jTextField16.setText(String.valueOf(top));
+
+        }
 //       if(getUse==false){
 //                  int kg=Integer.parseInt(jTextField12.getText());
 //                        int qua=Integer.parseInt(jTextField13.getText());
@@ -5659,227 +5606,235 @@ public void getProductPropeties(){
     }//GEN-LAST:event_jTextField13KeyReleased
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-       
-        boolean n=jButton46.isEnabled();
-        if(n==false){
+
+        boolean n = jButton46.isEnabled();
+        if (n == false) {
             JOptionPane.showMessageDialog(this, "cannot performe this task while in bill view");
-             jButton46.setEnabled(true);
-             jButton43.setEnabled(false);
+            jButton46.setEnabled(true);
+            jButton43.setEnabled(false);
             jRadioButton1.setSelected(true);
             jButton47.setVisible(true);
-             jButton39.setVisible(false);
-              jTextField45.setVisible(false);
-              jTextField11.setText("Salt");
-             jTable3.setEnabled(false);
-       jComboBox2.setVisible(false); jLabel82.setVisible(false);
+            jButton39.setVisible(false);
+            jTextField45.setVisible(false);
+            jTextField11.setText("Salt");
+            jTable3.setEnabled(false);
+            jComboBox2.setVisible(false);
+            jLabel82.setVisible(false);
             try {
-                String sql="SELECT DISTINCT name as Names_of_customers FROM detor";
-                pst =conn.prepareStatement(sql);
-                rs=pst.executeQuery();
+                String sql = "SELECT DISTINCT name as Names_of_customers FROM detor";
+                pst = conn.prepareStatement(sql);
+                rs = pst.executeQuery();
                 jTable24.setModel(DbUtils.resultSetToTableModel(rs));
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e);
             }
             try {
-            String select="SELECT * FROM detor ORDER BY id DESC";
-            pst =conn.prepareStatement(select);
-            rs=pst.executeQuery();
-            jTable7.setModel(DbUtils.resultSetToTableModel(rs));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
-        }
-        }else{
+                String select = "SELECT * FROM detor ORDER BY id DESC";
+                pst = conn.prepareStatement(select);
+                rs = pst.executeQuery();
+                jTable7.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e);
+            }
+        } else {
             jButton47.setVisible(true);
-             jButton39.setVisible(false);
-            selectSellers(); jTable3.setEnabled(false);
+            jButton39.setVisible(false);
+            selectSellers();
+            jTable3.setEnabled(false);
             try {
-                String sql="SELECT DISTINCT name as Names_of_customers FROM detor";
-                pst =conn.prepareStatement(sql);
-                rs=pst.executeQuery();
+                String sql = "SELECT DISTINCT name as Names_of_customers FROM detor";
+                pst = conn.prepareStatement(sql);
+                rs = pst.executeQuery();
                 jTable24.setModel(DbUtils.resultSetToTableModel(rs));
             } catch (Exception e) {
             }
         }
-       
-        
+
+
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
-        boolean n=jButton46.isEnabled();
-        if(n==false){
+        boolean n = jButton46.isEnabled();
+        if (n == false) {
             JOptionPane.showMessageDialog(this, "cannot performe this task while in bill view");
             jRadioButton1.setSelected(true);
             jTextField11.setText("Salt");
-            
-             jButton46.setEnabled(true);
-              jTextField45.setVisible(false);
-       jComboBox2.setVisible(false); jLabel82.setVisible(false);
-        jButton43.setEnabled(false);
-        jButton47.setVisible(true);
-             jButton39.setVisible(false);
+
+            jButton46.setEnabled(true);
+            jTextField45.setVisible(false);
+            jComboBox2.setVisible(false);
+            jLabel82.setVisible(false);
+            jButton43.setEnabled(false);
+            jButton47.setVisible(true);
+            jButton39.setVisible(false);
             try {
-                String sql="SELECT DISTINCT name as Names_of_customers FROM  arius_amount WHERE dealer='Deliver/Detor'";
-                pst =conn.prepareStatement(sql);
-                rs=pst.executeQuery();
+                String sql = "SELECT DISTINCT name as Names_of_customers FROM  arius_amount WHERE dealer='Deliver/Detor'";
+                pst = conn.prepareStatement(sql);
+                rs = pst.executeQuery();
                 jTable24.setModel(DbUtils.resultSetToTableModel(rs));
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e);
             }
             try {
-            String select="SELECT * FROM detor ORDER BY id DESC";
-            pst =conn.prepareStatement(select);
-            rs=pst.executeQuery();
-            jTable7.setModel(DbUtils.resultSetToTableModel(rs));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
-        }
-        }else{
+                String select = "SELECT * FROM detor ORDER BY id DESC";
+                pst = conn.prepareStatement(select);
+                rs = pst.executeQuery();
+                jTable7.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e);
+            }
+        } else {
             selectSellers();
             jTable3.setEnabled(true);
             jButton47.setVisible(false);
-             jButton39.setVisible(true);
+            jButton39.setVisible(true);
             try {
-                String sql="SELECT DISTINCT name as Names_of_customers FROM  arius_amount WHERE dealer='Deliver/Detor'";
-                pst =conn.prepareStatement(sql);
-                rs=pst.executeQuery();
+                String sql = "SELECT DISTINCT name as Names_of_customers FROM  arius_amount WHERE dealer='Deliver/Detor'";
+                pst = conn.prepareStatement(sql);
+                rs = pst.executeQuery();
                 jTable24.setModel(DbUtils.resultSetToTableModel(rs));
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e);
             }
         }
-        
+
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
-       boolean n=jButton46.isEnabled();
-        if(n==false){
+        boolean n = jButton46.isEnabled();
+        if (n == false) {
             JOptionPane.showMessageDialog(this, "cannot performe this task while in bill view");
             jRadioButton1.setSelected(true);
             jTextField11.setText("Salt");
-             jButton46.setEnabled(true);
-              jTextField45.setVisible(false);
-       jComboBox2.setVisible(false); jLabel82.setVisible(false);
-        jButton43.setEnabled(false);
-        jButton47.setVisible(true);
-             jButton39.setVisible(false);
+            jButton46.setEnabled(true);
+            jTextField45.setVisible(false);
+            jComboBox2.setVisible(false);
+            jLabel82.setVisible(false);
+            jButton43.setEnabled(false);
+            jButton47.setVisible(true);
+            jButton39.setVisible(false);
             try {
-                String sql="SELECT DISTINCT name as Names_of_customers FROM  arius_amount WHERE dealer='Customer'";
-                pst =conn.prepareStatement(sql);
-                rs=pst.executeQuery();
+                String sql = "SELECT DISTINCT name as Names_of_customers FROM  arius_amount WHERE dealer='Customer'";
+                pst = conn.prepareStatement(sql);
+                rs = pst.executeQuery();
                 jTable24.setModel(DbUtils.resultSetToTableModel(rs));
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e);
             }
             try {
-            String select="SELECT * FROM detor ORDER BY id DESC";
-            pst =conn.prepareStatement(select);
-            rs=pst.executeQuery();
-            jTable7.setModel(DbUtils.resultSetToTableModel(rs));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
-        }
-        }else{
+                String select = "SELECT * FROM detor ORDER BY id DESC";
+                pst = conn.prepareStatement(select);
+                rs = pst.executeQuery();
+                jTable7.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e);
+            }
+        } else {
             selectSellers();
             jButton47.setVisible(false);
-             jButton39.setVisible(true);jTable3.setEnabled(true);
-             try {
-                String sql="SELECT DISTINCT name as Names_of_customers FROM  arius_amount WHERE dealer='Customer'";
-                pst =conn.prepareStatement(sql);
-                rs=pst.executeQuery();
+            jButton39.setVisible(true);
+            jTable3.setEnabled(true);
+            try {
+                String sql = "SELECT DISTINCT name as Names_of_customers FROM  arius_amount WHERE dealer='Customer'";
+                pst = conn.prepareStatement(sql);
+                rs = pst.executeQuery();
                 jTable24.setModel(DbUtils.resultSetToTableModel(rs));
             } catch (Exception e) {
             }
         }
-        
+
     }//GEN-LAST:event_jRadioButton3ActionPerformed
 
     private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
-       boolean n=jButton46.isEnabled();
-        if(n==false){
+        boolean n = jButton46.isEnabled();
+        if (n == false) {
             JOptionPane.showMessageDialog(this, "cannot performe this task while in bill view");
             jRadioButton1.setSelected(true);
-             jTextField45.setVisible(false);
-             jTextField11.setText("Salt");
-       jComboBox2.setVisible(false); jLabel82.setVisible(false);
-             jButton46.setEnabled(true);
-        jButton43.setEnabled(false);
-        jButton47.setVisible(true);
-             jButton39.setVisible(false);
+            jTextField45.setVisible(false);
+            jTextField11.setText("Salt");
+            jComboBox2.setVisible(false);
+            jLabel82.setVisible(false);
+            jButton46.setEnabled(true);
+            jButton43.setEnabled(false);
+            jButton47.setVisible(true);
+            jButton39.setVisible(false);
             try {
-                String sql="SELECT DISTINCT name as Names_of_customers FROM deliver";
-                pst =conn.prepareStatement(sql);
-                rs=pst.executeQuery();
+                String sql = "SELECT DISTINCT name as Names_of_customers FROM deliver";
+                pst = conn.prepareStatement(sql);
+                rs = pst.executeQuery();
                 jTable24.setModel(DbUtils.resultSetToTableModel(rs));
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e);
             }
             try {
-            String select="SELECT * FROM detor ORDER BY id DESC";
-            pst =conn.prepareStatement(select);
-            rs=pst.executeQuery();
-            jTable7.setModel(DbUtils.resultSetToTableModel(rs));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
-        }
-        }else{
+                String select = "SELECT * FROM detor ORDER BY id DESC";
+                pst = conn.prepareStatement(select);
+                rs = pst.executeQuery();
+                jTable7.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e);
+            }
+        } else {
             selectSellers();
             jButton47.setVisible(false);
-             jButton39.setVisible(true);
-             jTable3.setEnabled(true);
-            DefaultTableModel df=(DefaultTableModel)jTable24.getModel();
-            int r =jTable24.getRowCount();
-                   for(int i=r;r>0;i--){{
-                       
-                       df.removeRow(i-1);
-                   }}
+            jButton39.setVisible(true);
+            jTable3.setEnabled(true);
+            DefaultTableModel df = (DefaultTableModel) jTable24.getModel();
+            int r = jTable24.getRowCount();
+            for (int i = r; r > 0; i--) {
+                {
+
+                    df.removeRow(i - 1);
+                }
+            }
         }
-     
+
     }//GEN-LAST:event_jRadioButton4ActionPerformed
 
     private void jTextField14KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField14KeyReleased
-       
-        
+
+
     }//GEN-LAST:event_jTextField14KeyReleased
 //add data to detor table
-    public void insertToDetor(String cat,String kg,String qua,String totalKg,String price,Double totalP){
-         String name=jTextField7.getText();
-       String mn=jTextField8.getText();
-       String ln=jTextField9.getText();
-       SimpleDateFormat g1 = new SimpleDateFormat("yyyy-MM-dd");
-    String dat = g1.format(jDateChooser2.getDate());
-       
-       
-     
+
+    public void insertToDetor(String cat, String kg, String qua, String totalKg, String price, Double totalP) {
+        String name = jTextField7.getText();
+        String mn = jTextField8.getText();
+        String ln = jTextField9.getText();
+        SimpleDateFormat g1 = new SimpleDateFormat("yyyy-MM-dd");
+        String dat = g1.format(jDateChooser2.getDate());
+
         try {
-            String insert="INSERT INTO detor(name,mobile_number,date,category,type_of_kg,quantity,total_kg,price_of_1kg,total_price)"
-                    + "VALUES('"+name+"','"+mn+"','"+dat+"','"+cat+"','"+kg+"','"+qua+"','"+totalKg+"','"+price+"','"+totalP+"')";
-            pst=conn.prepareStatement(insert);
+            String insert = "INSERT INTO detor(name,mobile_number,date,category,type_of_kg,quantity,total_kg,price_of_1kg,total_price)"
+                    + "VALUES('" + name + "','" + mn + "','" + dat + "','" + cat + "','" + kg + "','" + qua + "','" + totalKg + "','" + price + "','" + totalP + "')";
+            pst = conn.prepareStatement(insert);
             pst.execute();
-            
-        } catch (Exception e) {
-             JOptionPane.showMessageDialog(this, e);
-        }
-        try {
-            String select="SELECT * FROM detor ORDER BY id DESC";
-            pst =conn.prepareStatement(select);
-            rs=pst.executeQuery();
-            jTable7.setModel(DbUtils.resultSetToTableModel(rs));
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
-        
+        try {
+            String select = "SELECT * FROM detor ORDER BY id DESC";
+            pst = conn.prepareStatement(select);
+            rs = pst.executeQuery();
+            jTable7.setModel(DbUtils.resultSetToTableModel(rs));
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
+
     }
+
     //add data to deliver table
-    public void insertToDeliver(String cat,String kg,String qua,String totalKg,String price,Double totalP){
-    
-         String name=jTextField7.getText();
-       String mn=jTextField8.getText();
-       String ln=jTextField9.getText();
-       SimpleDateFormat g1 = new SimpleDateFormat("yyyy-MM-dd");
-    String dat = g1.format(jDateChooser2.getDate());
-    String route=jComboBox2.getSelectedItem().toString();
-    String collector=jTextField45.getText();
+    public void insertToDeliver(String cat, String kg, String qua, String totalKg, String price, Double totalP) {
+
+        String name = jTextField7.getText();
+        String mn = jTextField8.getText();
+        String ln = jTextField9.getText();
+        SimpleDateFormat g1 = new SimpleDateFormat("yyyy-MM-dd");
+        String dat = g1.format(jDateChooser2.getDate());
+        String route = jComboBox2.getSelectedItem().toString();
+        String collector = jTextField45.getText();
 //        String cat=jTextField11.getText();
 //        String kg=jTextField12.getText();
 //        String qua=jTextField13.getText();
@@ -5887,13 +5842,13 @@ public void getProductPropeties(){
 //        String price=jTextField15.getText();
 //        String totalP=jTextField16.getText();
         try {
-            String insert="INSERT INTO deliver(name,mobile_number,date,lorry_number,category,type_of_kg,quantity,total_kg,price_of_1kg,total_price,route,collector)"
-                    + "VALUES('"+name+"','"+mn+"','"+dat+"','"+ln+"','"+cat+"','"+kg+"','"+qua+"','"+totalKg+"','"+price+"','"+totalP+"','"+route+"','"+collector+"')";
-            pst=conn.prepareStatement(insert);
+            String insert = "INSERT INTO deliver(name,mobile_number,date,lorry_number,category,type_of_kg,quantity,total_kg,price_of_1kg,total_price,route,collector)"
+                    + "VALUES('" + name + "','" + mn + "','" + dat + "','" + ln + "','" + cat + "','" + kg + "','" + qua + "','" + totalKg + "','" + price + "','" + totalP + "','" + route + "','" + collector + "')";
+            pst = conn.prepareStatement(insert);
             pst.execute();
-          
+
         } catch (Exception e) {
-             JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e);
         }
 //    try {
 //            String select="SELECT * FROM deliver ORDER BY id DESC";
@@ -5903,7 +5858,7 @@ public void getProductPropeties(){
 //        } catch (Exception e) {
 //            JOptionPane.showMessageDialog(this, e);
 //        }
-      
+
 //     jTextField7.setText("");
 //        jTextField8.setText("");
 //        jTextField9.setText("");
@@ -5914,60 +5869,63 @@ public void getProductPropeties(){
 //         jTextField14.setText("");     
 //          jTextField15.setText("");     
 //          jTextField16.setText("");   
-    
     }
 //add data to cutomer table
-    public void insertToCustomer(String cat,String kg,String qua,String totalKg,String price,Double totalP){
-       String name=jTextField7.getText();
-       String mn=jTextField8.getText();
-       String ln=jTextField9.getText();
-       SimpleDateFormat g1 = new SimpleDateFormat("yyyy-MM-dd");
-    String dat = g1.format(jDateChooser2.getDate());
-       
+
+    public void insertToCustomer(String cat, String kg, String qua, String totalKg, String price, Double totalP) {
+        String name = jTextField7.getText();
+        String mn = jTextField8.getText();
+        String ln = jTextField9.getText();
+        SimpleDateFormat g1 = new SimpleDateFormat("yyyy-MM-dd");
+        String dat = g1.format(jDateChooser2.getDate());
+
         try {
-            String insert="INSERT INTO customer(name,mobile_number,date,category,type_of_kg,quantity,total_kg,price_of_1kg,total_price)"
-                    + "VALUES('"+name+"','"+mn+"','"+dat+"','"+cat+"','"+kg+"','"+qua+"','"+totalKg+"','"+price+"','"+totalP+"')";
-            pst=conn.prepareStatement(insert);
+            String insert = "INSERT INTO customer(name,mobile_number,date,category,type_of_kg,quantity,total_kg,price_of_1kg,total_price)"
+                    + "VALUES('" + name + "','" + mn + "','" + dat + "','" + cat + "','" + kg + "','" + qua + "','" + totalKg + "','" + price + "','" + totalP + "')";
+            pst = conn.prepareStatement(insert);
             pst.execute();
             JOptionPane.showMessageDialog(this, "Data added to table");
         } catch (Exception e) {
-             JOptionPane.showMessageDialog(this, e);
-        }try {
-            String select="SELECT * FROM customer ORDER BY id DESC";
-            pst =conn.prepareStatement(select);
-            rs=pst.executeQuery();
-            jTable7.setModel(DbUtils.resultSetToTableModel(rs));
-        } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
-          
-    }
-    //add data to shop table
-    public void insertToShop(String cat,String kg,String qua,String totalKg,String price,Double totalP){
-    
-       String name=jTextField7.getText();
-       String mn=jTextField8.getText();
-       String ln=jTextField9.getText();
-       SimpleDateFormat g1 = new SimpleDateFormat("yyyy-MM-dd");
-    String dat = g1.format(jDateChooser2.getDate());
-       
         try {
-            String insert="INSERT INTO shop(date,category,type_of_kg,quantity,total_kg,price_of_1kg,total_price)"
-                    + "VALUES('"+dat+"','"+cat+"','"+kg+"','"+qua+"','"+totalKg+"','"+price+"','"+totalP+"')";
-            pst=conn.prepareStatement(insert);
-            pst.execute();
-            
-        } catch (Exception e) {
-             JOptionPane.showMessageDialog(this, e);
-        }try {
-            String select="SELECT * FROM shop ORDER BY id DESC";
-            pst =conn.prepareStatement(select);
-            rs=pst.executeQuery();
+            String select = "SELECT * FROM customer ORDER BY id DESC";
+            pst = conn.prepareStatement(select);
+            rs = pst.executeQuery();
             jTable7.setModel(DbUtils.resultSetToTableModel(rs));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
-         
+
+    }
+
+    //add data to shop table
+    public void insertToShop(String cat, String kg, String qua, String totalKg, String price, Double totalP) {
+
+        String name = jTextField7.getText();
+        String mn = jTextField8.getText();
+        String ln = jTextField9.getText();
+        SimpleDateFormat g1 = new SimpleDateFormat("yyyy-MM-dd");
+        String dat = g1.format(jDateChooser2.getDate());
+
+        try {
+            String insert = "INSERT INTO shop(date,category,type_of_kg,quantity,total_kg,price_of_1kg,total_price)"
+                    + "VALUES('" + dat + "','" + cat + "','" + kg + "','" + qua + "','" + totalKg + "','" + price + "','" + totalP + "')";
+            pst = conn.prepareStatement(insert);
+            pst.execute();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
+        try {
+            String select = "SELECT * FROM shop ORDER BY id DESC";
+            pst = conn.prepareStatement(select);
+            rs = pst.executeQuery();
+            jTable7.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
+
 //        jTextField7.setText("");
 //        jTextField8.setText("");
 //        jTextField9.setText("");
@@ -5978,532 +5936,487 @@ public void getProductPropeties(){
 //         jTextField14.setText("");     
 //          jTextField15.setText("");     
 //          jTextField16.setText("");     
-                
-                
     }
+
     //update product propeties with new data
-    public void reduceCategoryAmount(String switchName,String ktype,String qty,String luuseqty,String tkg,String pid){
-    
-    if(switchName.equals("AL")){
-        try {
-            String sql="UPDATE product_properties SET rest_of_quantity=rest_of_quantity-'"+luuseqty+"',total_quantity=total_quantity-'"+tkg+"' WHERE p_id='"+pid+"' AND type_of_kg='"+ktype+"'";
-            pst=conn.prepareStatement(sql);
-            pst.execute();
-        } catch (Exception e) {
+    public void reduceCategoryAmount(String switchName, String ktype, String qty, String luuseqty, String tkg, String pid) {
+
+        if (switchName.equals("AL")) {
+            try {
+                String sql = "UPDATE product_properties SET rest_of_quantity=rest_of_quantity-'" + luuseqty + "',total_quantity=total_quantity-'" + tkg + "' WHERE p_id='" + pid + "' AND type_of_kg='" + ktype + "'";
+                pst = conn.prepareStatement(sql);
+                pst.execute();
+            } catch (Exception e) {
 //             JOptionPane.showMessageDialog(this, e);
-        }
-   
-    }else if(switchName.equals("GL")){
-                    int ty=Integer.parseInt(ktype);
-                    int tt=Integer.parseInt(tkg);
-                    int sum=(ty-tt);
-        try {
-               String sql="UPDATE product_properties SET quantity=quantity-'"+1+"',rest_of_quantity=rest_of_quantity+'"+sum+"',total_quantity=total_quantity-'"+tt+"' WHERE p_id='"+pid+"' AND type_of_kg='"+ktype+"'";
-               pst=conn.prepareStatement(sql);
-               pst.execute();
-           } catch (Exception e) {
+            }
+
+        } else if (switchName.equals("GL")) {
+            int ty = Integer.parseInt(ktype);
+            int tt = Integer.parseInt(tkg);
+            int sum = (ty - tt);
+            try {
+                String sql = "UPDATE product_properties SET quantity=quantity-'" + 1 + "',rest_of_quantity=rest_of_quantity+'" + sum + "',total_quantity=total_quantity-'" + tt + "' WHERE p_id='" + pid + "' AND type_of_kg='" + ktype + "'";
+                pst = conn.prepareStatement(sql);
+                pst.execute();
+            } catch (Exception e) {
 //               JOptionPane.showMessageDialog(this, e);
-           }
-    }else{
-    
-        try {
-               String sql="UPDATE product_properties SET quantity=quantity-'"+qty+"',total_quantity=total_quantity-'"+tkg+"' WHERE p_id='"+pid+"' AND type_of_kg='"+ktype+"'";
-               pst=conn.prepareStatement(sql);
-               pst.execute();
-           } catch (Exception e) {
+            }
+        } else {
+
+            try {
+                String sql = "UPDATE product_properties SET quantity=quantity-'" + qty + "',total_quantity=total_quantity-'" + tkg + "' WHERE p_id='" + pid + "' AND type_of_kg='" + ktype + "'";
+                pst = conn.prepareStatement(sql);
+                pst.execute();
+            } catch (Exception e) {
 //                JOptionPane.showMessageDialog(this, e);
-           }
-    }
-    
-    getKiloPackets();
+            }
+        }
+
+        getKiloPackets();
     }//code end here
-    
+
     //generate bill 
-    
     private void printBill() {
         try {
             BillPrinter billPrinter = new BillPrinter();
-            billPrinter.printBill(jLabel85.getText(),jLabel86.getText(),jLabel88.getText(),jLabel90.getText(),cdate,jTextField7.getText(),jLabel20.getText());
+            billPrinter.printBill(jLabel85.getText(), jLabel86.getText(), jLabel88.getText(), jLabel90.getText(), cdate, jTextField7.getText(), jLabel20.getText());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
-    } 
-    
-    
-    
-    
-    
-    
-    public void generateBill(String inv,String item,String unit,String qty,String luse,String tkg,String price,Double tprice,String bil_amount,String arius,String tarius,String cname){
-    
+    }
 
-
+    public void generateBill(String inv, String item, String unit, String qty, String luse, String tkg, String price, Double tprice, String bil_amount, String arius, String tarius, String cname) {
 
         try {
-            String sql="INSERT INTO bill(inv,item,unit,qty,luse,tkg,price,tprice,bill_amount,arius,total_arius,cname)"
-                 + "VALUES('"+inv+"','"+item+"','"+unit+"','"+qty+"','"+luse+"','"+tkg+"','"+price+"','"+tprice+"','"+bil_amount+"','"+arius+"','"+tarius+"','"+cname+"')";
-            pst=conn.prepareStatement(sql);
+            String sql = "INSERT INTO bill(inv,item,unit,qty,luse,tkg,price,tprice,bill_amount,arius,total_arius,cname)"
+                    + "VALUES('" + inv + "','" + item + "','" + unit + "','" + qty + "','" + luse + "','" + tkg + "','" + price + "','" + tprice + "','" + bil_amount + "','" + arius + "','" + tarius + "','" + cname + "')";
+            pst = conn.prepareStatement(sql);
             pst.execute();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
 
-    
-    
-    
     }
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
-     int r=jTable7.getRowCount();
-     boolean bt=jButton46.isEnabled();
-        if(r==0||bt==true){
-             JOptionPane.showMessageDialog(this, "Bill is empty");
-        }else{
-          String name=jTextField7.getText();
-       String mn=jTextField8.getText();
-       String ln=jTextField9.getText();
-       SimpleDateFormat g1 = new SimpleDateFormat("yyyy-MM-dd");
-       Date dat = jDateChooser2.getDate();
-        String cat=jTextField11.getText();
-        String kg=jTextField12.getText();
-        String qua=jTextField13.getText();
-        String totalKg=jTextField14.getText();
-        String price=jTextField15.getText();
-        String totalP=jTextField16.getText();
-        
-        String collector=jTextField45.getText();
-        int route=jComboBox2.getSelectedIndex();
-        
-        boolean detor2 =jRadioButton1.isSelected();
-        boolean deliver =jRadioButton2.isSelected();
-         boolean customer =jRadioButton3.isSelected();
-         boolean shop =jRadioButton4.isSelected();
-        
-         if(detor2==true){
-             if(dat==null||name.equals("")||mn.equals("")||cat.equals("")||kg.equals("")||qua.equals("")||totalKg.equals("")||price.equals("")||totalP.equals("")||ln.equals("")){
-             
-             JOptionPane.showMessageDialog(this, "Fil the empty fields");
-             }else{
-               //ask the user that, he needs to print the bill
-                 int msg =JOptionPane.showConfirmDialog(this, "Do you want to print the bill");
-                if(msg==0){
-                            DefaultTableModel df2 =(DefaultTableModel)jTable7.getModel();
-                                   int newRC=jTable7.getRowCount();
-                                   String nqty="";
-                                   String newluse="";
-                                   String switchName="null";
-                                   
-                                   for(int i=0;i<newRC;i++){
-                                       
-                                       //get dealer name,mobile number,lorry number...etc
-                                       
-                                       String bil=jLabel85.getText();
-                                       String ktype=(String)df2.getValueAt(i, 1);
-                                       String item=(String)df2.getValueAt(i, 0);
-                                       String qty=(String)df2.getValueAt(i, 2);
-                                       String luuseqty=(String)df2.getValueAt(i, 3);
-                                       if(qty.equals("0")){
-                                           nqty="L"+luuseqty;
-                                           newluse=luuseqty;
-                                       }else{
-                                           nqty=qty;
-                                           newluse=qty;
-                                       }
-                                       String lVaue=(String)df2.getValueAt(i, 8);
-                                       String tkg=(String)df2.getValueAt(i, 4);
-                                       String pp=(String)df2.getValueAt(i, 5);
-                                       double tpp=(Double)df2.getValueAt(i, 6);
-                                       String pid7=(String)df2.getValueAt(i, 7);
-                                       String getUser=jLabel20.getText();
-                                       String move="OUT";
-                                       String cred="Salt";
-                                       switch (lVaue) {
-                                           case "AL":
-                                               switchName="AL";
-                                               insertLuuse(item,ktype,"0",luuseqty,luuseqty,cdate,move);
-                                               insertDataToSales(cred,ktype,nqty,tkg,pp,tpp,item);
-                                               insertDataStock(cred,item+"/luuse",ktype,newluse,tkg,pp,tpp,move,cdate,getUser);
-                                               
-                                               break;
-                                           case "GL":
-                                               switchName="GL";
-                                               
-                                               insertLuuse(item,ktype,"1",luuseqty,luuseqty,cdate,move);
-                                               
-                                               insertDataToSales(cred,ktype,nqty,tkg,pp,tpp,item);
-                                               insertDataStock(cred,item+"/luuse",ktype,newluse,tkg,pp,tpp,move,cdate,getUser);
-                                               break;
-                                           default:
-                                               switchName="null";
-                                               
-                                               insertDataStock(cred,item,ktype,qty,tkg,pp,tpp,move,cdate,getUser);
-                                               insertDataToSales(cred,ktype,qty,tkg,pp,tpp,item);
-                                               break;
-                                       }
-                                    
-                                       insertToDetor(item,ktype,nqty,tkg,pp,tpp);
-                                       //sen to bill
-                                       generateBill(jLabel85.getText(),item,ktype,qty,luuseqty,tkg,pp,tpp,jLabel86.getText(),jLabel88.getText(),jLabel90.getText(),jTextField7.getText());
-                                   }
-                                   String cred="Salt"; 
-                                   getSalesData(cred);
-                                    addOrUpdateariusTable(cred,jTextField7.getText(),cdate,jLabel90.getText());
-                                    printBill();
-                                    invID();
-                                    DefaultTableModel df1 =(DefaultTableModel)jTable7.getModel();
-                                    int rowCount=jTable7.getRowCount();
-                                    //df1.setRowCount(0);
-                                    for(int i = rowCount;i>0;i--){
-                                             df1.removeRow(i-1);
+        int r = jTable7.getRowCount();
+        boolean bt = jButton46.isEnabled();
+        if (r == 0 || bt == true) {
+            JOptionPane.showMessageDialog(this, "Bill is empty");
+        } else {
+            String name = jTextField7.getText();
+            String mn = jTextField8.getText();
+            String ln = jTextField9.getText();
+            SimpleDateFormat g1 = new SimpleDateFormat("yyyy-MM-dd");
+            Date dat = jDateChooser2.getDate();
+            String cat = jTextField11.getText();
+            String kg = jTextField12.getText();
+            String qua = jTextField13.getText();
+            String totalKg = jTextField14.getText();
+            String price = jTextField15.getText();
+            String totalP = jTextField16.getText();
 
-                                    }
-                                    
-                                 
-                                    
-                                    clearFields();
-                 }else{
-                            JOptionPane.showMessageDialog(this, "please use 'YES' option ");
-                }
-                   
+            String collector = jTextField45.getText();
+            int route = jComboBox2.getSelectedIndex();
 
-             
-             }
+            boolean detor2 = jRadioButton1.isSelected();
+            boolean deliver = jRadioButton2.isSelected();
+            boolean customer = jRadioButton3.isSelected();
+            boolean shop = jRadioButton4.isSelected();
 
-         }else if(deliver==true){
-             if(dat==null||name.equals("")||ln.equals("")||collector.equals("")||route==0){
-             
-             JOptionPane.showMessageDialog(this, "Fil the empty fields");
-             }else{
-                 
-                 //ask the user that, he needs to print the bill
-                 int msg =JOptionPane.showConfirmDialog(this, "Do you want to print the bill");
-                if(msg==0){
-                            DefaultTableModel df2 =(DefaultTableModel)jTable7.getModel();
-                                   int newRC=jTable7.getRowCount();
-                                   String nqty="";
-                                   String newluse="";
-                                   String switchName="null";
-                                   for(int i=0;i<newRC;i++){
-                                       
-                                       //get dealer name,mobile number,lorry number...etc
-                                         
-                                       
-                                       String ktype=(String)df2.getValueAt(i, 1);
-                                        String item=(String)df2.getValueAt(i, 0);
-                                       String qty=(String)df2.getValueAt(i, 2);
-                                       String luuseqty=(String)df2.getValueAt(i, 3);
-                                                if(qty.equals("0")){
-                                                    nqty="L"+luuseqty;
-                                                    newluse=luuseqty;
-                                                }else{
-                                                     nqty=qty;
-                                                     newluse=qty;
-                                                }
-                                        String lVaue=(String)df2.getValueAt(i, 8);
-                                        String tkg=(String)df2.getValueAt(i, 4);
-                                       String pp=(String)df2.getValueAt(i, 5);
-                                       double tpp=(Double)df2.getValueAt(i, 6);
-                                       String pid=(String)df2.getValueAt(i, 7);
-                                       String getUser=jLabel20.getText();
-                                       String move="OUT";
+            if (detor2 == true) {
+                if (dat == null || name.equals("") || mn.equals("") || cat.equals("") || kg.equals("") || qua.equals("") || totalKg.equals("") || price.equals("") || totalP.equals("") || ln.equals("")) {
 
-                                        String cred="Deliver/Detor"; 
-                                switch (lVaue) {
-                                    case "AL":
-                                        switchName="AL";
-                                        insertLuuse(item,ktype,"0",luuseqty,luuseqty,cdate,move);
-                                        insertDataToSales(cred,ktype,nqty,tkg,pp,tpp,item);
-                                        insertDataStock(cred,item+"/luuse",ktype,newluse,tkg,pp,tpp,move,cdate,getUser);
+                    JOptionPane.showMessageDialog(this, "Fil the empty fields");
+                } else {
+                    //ask the user that, he needs to print the bill
+                    int msg = JOptionPane.showConfirmDialog(this, "Do you want to print the bill");
+                    if (msg == 0) {
+                        DefaultTableModel df2 = (DefaultTableModel) jTable7.getModel();
+                        int newRC = jTable7.getRowCount();
+                        String nqty = "";
+                        String newluse = "";
+                        String switchName = "null";
 
-                                        break;
-                                    case "GL":
-                                        switchName="GL";
-                                            
-                                        insertLuuse(item,ktype,"1",luuseqty,luuseqty,cdate,move);
-                                        insertDataToSales(cred,ktype,nqty,tkg,pp,tpp,item);
-                                         insertDataStock(cred,item+"/luuse",ktype,newluse,tkg,pp,tpp,move,cdate,getUser);
-                                        break;
-                                    default:
-                                        switchName="null";
-                                           
-                                            insertDataStock(cred,item,ktype,qty,tkg,pp,tpp,move,cdate,getUser);
-                                           insertDataToSales(cred,ktype,qty,tkg,pp,tpp,item);
-                                        break;
-                                }
-                                
-                                       
-                                        
-                                              
-                                      
-                                      insertToDeliver(item,ktype,nqty,tkg,pp,tpp);
-                                        //update product properties table(addition/subtraction)
-                                        
-                                       reduceCategoryAmount(switchName,ktype,qty,luuseqty,tkg,pid);
-                                       generateBill(jLabel85.getText(),item,ktype,qty,luuseqty,tkg,pp,tpp,jLabel86.getText(),jLabel88.getText(),jLabel90.getText(),jTextField7.getText());
-                                   }//loop end here
-                                   String cred="Deliver/Detor"; 
-                                   getSalesData(cred);
-                                   
-                                   addOrUpdateariusTable(cred,jTextField7.getText(),cdate,jLabel90.getText());
-                                   printBill();
-                                   invID();
-                                   DefaultTableModel df1 =(DefaultTableModel)jTable7.getModel();
-                                    int rowCount=jTable7.getRowCount();
-                                    //df1.setRowCount(0);
-                                    for(int i = rowCount;i>0;i--){
-                                             df1.removeRow(i-1);
+                        for (int i = 0; i < newRC; i++) {
 
-                                    }
-                                   clearFields();
-                 }else{
-                            JOptionPane.showMessageDialog(this, "please use 'YES' option");
-                }
-                 
-         
-             }
-         }else if(customer==true){
-             if(dat==null||name.equals("")){
-             
-             JOptionPane.showMessageDialog(this, "Fil the empty fields");
-             }else{
-                 
-                  //ask the user that, he needs to print the bill
-                 int msg =JOptionPane.showConfirmDialog(this, "Do you want to print the bill");
-                if(msg==0){
-                            DefaultTableModel df2 =(DefaultTableModel)jTable7.getModel();
-                                   int newRC=jTable7.getRowCount();
-                                   String nqty="";
-                                   String newluse="";
-                                   String switchName="null";
-                                   for(int i=0;i<newRC;i++){
-                                       
-                                       //get dealer name,mobile number,lorry number...etc
-                                         
-                                       
-                                       String ktype=(String)df2.getValueAt(i, 1);
-                                        String item=(String)df2.getValueAt(i, 0);
-                                       String qty=(String)df2.getValueAt(i, 2);
-                                       String luuseqty=(String)df2.getValueAt(i, 3);
-                                                if(qty.equals("0")){
-                                                    nqty="L"+luuseqty;
-                                                    newluse=luuseqty;
-                                                }else{
-                                                     nqty=qty;
-                                                     newluse=qty;
-                                                }
-                                        String lVaue=(String)df2.getValueAt(i, 8);
-                                        String tkg=(String)df2.getValueAt(i, 4);
-                                       String pp=(String)df2.getValueAt(i, 5);
-                                       double tpp=(Double)df2.getValueAt(i, 6);
-                                       String pid6=(String)df2.getValueAt(i, 7);
-                                       String getUser=jLabel20.getText();
-                                       String move="OUT";
+                            //get dealer name,mobile number,lorry number...etc
+                            String bil = jLabel85.getText();
+                            String ktype = (String) df2.getValueAt(i, 1);
+                            String item = (String) df2.getValueAt(i, 0);
+                            String qty = (String) df2.getValueAt(i, 2);
+                            String luuseqty = (String) df2.getValueAt(i, 3);
+                            if (qty.equals("0")) {
+                                nqty = "L" + luuseqty;
+                                newluse = luuseqty;
+                            } else {
+                                nqty = qty;
+                                newluse = qty;
+                            }
+                            String lVaue = (String) df2.getValueAt(i, 8);
+                            String tkg = (String) df2.getValueAt(i, 4);
+                            String pp = (String) df2.getValueAt(i, 5);
+                            double tpp = (Double) df2.getValueAt(i, 6);
+                            String pid7 = (String) df2.getValueAt(i, 7);
+                            String getUser = jLabel20.getText();
+                            String move = "OUT";
+                            String cred = "Salt";
+                            switch (lVaue) {
+                                case "AL":
+                                    switchName = "AL";
+                                    insertLuuse(item, ktype, "0", luuseqty, luuseqty, cdate, move);
+                                    insertDataToSales(cred, ktype, nqty, tkg, pp, tpp, item);
+                                    insertDataStock(cred, item + "/luuse", ktype, newluse, tkg, pp, tpp, move, cdate, getUser);
 
-                                        String cred="Customer"; 
-                                switch (lVaue) {
-                                    case "AL":
-                                        switchName="AL";
-                                        insertLuuse(item,ktype,"0",luuseqty,luuseqty,cdate,move);
-                                         insertDataToSales(cred,ktype,nqty,tkg,pp,tpp,item);
-                                          insertDataStock(cred,item+"/luuse",ktype,newluse,tkg,pp,tpp,move,cdate,getUser);
-                                        break;
-                                    case "GL":
-                                        switchName="GL";
-                                            
-                                        insertLuuse(item,ktype,"1",luuseqty,luuseqty,cdate,move);
-                                         insertDataToSales(cred,ktype,nqty,tkg,pp,tpp,item);
-                                         insertDataStock(cred,item+"/luuse",ktype,newluse,tkg,pp,tpp,move,cdate,getUser);
-                                        break;
-                                    default:
-                                        switchName="null";
-                                           
-                                            insertDataStock(cred,item,ktype,qty,tkg,pp,tpp,move,cdate,getUser);
-                                            insertDataToSales(cred,ktype,qty,tkg,pp,tpp,item);
-                                        break;
-                                }
-                                
-                                       
-                                       
-                                              
-                                      
-                                      insertToCustomer(item,ktype,nqty,tkg,pp,tpp);
-                                        //update product properties table(addition/subtraction)
-                                        reduceCategoryAmount(switchName,ktype,qty,luuseqty,tkg,pid6);
-                                        generateBill(jLabel85.getText(),item,ktype,qty,luuseqty,tkg,pp,tpp,jLabel86.getText(),jLabel88.getText(),jLabel90.getText(),jTextField7.getText());
-                                   }//loop end here
-                                   String cred="Customer"; 
-                                   getSalesData(cred);
-                                   
-                                    addOrUpdateariusTable(cred,jTextField7.getText(),cdate,jLabel90.getText());
-                                    printBill();
-                                    invID();
-                                     DefaultTableModel df1 =(DefaultTableModel)jTable7.getModel();
-                                    int rowCount=jTable7.getRowCount();
-                                    //df1.setRowCount(0);
-                                    for(int i = rowCount;i>0;i--){
-                                             df1.removeRow(i-1);
+                                    break;
+                                case "GL":
+                                    switchName = "GL";
 
-                                    }
-                                    clearFields();
-                 }else{
-                            JOptionPane.showMessageDialog(this, "please use 'YES' option");
-                }
-                   
+                                    insertLuuse(item, ktype, "1", luuseqty, luuseqty, cdate, move);
 
-         }
-         }else if(shop==true){
-             if(dat==null){
-             
-             JOptionPane.showMessageDialog(this, "Fil the empty fields");
-             }else{
-                 
-                  //ask the user that, he needs to print the bill
-                 int msg =JOptionPane.showConfirmDialog(this, "Do you want to print the bill");
-                if(msg==0){
-                            DefaultTableModel df2 =(DefaultTableModel)jTable7.getModel();
-                                   int newRC=jTable7.getRowCount();
-                                   String nqty="";
-                                   String newluse="";
-                                   String switchName="null";
-                                   for(int i=0;i<newRC;i++){
-                                       
-                                       //get dealer name,mobile number,lorry number...etc
-                                         
-                                       
-                                       String ktype=(String)df2.getValueAt(i, 1);
-                                        String item=(String)df2.getValueAt(i, 0);
-                                       String qty=(String)df2.getValueAt(i, 2);
-                                       String luuseqty=(String)df2.getValueAt(i, 3);
-                                                if(qty.equals("0")){
-                                                    nqty="L"+luuseqty;
-                                                    newluse=luuseqty;
-                                                }else{
-                                                     nqty=qty;
-                                                     newluse=qty;
-                                                }
-                                        String lVaue=(String)df2.getValueAt(i, 8);
-                                        String tkg=(String)df2.getValueAt(i, 4);
-                                       String pp=(String)df2.getValueAt(i, 5);
-                                       double tpp=(Double)df2.getValueAt(i, 6);
-                                       String pid=(String)df2.getValueAt(i, 7);
-                                       String getUser=jLabel20.getText();
-                                       String move="OUT";
+                                    insertDataToSales(cred, ktype, nqty, tkg, pp, tpp, item);
+                                    insertDataStock(cred, item + "/luuse", ktype, newluse, tkg, pp, tpp, move, cdate, getUser);
+                                    break;
+                                default:
+                                    switchName = "null";
 
-                                        String cred="Shop"; 
-                                switch (lVaue) {
-                                    case "AL":
-                                        switchName="AL";
-                                        insertLuuse(item,ktype,"0",luuseqty,luuseqty,cdate,move);
-                                        insertDataToSales(cred,ktype,nqty,tkg,pp,tpp,item);
-                                        insertDataStock(cred,item+"/luuse",ktype,newluse,tkg,pp,tpp,move,cdate,getUser);
-                                        break;
-                                    case "GL":
-                                        switchName="GL";
-                                            
-                                        insertLuuse(item,ktype,"1",luuseqty,luuseqty,cdate,move);
-                                        insertDataToSales(cred,ktype,nqty,tkg,pp,tpp,item);
-                                        insertDataStock(cred,item+"/luuse",ktype,newluse,tkg,pp,tpp,move,cdate,getUser);
-                                        break;
-                                    default:
-                                        switchName="null";
-                                           
-                                            insertDataStock(cred,item,ktype,qty,tkg,pp,tpp,move,cdate,getUser);
-                                            insertDataToSales(cred,ktype,qty,tkg,pp,tpp,item);
-                                        break;
-                                }
-                                
-                                       
-                                       
-                                              
-                                      
-                                      insertToShop(item,ktype,nqty,tkg,pp,tpp);
-                                        //update product properties table(addition/subtraction)
-                                        reduceCategoryAmount(switchName,ktype,qty,luuseqty,tkg,pid);
-                                        
-                                        generateBill(jLabel85.getText(),item,ktype,qty,luuseqty,tkg,pp,tpp,jLabel86.getText(),jLabel88.getText(),jLabel90.getText(),jTextField7.getText());
-                                   }//loop end here
-                                   String cred="Shop"; 
-                                   getSalesData(cred);
-                                  
-                                    addOrUpdateariusTable(cred,jTextField7.getText(),cdate,jLabel90.getText());
-                                     printBill();
-                                     invID();
-                                    DefaultTableModel df1 =(DefaultTableModel)jTable7.getModel();
-                                    int rowCount=jTable7.getRowCount();
-                                    //df1.setRowCount(0);
-                                    for(int i = rowCount;i>0;i--){
-                                             df1.removeRow(i-1);
+                                    insertDataStock(cred, item, ktype, qty, tkg, pp, tpp, move, cdate, getUser);
+                                    insertDataToSales(cred, ktype, qty, tkg, pp, tpp, item);
+                                    break;
+                            }
 
-                                    }
-                                   clearFields();
-                 }else{
-                            JOptionPane.showMessageDialog(this, "please use 'YES' option");
+                            insertToDetor(item, ktype, nqty, tkg, pp, tpp);
+                            //sen to bill
+                            generateBill(jLabel85.getText(), item, ktype, qty, luuseqty, tkg, pp, tpp, jLabel86.getText(), jLabel88.getText(), jLabel90.getText(), jTextField7.getText());
+                        }
+                        String cred = "Salt";
+                        getSalesData(cred);
+                        addOrUpdateariusTable(cred, jTextField7.getText(), cdate, jLabel90.getText());
+                        printBill();
+                        invID();
+                        DefaultTableModel df1 = (DefaultTableModel) jTable7.getModel();
+                        int rowCount = jTable7.getRowCount();
+                        //df1.setRowCount(0);
+                        for (int i = rowCount; i > 0; i--) {
+                            df1.removeRow(i - 1);
+
+                        }
+
+                        clearFields();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "please use 'YES' option ");
+                    }
+
                 }
 
-             }
-         }
-        
+            } else if (deliver == true) {
+                if (dat == null || name.equals("") || ln.equals("") || collector.equals("") || route == 0) {
+
+                    JOptionPane.showMessageDialog(this, "Fil the empty fields");
+                } else {
+
+                    //ask the user that, he needs to print the bill
+                    int msg = JOptionPane.showConfirmDialog(this, "Do you want to print the bill");
+                    if (msg == 0) {
+                        DefaultTableModel df2 = (DefaultTableModel) jTable7.getModel();
+                        int newRC = jTable7.getRowCount();
+                        String nqty = "";
+                        String newluse = "";
+                        String switchName = "null";
+                        for (int i = 0; i < newRC; i++) {
+
+                            //get dealer name,mobile number,lorry number...etc
+                            String ktype = (String) df2.getValueAt(i, 1);
+                            String item = (String) df2.getValueAt(i, 0);
+                            String qty = (String) df2.getValueAt(i, 2);
+                            String luuseqty = (String) df2.getValueAt(i, 3);
+                            if (qty.equals("0")) {
+                                nqty = "L" + luuseqty;
+                                newluse = luuseqty;
+                            } else {
+                                nqty = qty;
+                                newluse = qty;
+                            }
+                            String lVaue = (String) df2.getValueAt(i, 8);
+                            String tkg = (String) df2.getValueAt(i, 4);
+                            String pp = (String) df2.getValueAt(i, 5);
+                            double tpp = (Double) df2.getValueAt(i, 6);
+                            String pid = (String) df2.getValueAt(i, 7);
+                            String getUser = jLabel20.getText();
+                            String move = "OUT";
+
+                            String cred = "Deliver/Detor";
+                            switch (lVaue) {
+                                case "AL":
+                                    switchName = "AL";
+                                    insertLuuse(item, ktype, "0", luuseqty, luuseqty, cdate, move);
+                                    insertDataToSales(cred, ktype, nqty, tkg, pp, tpp, item);
+                                    insertDataStock(cred, item + "/luuse", ktype, newluse, tkg, pp, tpp, move, cdate, getUser);
+
+                                    break;
+                                case "GL":
+                                    switchName = "GL";
+
+                                    insertLuuse(item, ktype, "1", luuseqty, luuseqty, cdate, move);
+                                    insertDataToSales(cred, ktype, nqty, tkg, pp, tpp, item);
+                                    insertDataStock(cred, item + "/luuse", ktype, newluse, tkg, pp, tpp, move, cdate, getUser);
+                                    break;
+                                default:
+                                    switchName = "null";
+
+                                    insertDataStock(cred, item, ktype, qty, tkg, pp, tpp, move, cdate, getUser);
+                                    insertDataToSales(cred, ktype, qty, tkg, pp, tpp, item);
+                                    break;
+                            }
+
+                            insertToDeliver(item, ktype, nqty, tkg, pp, tpp);
+                            //update product properties table(addition/subtraction)
+
+                            reduceCategoryAmount(switchName, ktype, qty, luuseqty, tkg, pid);
+                            generateBill(jLabel85.getText(), item, ktype, qty, luuseqty, tkg, pp, tpp, jLabel86.getText(), jLabel88.getText(), jLabel90.getText(), jTextField7.getText());
+                        }//loop end here
+                        String cred = "Deliver/Detor";
+                        getSalesData(cred);
+
+                        addOrUpdateariusTable(cred, jTextField7.getText(), cdate, jLabel90.getText());
+                        printBill();
+                        invID();
+                        DefaultTableModel df1 = (DefaultTableModel) jTable7.getModel();
+                        int rowCount = jTable7.getRowCount();
+                        //df1.setRowCount(0);
+                        for (int i = rowCount; i > 0; i--) {
+                            df1.removeRow(i - 1);
+
+                        }
+                        clearFields();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "please use 'YES' option");
+                    }
+
+                }
+            } else if (customer == true) {
+                if (dat == null || name.equals("")) {
+
+                    JOptionPane.showMessageDialog(this, "Fil the empty fields");
+                } else {
+
+                    //ask the user that, he needs to print the bill
+                    int msg = JOptionPane.showConfirmDialog(this, "Do you want to print the bill");
+                    if (msg == 0) {
+                        DefaultTableModel df2 = (DefaultTableModel) jTable7.getModel();
+                        int newRC = jTable7.getRowCount();
+                        String nqty = "";
+                        String newluse = "";
+                        String switchName = "null";
+                        for (int i = 0; i < newRC; i++) {
+
+                            //get dealer name,mobile number,lorry number...etc
+                            String ktype = (String) df2.getValueAt(i, 1);
+                            String item = (String) df2.getValueAt(i, 0);
+                            String qty = (String) df2.getValueAt(i, 2);
+                            String luuseqty = (String) df2.getValueAt(i, 3);
+                            if (qty.equals("0")) {
+                                nqty = "L" + luuseqty;
+                                newluse = luuseqty;
+                            } else {
+                                nqty = qty;
+                                newluse = qty;
+                            }
+                            String lVaue = (String) df2.getValueAt(i, 8);
+                            String tkg = (String) df2.getValueAt(i, 4);
+                            String pp = (String) df2.getValueAt(i, 5);
+                            double tpp = (Double) df2.getValueAt(i, 6);
+                            String pid6 = (String) df2.getValueAt(i, 7);
+                            String getUser = jLabel20.getText();
+                            String move = "OUT";
+
+                            String cred = "Customer";
+                            switch (lVaue) {
+                                case "AL":
+                                    switchName = "AL";
+                                    insertLuuse(item, ktype, "0", luuseqty, luuseqty, cdate, move);
+                                    insertDataToSales(cred, ktype, nqty, tkg, pp, tpp, item);
+                                    insertDataStock(cred, item + "/luuse", ktype, newluse, tkg, pp, tpp, move, cdate, getUser);
+                                    break;
+                                case "GL":
+                                    switchName = "GL";
+
+                                    insertLuuse(item, ktype, "1", luuseqty, luuseqty, cdate, move);
+                                    insertDataToSales(cred, ktype, nqty, tkg, pp, tpp, item);
+                                    insertDataStock(cred, item + "/luuse", ktype, newluse, tkg, pp, tpp, move, cdate, getUser);
+                                    break;
+                                default:
+                                    switchName = "null";
+
+                                    insertDataStock(cred, item, ktype, qty, tkg, pp, tpp, move, cdate, getUser);
+                                    insertDataToSales(cred, ktype, qty, tkg, pp, tpp, item);
+                                    break;
+                            }
+
+                            insertToCustomer(item, ktype, nqty, tkg, pp, tpp);
+                            //update product properties table(addition/subtraction)
+                            reduceCategoryAmount(switchName, ktype, qty, luuseqty, tkg, pid6);
+                            generateBill(jLabel85.getText(), item, ktype, qty, luuseqty, tkg, pp, tpp, jLabel86.getText(), jLabel88.getText(), jLabel90.getText(), jTextField7.getText());
+                        }//loop end here
+                        String cred = "Customer";
+                        getSalesData(cred);
+
+                        addOrUpdateariusTable(cred, jTextField7.getText(), cdate, jLabel90.getText());
+                        printBill();
+                        invID();
+                        DefaultTableModel df1 = (DefaultTableModel) jTable7.getModel();
+                        int rowCount = jTable7.getRowCount();
+                        //df1.setRowCount(0);
+                        for (int i = rowCount; i > 0; i--) {
+                            df1.removeRow(i - 1);
+
+                        }
+                        clearFields();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "please use 'YES' option");
+                    }
+
+                }
+            } else if (shop == true) {
+                if (dat == null) {
+
+                    JOptionPane.showMessageDialog(this, "Fil the empty fields");
+                } else {
+
+                    //ask the user that, he needs to print the bill
+                    int msg = JOptionPane.showConfirmDialog(this, "Do you want to print the bill");
+                    if (msg == 0) {
+                        DefaultTableModel df2 = (DefaultTableModel) jTable7.getModel();
+                        int newRC = jTable7.getRowCount();
+                        String nqty = "";
+                        String newluse = "";
+                        String switchName = "null";
+                        for (int i = 0; i < newRC; i++) {
+
+                            //get dealer name,mobile number,lorry number...etc
+                            String ktype = (String) df2.getValueAt(i, 1);
+                            String item = (String) df2.getValueAt(i, 0);
+                            String qty = (String) df2.getValueAt(i, 2);
+                            String luuseqty = (String) df2.getValueAt(i, 3);
+                            if (qty.equals("0")) {
+                                nqty = "L" + luuseqty;
+                                newluse = luuseqty;
+                            } else {
+                                nqty = qty;
+                                newluse = qty;
+                            }
+                            String lVaue = (String) df2.getValueAt(i, 8);
+                            String tkg = (String) df2.getValueAt(i, 4);
+                            String pp = (String) df2.getValueAt(i, 5);
+                            double tpp = (Double) df2.getValueAt(i, 6);
+                            String pid = (String) df2.getValueAt(i, 7);
+                            String getUser = jLabel20.getText();
+                            String move = "OUT";
+
+                            String cred = "Shop";
+                            switch (lVaue) {
+                                case "AL":
+                                    switchName = "AL";
+                                    insertLuuse(item, ktype, "0", luuseqty, luuseqty, cdate, move);
+                                    insertDataToSales(cred, ktype, nqty, tkg, pp, tpp, item);
+                                    insertDataStock(cred, item + "/luuse", ktype, newluse, tkg, pp, tpp, move, cdate, getUser);
+                                    break;
+                                case "GL":
+                                    switchName = "GL";
+
+                                    insertLuuse(item, ktype, "1", luuseqty, luuseqty, cdate, move);
+                                    insertDataToSales(cred, ktype, nqty, tkg, pp, tpp, item);
+                                    insertDataStock(cred, item + "/luuse", ktype, newluse, tkg, pp, tpp, move, cdate, getUser);
+                                    break;
+                                default:
+                                    switchName = "null";
+
+                                    insertDataStock(cred, item, ktype, qty, tkg, pp, tpp, move, cdate, getUser);
+                                    insertDataToSales(cred, ktype, qty, tkg, pp, tpp, item);
+                                    break;
+                            }
+
+                            insertToShop(item, ktype, nqty, tkg, pp, tpp);
+                            //update product properties table(addition/subtraction)
+                            reduceCategoryAmount(switchName, ktype, qty, luuseqty, tkg, pid);
+
+                            generateBill(jLabel85.getText(), item, ktype, qty, luuseqty, tkg, pp, tpp, jLabel86.getText(), jLabel88.getText(), jLabel90.getText(), jTextField7.getText());
+                        }//loop end here
+                        String cred = "Shop";
+                        getSalesData(cred);
+
+                        addOrUpdateariusTable(cred, jTextField7.getText(), cdate, jLabel90.getText());
+                        printBill();
+                        invID();
+                        DefaultTableModel df1 = (DefaultTableModel) jTable7.getModel();
+                        int rowCount = jTable7.getRowCount();
+                        //df1.setRowCount(0);
+                        for (int i = rowCount; i > 0; i--) {
+                            df1.removeRow(i - 1);
+
+                        }
+                        clearFields();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "please use 'YES' option");
+                    }
+
+                }
+            }
+
         }
         //getTotalQuantity();
     }//GEN-LAST:event_jButton16ActionPerformed
-public void getDataByClickRadioBtn(){
- boolean detorq =jRadioButton5.isSelected();
-        boolean deliver =jRadioButton6.isSelected();
-         boolean customer =jRadioButton7.isSelected();
-         boolean shop =jRadioButton8.isSelected();
-    
-    if(detorq == true){
-     
-        
-       try {
-            String sq ="SELECT bill_number,dealer,dealer_name,date FROM set_sales WHERE dealer='"+"Salt"+"' ORDER BY status desc";
-                    pst = conn.prepareStatement(sq);
-                    rs = pst.executeQuery();
-                    jTable5.setModel(DbUtils.resultSetToTableModel(rs));
-        } catch (Exception e) {
-        }
-    
-    
+    public void getDataByClickRadioBtn() {
+        boolean detorq = jRadioButton5.isSelected();
+        boolean deliver = jRadioButton6.isSelected();
+        boolean customer = jRadioButton7.isSelected();
+        boolean shop = jRadioButton8.isSelected();
 
-}else if(deliver ==true){
-     
-        
-        try {
-            String sq ="SELECT bill_number,dealer,dealer_name,date FROM set_sales WHERE dealer='"+"Deliver/Detor"+"' ORDER BY status desc";
-                    pst = conn.prepareStatement(sq);
-                    rs = pst.executeQuery();
-                    jTable5.setModel(DbUtils.resultSetToTableModel(rs));
-        } catch (Exception e) {
-        }
-    
-    }else if(customer ==true){
-     
-        
-         try {
-            String sq ="SELECT bill_number,dealer,dealer_name,date FROM set_sales WHERE dealer='"+"Customer"+"' ORDER BY status desc";
-                    pst = conn.prepareStatement(sq);
-                    rs = pst.executeQuery();
-                    jTable5.setModel(DbUtils.resultSetToTableModel(rs));
-        } catch (Exception e) {
-        }
-    
-    }
-    else if(shop ==true){
-     
-        
-         try {
-            String sq ="SELECT bill_number,dealer,dealer_name,date FROM set_sales WHERE dealer='"+"Shop"+"' ORDER BY status desc";
-                    pst = conn.prepareStatement(sq);
-                    rs = pst.executeQuery();
-                    jTable5.setModel(DbUtils.resultSetToTableModel(rs));
-        } catch (Exception e) {
-        }
-    
-    }
+        if (detorq == true) {
 
-}
+            try {
+                String sq = "SELECT bill_number,dealer,dealer_name,date FROM set_sales WHERE dealer='" + "Salt" + "' ORDER BY status desc";
+                pst = conn.prepareStatement(sq);
+                rs = pst.executeQuery();
+                jTable5.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+            }
+
+        } else if (deliver == true) {
+
+            try {
+                String sq = "SELECT bill_number,dealer,dealer_name,date FROM set_sales WHERE dealer='" + "Deliver/Detor" + "' ORDER BY status desc";
+                pst = conn.prepareStatement(sq);
+                rs = pst.executeQuery();
+                jTable5.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+            }
+
+        } else if (customer == true) {
+
+            try {
+                String sq = "SELECT bill_number,dealer,dealer_name,date FROM set_sales WHERE dealer='" + "Customer" + "' ORDER BY status desc";
+                pst = conn.prepareStatement(sq);
+                rs = pst.executeQuery();
+                jTable5.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+            }
+
+        } else if (shop == true) {
+
+            try {
+                String sq = "SELECT bill_number,dealer,dealer_name,date FROM set_sales WHERE dealer='" + "Shop" + "' ORDER BY status desc";
+                pst = conn.prepareStatement(sq);
+                rs = pst.executeQuery();
+                jTable5.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+            }
+
+        }
+
+    }
     private void jRadioButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton5ActionPerformed
         getDataByClickRadioBtn();
-        
+
     }//GEN-LAST:event_jRadioButton5ActionPerformed
 
     private void jRadioButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton6ActionPerformed
@@ -6512,164 +6425,154 @@ public void getDataByClickRadioBtn(){
 
     private void jRadioButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton7ActionPerformed
         // TODO add your handling code here:
-         getDataByClickRadioBtn();
+        getDataByClickRadioBtn();
     }//GEN-LAST:event_jRadioButton7ActionPerformed
 
     private void jRadioButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton8ActionPerformed
         // TODO add your handling code here:
-         getDataByClickRadioBtn();
+        getDataByClickRadioBtn();
     }//GEN-LAST:event_jRadioButton8ActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
-        int m =JOptionPane.showConfirmDialog(this, "Do you want to log out the system");
-        if(m==0){
+        int m = JOptionPane.showConfirmDialog(this, "Do you want to log out the system");
+        if (m == 0) {
             Login l;
             try {
-                
-                  String getUser=jLabel20.getText();
-                String move="LOU OUT";
-                String descr="logout user";
+
+                String getUser = jLabel20.getText();
+                String move = "LOU OUT";
+                String descr = "logout user";
                 MainPage p = new MainPage();
-                p.insertIntoMovement(getUser,move,descr,cdate,ctime);
+                p.insertIntoMovement(getUser, move, descr, cdate, ctime);
                 l = new Login();
-                 l.setVisible(true);
+                l.setVisible(true);
             } catch (SQLException ex) {
                 Logger.getLogger(MainPage.class.getName()).log(Level.SEVERE, null, ex);
             }
-           
+
             this.dispose();
-            
+
         }
-        
+
     }//GEN-LAST:event_jButton18ActionPerformed
 //fetch data to return table
-    public void getDataFromReturnTable(){
+
+    public void getDataFromReturnTable() {
         try {
-            String a="SELECT * FROM returntable ORDER BY id";
-            pst =conn.prepareStatement(a);
-            rs=pst.executeQuery();
+            String a = "SELECT * FROM returntable ORDER BY id";
+            pst = conn.prepareStatement(a);
+            rs = pst.executeQuery();
             jTable6.setModel(DbUtils.resultSetToTableModel(rs));
-            
+
         } catch (Exception e) {
         }
-    
-    
+
     }
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
-       String name=jTextField17.getText();
-       String mn=jTextField18.getText();
-       String kg=jTextField19.getText();
-       String qua=jTextField20.getText();
-       String des=jTextArea1.getText();
-       String cat=jTextField21.getText();
-       
-       boolean detorq =jRadioButton5.isSelected();
-        boolean deliver =jRadioButton6.isSelected();
-         boolean customer =jRadioButton7.isSelected();
-         boolean shop =jRadioButton8.isSelected();
-         
+        String name = jTextField17.getText();
+        String mn = jTextField18.getText();
+        String kg = jTextField19.getText();
+        String qua = jTextField20.getText();
+        String des = jTextArea1.getText();
+        String cat = jTextField21.getText();
+
+        boolean detorq = jRadioButton5.isSelected();
+        boolean deliver = jRadioButton6.isSelected();
+        boolean customer = jRadioButton7.isSelected();
+        boolean shop = jRadioButton8.isSelected();
+
         SimpleDateFormat g = new SimpleDateFormat("yyyy-MM-dd");
         String ys = g.format(jDateChooser3.getDate());
-        String cred="";
-         if(detorq == true){
-              cred="Detor";
-              }else if(deliver==true){
-              cred="Deliver";
-              }else if(customer==true){
-                  cred="Customer";
-           }else if(shop==true){
-           cred="Shop";
-           }
-    
-    
-       
-       String s="";
-       boolean b=jRadioButton9.isSelected();
+        String cred = "";
+        if (detorq == true) {
+            cred = "Detor";
+        } else if (deliver == true) {
+            cred = "Deliver";
+        } else if (customer == true) {
+            cred = "Customer";
+        } else if (shop == true) {
+            cred = "Shop";
+        }
 
-       Date v=jDateChooser3.getDate();
+        String s = "";
+        boolean b = jRadioButton9.isSelected();
 
-      
-       if(name.equals("")||mn.equals("")||kg.equals("")||qua.equals("")||v==null){
-       
-       JOptionPane.showMessageDialog(this, "Fill the fields");
-       }else{
-            
-         try {
-                if(b==true){
-                    s="damage";
-                }else{
-                    s="reusable";
+        Date v = jDateChooser3.getDate();
+
+        if (name.equals("") || mn.equals("") || kg.equals("") || qua.equals("") || v == null) {
+
+            JOptionPane.showMessageDialog(this, "Fill the fields");
+        } else {
+
+            try {
+                if (b == true) {
+                    s = "damage";
+                } else {
+                    s = "reusable";
                 }
-         if(s.equals("reusable")){
-             
-                        try {
+                if (s.equals("reusable")) {
 
-                            String q="SELECT id FROM product_sales WHERE category_name='"+jTextField21.getText()+"'";
-                            pst =conn.prepareStatement(q);
-                            rs =pst.executeQuery();
-                            if(rs.next()){
-                              int id=rs.getInt("id");
+                    try {
 
-                             String quaUpdate="UPDATE product_properties SET quantity=quantity+'"+qua+"',rest_of_quantity=rest_of_quantity+'"+jTextField50.getText()+"',total_quantity=total_quantity+'"+jTextField22.getText()+"' WHERE p_id='"+id+"' AND type_of_kg='"+kg+"'";
-                             pst =conn.prepareStatement(quaUpdate);
-                             pst.execute();
-                             
-                                try {
-                                    
-                                   String luuseUpdate="INSERT INTO luuse(cat_name,type_of_kg,quantity,luuse_kg,total_luuse,date,move)"
-                                           + "VALUES('"+cat+"','"+kg+"','"+"0"+"','"+jTextField50.getText()+"','"+jTextField50.getText()+"','"+ys+"','"+"IN"+"')";
-                                   pst1 =conn.prepareStatement(luuseUpdate);
-                                   pst1.execute();
-                                        
-                                    
-                                } catch (Exception e) {
-                                }
+                        String q = "SELECT id FROM product_sales WHERE category_name='" + jTextField21.getText() + "'";
+                        pst = conn.prepareStatement(q);
+                        rs = pst.executeQuery();
+                        if (rs.next()) {
+                            int id = rs.getInt("id");
+
+                            String quaUpdate = "UPDATE product_properties SET quantity=quantity+'" + qua + "',rest_of_quantity=rest_of_quantity+'" + jTextField50.getText() + "',total_quantity=total_quantity+'" + jTextField22.getText() + "' WHERE p_id='" + id + "' AND type_of_kg='" + kg + "'";
+                            pst = conn.prepareStatement(quaUpdate);
+                            pst.execute();
+
+                            try {
+
+                                String luuseUpdate = "INSERT INTO luuse(cat_name,type_of_kg,quantity,luuse_kg,total_luuse,date,move)"
+                                        + "VALUES('" + cat + "','" + kg + "','" + "0" + "','" + jTextField50.getText() + "','" + jTextField50.getText() + "','" + ys + "','" + "IN" + "')";
+                                pst1 = conn.prepareStatement(luuseUpdate);
+                                pst1.execute();
+
+                            } catch (Exception e) {
                             }
+                        }
 
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(this, e);
+                    }
+                    String inser = "INSERT INTO returntable(name,mobile,category,kg,quantity,total_kg,status,date,descr)"
+                            + "VALUES('" + name + "','" + mn + "','" + cat + "','" + kg + "','" + qua + "','" + jTextField22.getText() + "','" + s + "','" + ys + "','" + des + "')";
+                    pst = conn.prepareStatement(inser);
+                    pst.execute();
 
-                         } catch (Exception e) {
-                          JOptionPane.showMessageDialog(this, e);
-                         }
-                         String inser="INSERT INTO returntable(name,mobile,category,kg,quantity,total_kg,status,date,descr)"
-                                + "VALUES('"+name+"','"+mn+"','"+cat+"','"+kg+"','"+qua+"','"+jTextField22.getText()+"','"+s+"','"+ys+"','"+des+"')";
-                         pst=conn.prepareStatement(inser);
-                         pst.execute();
-                         
-                          String getUser=jLabel20.getText();
-                            String move="IN";
-                            String price="0";
-                            String totalP="0";
-                            double tpp=Double.parseDouble(totalP);
-                            insertDataStock(cred,cat,kg,qua,jTextField22.getText(),price,tpp,move,cdate,getUser);
-               
-         }else{
-                        String inser="INSERT INTO returntable(name,mobile,category,kg,quantity,total_kg,status,date,descr)"
-                       + "VALUES('"+name+"','"+mn+"','"+cat+"','"+kg+"','"+qua+"','"+jTextField22.getText()+"','"+s+"','"+ys+"','"+des+"')";
-                        pst=conn.prepareStatement(inser);
-                        pst.execute();
-        
-         }
-             
-               
-               
-               
-              
-                 JOptionPane.showMessageDialog(this, "added data to return");
-                  getDataFromReturnTable();
-                  
-                    jTextField17.setText("");
-      jTextField18.setText("");
-       jTextField19.setText("");
-       jTextField20.setText("");
-       jTextArea1.setText("");
-       jTextField21.setText("");
-       jTextArea1.setText("Write Here");
-       jTextField22.setText("");
-           } catch (Exception e) {
-           }
-           
-           
-       }
+                    String getUser = jLabel20.getText();
+                    String move = "IN";
+                    String price = "0";
+                    String totalP = "0";
+                    double tpp = Double.parseDouble(totalP);
+                    insertDataStock(cred, cat, kg, qua, jTextField22.getText(), price, tpp, move, cdate, getUser);
+
+                } else {
+                    String inser = "INSERT INTO returntable(name,mobile,category,kg,quantity,total_kg,status,date,descr)"
+                            + "VALUES('" + name + "','" + mn + "','" + cat + "','" + kg + "','" + qua + "','" + jTextField22.getText() + "','" + s + "','" + ys + "','" + des + "')";
+                    pst = conn.prepareStatement(inser);
+                    pst.execute();
+
+                }
+
+                JOptionPane.showMessageDialog(this, "added data to return");
+                getDataFromReturnTable();
+
+                jTextField17.setText("");
+                jTextField18.setText("");
+                jTextField19.setText("");
+                jTextField20.setText("");
+                jTextArea1.setText("");
+                jTextField21.setText("");
+                jTextArea1.setText("Write Here");
+                jTextField22.setText("");
+            } catch (Exception e) {
+            }
+
+        }
     }//GEN-LAST:event_jButton17ActionPerformed
 
     private void jTextArea1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextArea1MouseClicked
@@ -6677,193 +6580,184 @@ public void getDataByClickRadioBtn(){
     }//GEN-LAST:event_jTextArea1MouseClicked
 
     private void jTextField6KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField6KeyReleased
-        String sq=jTextField6.getText();
-        
+        String sq = jTextField6.getText();
+
         try {
-            String s = "SELECT * FROM  product_sales WHERE category_name LIKE '%"+sq+"%'";
+            String s = "SELECT * FROM  product_sales WHERE category_name LIKE '%" + sq + "%'";
             pst = conn.prepareStatement(s);
             rs = pst.executeQuery();
             jTable3.setModel(DbUtils.resultSetToTableModel(rs));
-    
-    } catch (Exception e) {
-    }
+
+        } catch (Exception e) {
+        }
         jTable3.getColumnModel().getColumn(0).setMinWidth(0);
         jTable3.getColumnModel().getColumn(0).setMaxWidth(0);
     }//GEN-LAST:event_jTextField6KeyReleased
 
     private void jTextField20KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField20KeyReleased
-         
-        if(evt.getKeyCode()==KeyEvent.VK_BACK_SPACE){
-        jTextField22.setText("");
+
+        if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+            jTextField22.setText("");
         }
         try {
-             int h=Integer.parseInt(jTextField20.getText());
-            
+            int h = Integer.parseInt(jTextField20.getText());
+
         } catch (NumberFormatException e) {
-             
-             jTextField20.setText("");
+
+            jTextField20.setText("");
         }
-        int kg=Integer.parseInt(jTextField19.getText());
-                        int qua=Integer.parseInt(jTextField20.getText());
+        int kg = Integer.parseInt(jTextField19.getText());
+        int qua = Integer.parseInt(jTextField20.getText());
 
-                     int total=0;
-                     total=(kg*qua);
+        int total = 0;
+        total = (kg * qua);
 
-                     jTextField22.setText(String.valueOf(total));
+        jTextField22.setText(String.valueOf(total));
 
-                     
+
     }//GEN-LAST:event_jTextField20KeyReleased
 
     private void jTable5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable5MouseClicked
         try {
-                int r=jTable5.getSelectedRow();
-                String bil=jTable5.getValueAt(r, 0).toString();
-                String dealer=jTable5.getValueAt(r, 1).toString();
-                String name=jTable5.getValueAt(r, 2).toString();
-                
-                String sa="SELECT * FROM sales_list WHERE bill='"+bil+"' AND dealer='"+dealer+"' AND dealer_name='"+name+"'";
-                pst=conn.prepareStatement(sa);
-                rs=pst.executeQuery();
-                jTable6.setModel(DbUtils.resultSetToTableModel(rs));
+            int r = jTable5.getSelectedRow();
+            String bil = jTable5.getValueAt(r, 0).toString();
+            String dealer = jTable5.getValueAt(r, 1).toString();
+            String name = jTable5.getValueAt(r, 2).toString();
 
+            String sa = "SELECT * FROM sales_list WHERE bill='" + bil + "' AND dealer='" + dealer + "' AND dealer_name='" + name + "'";
+            pst = conn.prepareStatement(sa);
+            rs = pst.executeQuery();
+            jTable6.setModel(DbUtils.resultSetToTableModel(rs));
 
-                jTable6.getColumnModel().getColumn(0).setMinWidth(0);
-                jTable6.getColumnModel().getColumn(0).setMaxWidth(0);
+            jTable6.getColumnModel().getColumn(0).setMinWidth(0);
+            jTable6.getColumnModel().getColumn(0).setMaxWidth(0);
 
         } catch (Exception e) {
         }
-        
-        
+
 
     }//GEN-LAST:event_jTable5MouseClicked
-public void getKiloPackets2(){
+    public void getKiloPackets2() {
 
-    int row=jTable9.getSelectedRow();
-    String id =jTable9.getValueAt(row, 0).toString();
-    
-     try {
-            String s = "SELECT type_of_kg,quantity,rest_of_quantity as luuse,total_quantity as total_kg,price_per_1kg FROM   product_properties WHERE p_id='"+id+"'";
+        int row = jTable9.getSelectedRow();
+        String id = jTable9.getValueAt(row, 0).toString();
+
+        try {
+            String s = "SELECT type_of_kg,quantity,rest_of_quantity as luuse,total_quantity as total_kg,price_per_1kg FROM   product_properties WHERE p_id='" + id + "'";
             pst = conn.prepareStatement(s);
             rs = pst.executeQuery();
-            
+
             jTable10.setModel(DbUtils.resultSetToTableModel(rs));
-    } catch (Exception e) {
-    }
-    
- jTable10.getColumnModel().getColumn(4).setMinWidth(0);
+        } catch (Exception e) {
+        }
+
+        jTable10.getColumnModel().getColumn(4).setMinWidth(0);
         jTable10.getColumnModel().getColumn(4).setMaxWidth(0);
 
-}
+    }
     private void jTable9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable9MouseClicked
         getKiloPackets2();
         getTotalQuantity2();
-        
+
     }//GEN-LAST:event_jTable9MouseClicked
 
     private void jTextField18KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField18KeyReleased
         try {
-             int h=Integer.parseInt(jTextField18.getText());
-            
+            int h = Integer.parseInt(jTextField18.getText());
+
         } catch (NumberFormatException e) {
-             
-             jTextField18.setText("");
+
+            jTextField18.setText("");
         }
     }//GEN-LAST:event_jTextField18KeyReleased
 
     private void jTextField8KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField8KeyReleased
         try {
-             int h=Integer.parseInt(jTextField8.getText());
-            
+            int h = Integer.parseInt(jTextField8.getText());
+
         } catch (NumberFormatException e) {
-            
-             jTextField8.setText("");
+
+            jTextField8.setText("");
         }
     }//GEN-LAST:event_jTextField8KeyReleased
 
     private void jTextField10KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField10KeyReleased
-       String sq=jTextField10.getText();
-        
+        String sq = jTextField10.getText();
+
         try {
-            String s = "SELECT * FROM  product_sales WHERE category_name LIKE '%"+sq+"%'";
+            String s = "SELECT * FROM  product_sales WHERE category_name LIKE '%" + sq + "%'";
             pst = conn.prepareStatement(s);
             rs = pst.executeQuery();
             jTable9.setModel(DbUtils.resultSetToTableModel(rs));
-    
-    } catch (Exception e) {
-    }
+
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_jTextField10KeyReleased
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
-         SimpleDateFormat g = new SimpleDateFormat("yyyy-MM-dd");
-                    String date = g.format(jDateChooser4.getDate());
-                    
-                     try {
-            String s = "SELECT * FROM stock WHERE date LIKE '%"+date+"%'";
+        SimpleDateFormat g = new SimpleDateFormat("yyyy-MM-dd");
+        String date = g.format(jDateChooser4.getDate());
+
+        try {
+            String s = "SELECT * FROM stock WHERE date LIKE '%" + date + "%'";
             pst = conn.prepareStatement(s);
             rs = pst.executeQuery();
             jTable8.setModel(DbUtils.resultSetToTableModel(rs));
-    
-    } catch (Exception e) {
-    }
+
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_jButton19ActionPerformed
 
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
         SimpleDateFormat g = new SimpleDateFormat("yyyy-MM-dd");
-                    String date = g.format(jDateChooser5.getDate());
-        
-        
-        boolean detorq =jRadioButton5.isSelected();
-        boolean deliver =jRadioButton6.isSelected();
-         boolean customer =jRadioButton7.isSelected();
-         boolean shop =jRadioButton8.isSelected();
-    
-    if(detorq == true){
-     
-        
-        try {
-            String sq ="SELECT bill_number,dealer,dealer_name,date FROM set_sales WHERE dealer='"+"Salt"+"' AND date='"+date+"' ORDER BY status desc";
-                    pst = conn.prepareStatement(sq);
-                    rs = pst.executeQuery();
-                    jTable5.setModel(DbUtils.resultSetToTableModel(rs));
-        } catch (Exception e) {
-        }
-    
-    
+        String date = g.format(jDateChooser5.getDate());
 
-}else if(deliver ==true){
-     
-        
-          try {
-            String sq ="SELECT bill_number,dealer,dealer_name,date FROM set_sales WHERE dealer='"+"Deliver/Detor"+"' AND date='"+date+"' ORDER BY status desc";
-                    pst = conn.prepareStatement(sq);
-                    rs = pst.executeQuery();
-                    jTable5.setModel(DbUtils.resultSetToTableModel(rs));
-        } catch (Exception e) {
+        boolean detorq = jRadioButton5.isSelected();
+        boolean deliver = jRadioButton6.isSelected();
+        boolean customer = jRadioButton7.isSelected();
+        boolean shop = jRadioButton8.isSelected();
+
+        if (detorq == true) {
+
+            try {
+                String sq = "SELECT bill_number,dealer,dealer_name,date FROM set_sales WHERE dealer='" + "Salt" + "' AND date='" + date + "' ORDER BY status desc";
+                pst = conn.prepareStatement(sq);
+                rs = pst.executeQuery();
+                jTable5.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+            }
+
+        } else if (deliver == true) {
+
+            try {
+                String sq = "SELECT bill_number,dealer,dealer_name,date FROM set_sales WHERE dealer='" + "Deliver/Detor" + "' AND date='" + date + "' ORDER BY status desc";
+                pst = conn.prepareStatement(sq);
+                rs = pst.executeQuery();
+                jTable5.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+            }
+
+        } else if (customer == true) {
+
+            try {
+                String sq = "SELECT bill_number,dealer,dealer_name,date FROM set_sales WHERE dealer='" + "Customer" + "' AND date='" + date + "' ORDER BY status desc";
+                pst = conn.prepareStatement(sq);
+                rs = pst.executeQuery();
+                jTable5.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+            }
+
+        } else if (shop == true) {
+
+            try {
+                String sq = "SELECT bill_number,dealer,dealer_name,date FROM set_sales WHERE dealer='" + "Shop" + "' AND date='" + date + "' ORDER BY status desc";
+                pst = conn.prepareStatement(sq);
+                rs = pst.executeQuery();
+                jTable5.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (Exception e) {
+            }
+
         }
-    
-    }else if(customer ==true){
-     
-         try {
-            String sq ="SELECT bill_number,dealer,dealer_name,date FROM set_sales WHERE dealer='"+"Customer"+"' AND date='"+date+"' ORDER BY status desc";
-                    pst = conn.prepareStatement(sq);
-                    rs = pst.executeQuery();
-                    jTable5.setModel(DbUtils.resultSetToTableModel(rs));
-        } catch (Exception e) {
-        }
-    
-    }
-    else if(shop ==true){
-     
-        
-       try {
-            String sq ="SELECT bill_number,dealer,dealer_name,date FROM set_sales WHERE dealer='"+"Shop"+"' AND date='"+date+"' ORDER BY status desc";
-                    pst = conn.prepareStatement(sq);
-                    rs = pst.executeQuery();
-                    jTable5.setModel(DbUtils.resultSetToTableModel(rs));
-        } catch (Exception e) {
-        }
-    
-    }
     }//GEN-LAST:event_jButton20ActionPerformed
 
     private void txtPriceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPriceMouseClicked
@@ -6879,25 +6773,25 @@ public void getKiloPackets2(){
     }//GEN-LAST:event_txtCatKeyPressed
 
     private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
-         txtCreditorName.requestFocus();
+        txtCreditorName.requestFocus();
         txtCreditorName.setText("");
         jTextField2.setText("");
         jTextField5.setText("");
         jTextField4.setText("");
-        
+
         jLabel11.setText("");
         txtQuantity.setText("");
         jTextField3.setText("");
         jDateChooser1.setDate(null);
         txtPrice.setText("");
-         jkg.removeAllItems();
-                 jr1.setSelected(true);
-            txtQuantity.setEnabled(false);
-            txtQuantity.setEditable(false);
+        jkg.removeAllItems();
+        jr1.setSelected(true);
+        txtQuantity.setEnabled(false);
+        txtQuantity.setEditable(false);
     }//GEN-LAST:event_jButton21ActionPerformed
 
     private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
-          rightPanel.removeAll();
+        rightPanel.removeAll();
         rightPanel.add(p6);
         rightPanel.repaint();
         rightPanel.revalidate();
@@ -6906,9 +6800,9 @@ public void getKiloPackets2(){
         } catch (SQLException ex) {
             Logger.getLogger(MainPage.class.getName()).log(Level.SEVERE, null, ex);
         }
-           jTable11.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable11.getColumnModel().getColumn(0).setMinWidth(0);
         jTable11.getColumnModel().getColumn(0).setMaxWidth(0);
-        
+
         jButton3.setBackground(Color.white);
         jButton1.setBackground(Color.white);
         jButton13.setBackground(Color.white);
@@ -6930,17 +6824,17 @@ public void getKiloPackets2(){
         topbar_menu.add(tbp1);
         topbar_menu.repaint();
         topbar_menu.revalidate();
-        
+
         try {
-            String sq ="SELECT name FROM arius_amount";
-                    pst = conn.prepareStatement(sq);
-                    rs = pst.executeQuery();
-                    jTable12.setModel(DbUtils.resultSetToTableModel(rs));
-                    displayCashInHand();
-                    calculateAndDisplaySum();
-            } catch (Exception e) {
+            String sq = "SELECT name FROM arius_amount";
+            pst = conn.prepareStatement(sq);
+            rs = pst.executeQuery();
+            jTable12.setModel(DbUtils.resultSetToTableModel(rs));
+            displayCashInHand();
+            calculateAndDisplaySum();
+        } catch (Exception e) {
         }
-        
+
         jButton3.setBackground(Color.white);
         jButton1.setBackground(Color.white);
         jButton13.setBackground(Color.white);
@@ -6954,11 +6848,11 @@ public void getKiloPackets2(){
     }//GEN-LAST:event_jButton23ActionPerformed
 
     private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
-          rightPanel.removeAll();
+        rightPanel.removeAll();
         rightPanel.add(p8);
         rightPanel.repaint();
         rightPanel.revalidate();
-        
+
         jButton3.setBackground(Color.white);
         jButton1.setBackground(Color.white);
         jButton13.setBackground(Color.white);
@@ -6972,12 +6866,12 @@ public void getKiloPackets2(){
     }//GEN-LAST:event_jButton24ActionPerformed
 
     private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
-         rightPanel.removeAll();
+        rightPanel.removeAll();
         rightPanel.add(p9);
         rightPanel.repaint();
         rightPanel.revalidate();
-        
-         jButton3.setBackground(Color.white);
+
+        jButton3.setBackground(Color.white);
         jButton1.setBackground(Color.white);
         jButton13.setBackground(Color.white);
         jButton15.setBackground(Color.white);
@@ -6995,58 +6889,60 @@ public void getKiloPackets2(){
         topbar_menu.add(tbp1);
         topbar_menu.repaint();
         topbar_menu.revalidate();
-        
-         try {
-            String sq ="SELECT name FROM arius_amount";
-                    pst = conn.prepareStatement(sq);
-                    rs = pst.executeQuery();
-                    jTable12.setModel(DbUtils.resultSetToTableModel(rs));
-                     displayCashInHand();
-                     calculateAndDisplaySum();
-            } catch (Exception e) {
+
+        try {
+            String sq = "SELECT name FROM arius_amount";
+            pst = conn.prepareStatement(sq);
+            rs = pst.executeQuery();
+            jTable12.setModel(DbUtils.resultSetToTableModel(rs));
+            displayCashInHand();
+            calculateAndDisplaySum();
+        } catch (Exception e) {
         }
     }//GEN-LAST:event_jButton26ActionPerformed
 
-     private void displayCashInHand(){
-          //         Cash/Banking Section
-      try {
-          SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private void displayCashInHand() {
+        //         Cash/Banking Section
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String currentDate = dateFormat.format(new Date());
             String sq = "SELECT * FROM cash_in_hand WHERE Date = ?";
-                pst = conn.prepareStatement(sq);
-                 pst.setString(1, currentDate);
-                 rs = pst.executeQuery();
-                 jTable13.setModel(DbUtils.resultSetToTableModel(rs));
-            } catch (Exception e) {
+            pst = conn.prepareStatement(sq);
+            pst.setString(1, currentDate);
+            rs = pst.executeQuery();
+            jTable13.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (Exception e) {
         }
-  }
-    
-     private void displayChequeInHand(){
-          //         Cash/Banking Section
-      try {
-          SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    }
+
+    private void displayChequeInHand() {
+        //         Cash/Banking Section
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String currentDate = dateFormat.format(new Date());
             String sq = "SELECT * FROM cheque_in_hand WHERE Date = ?";
-                pst = conn.prepareStatement(sq);
-                 pst.setString(1, currentDate);
-                 rs = pst.executeQuery();
-                 jTable15.setModel(DbUtils.resultSetToTableModel(rs));
-            } catch (Exception e) {
+            pst = conn.prepareStatement(sq);
+            pst.setString(1, currentDate);
+            rs = pst.executeQuery();
+            jTable15.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (Exception e) {
         }
-  }
-     private void displayCreditToday(){
-          //         Cash/Banking Section
-      try {
-          SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    }
+
+    private void displayCreditToday() {
+        //         Cash/Banking Section
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String currentDate = dateFormat.format(new Date());
             String sq = "SELECT * FROM credit_today WHERE Date = ?";
-                pst = conn.prepareStatement(sq);
-                 pst.setString(1, currentDate);
-                 rs = pst.executeQuery();
-                 jTable17.setModel(DbUtils.resultSetToTableModel(rs));
-            } catch (Exception e) {
+            pst = conn.prepareStatement(sq);
+            pst.setString(1, currentDate);
+            rs = pst.executeQuery();
+            jTable17.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (Exception e) {
         }
-  }
+    }
+
     private void displayAriusAmount(String selectedName) {
         //        Cash/Banking Section
         try {
@@ -7057,7 +6953,7 @@ public void getKiloPackets2(){
 
             if (rs.next()) {
                 double ariusAmount = rs.getDouble("arius_amount");
-                 jTextField51.setText(String.valueOf(selectedName));
+                jTextField51.setText(String.valueOf(selectedName));
                 jTextField25.setText(String.valueOf(ariusAmount));
             } else {
                 jTextField25.setText("Arius Amount not found");
@@ -7069,41 +6965,43 @@ public void getKiloPackets2(){
             e.printStackTrace();
         }
     }
-    
-     private void calculateAndDisplaySum() {
-           //         Cash/Banking Section
+
+    private void calculateAndDisplaySum() {
+        //         Cash/Banking Section
         double totalSum = 0;
 
         for (int row = 0; row < jTable13.getRowCount(); row++) {
             double cashInValue = Double.parseDouble(jTable13.getValueAt(row, 3).toString());
             totalSum += cashInValue;
         }
-        
-        jLabel3.setText("රු. "+totalSum);
+
+        jLabel3.setText("රු. " + totalSum);
     }
-     private void calculateAndDisplayCreditSum() {
-           //         Cash/Banking Section
+
+    private void calculateAndDisplayCreditSum() {
+        //         Cash/Banking Section
         double totalSum = 0;
 
         for (int row = 0; row < jTable17.getRowCount(); row++) {
             double cashInValue = Double.parseDouble(jTable17.getValueAt(row, 3).toString());
             totalSum += cashInValue;
         }
-        
-        jLabel103.setText("රු. "+totalSum);
+
+        jLabel103.setText("රු. " + totalSum);
     }
-     private void calculateAndDisplayChequeSum() {
-           //         Cash/Banking Section
+
+    private void calculateAndDisplayChequeSum() {
+        //         Cash/Banking Section
         double totalSum = 0;
 
         for (int row = 0; row < jTable15.getRowCount(); row++) {
             double cashInValue = Double.parseDouble(jTable15.getValueAt(row, 3).toString());
             totalSum += cashInValue;
         }
-        
-        jLabel51.setText("රු. "+totalSum);
+
+        jLabel51.setText("රු. " + totalSum);
     }
-     
+
     private void displayAriusAmountcheque(String selectedName) {
         //        Cash/Banking Section
         try {
@@ -7126,7 +7024,8 @@ public void getKiloPackets2(){
             e.printStackTrace();
         }
     }
-        private void displayAriusDetaers(String selectedName) {
+
+    private void displayAriusDetaers(String selectedName) {
         //        Cash/Banking Section
         try {
             String sql = "SELECT arius_amount FROM arius_amount WHERE name=?";
@@ -7148,36 +7047,36 @@ public void getKiloPackets2(){
             e.printStackTrace();
         }
     }
-    
+
     private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
-         topbar_menu.removeAll();
+        topbar_menu.removeAll();
         topbar_menu.add(tbp2);
         topbar_menu.repaint();
         topbar_menu.revalidate();
         try {
-            String sq ="SELECT name FROM arius_amount";
-                    pst = conn.prepareStatement(sq);
-                    rs = pst.executeQuery();
-                    jTable14.setModel(DbUtils.resultSetToTableModel(rs));
-                    displayChequeInHand();
-                    calculateAndDisplayCreditSum();
-            } catch (Exception e) {
+            String sq = "SELECT name FROM arius_amount";
+            pst = conn.prepareStatement(sq);
+            rs = pst.executeQuery();
+            jTable14.setModel(DbUtils.resultSetToTableModel(rs));
+            displayChequeInHand();
+            calculateAndDisplayCreditSum();
+        } catch (Exception e) {
         }
     }//GEN-LAST:event_jButton27ActionPerformed
 
     private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
-         topbar_menu.removeAll();
+        topbar_menu.removeAll();
         topbar_menu.add(tbp3);
         topbar_menu.repaint();
         topbar_menu.revalidate();
-         try {
-            String sq ="SELECT name FROM arius_amount";
-                    pst = conn.prepareStatement(sq);
-                    rs = pst.executeQuery();
-                    jTable16.setModel(DbUtils.resultSetToTableModel(rs));
-                     displayCreditToday();
-                     calculateAndDisplayCreditSum();
-            } catch (Exception e) {
+        try {
+            String sq = "SELECT name FROM arius_amount";
+            pst = conn.prepareStatement(sq);
+            rs = pst.executeQuery();
+            jTable16.setModel(DbUtils.resultSetToTableModel(rs));
+            displayCreditToday();
+            calculateAndDisplayCreditSum();
+        } catch (Exception e) {
         }
     }//GEN-LAST:event_jButton28ActionPerformed
 
@@ -7206,19 +7105,19 @@ public void getKiloPackets2(){
     }//GEN-LAST:event_jTextField31ActionPerformed
 
     private void jButton32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton32ActionPerformed
-          rightPanel.removeAll();
+        rightPanel.removeAll();
         rightPanel.add(p10);
         rightPanel.repaint();
         rightPanel.revalidate();
-        
+
         try {
-            String sql="SELECT name,mobile,category,kg,total_kg,status,date,descr FROM returntable WHERE status='"+"damage"+"' ORDER BY date desc";
-            pst=conn.prepareStatement(sql);
-            rs=pst.executeQuery();
+            String sql = "SELECT name,mobile,category,kg,total_kg,status,date,descr FROM returntable WHERE status='" + "damage" + "' ORDER BY date desc";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
             jTable20.setModel(DbUtils.resultSetToTableModel(rs));
         } catch (Exception e) {
         }
-        
+
         jButton3.setBackground(Color.white);
         jButton1.setBackground(Color.white);
         jButton13.setBackground(Color.white);
@@ -7232,14 +7131,14 @@ public void getKiloPackets2(){
     }//GEN-LAST:event_jButton32ActionPerformed
 
     private void jButton33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton33ActionPerformed
-          tmenu.removeAll();
+        tmenu.removeAll();
         tmenu.add(tp1);
         tmenu.repaint();
         tmenu.revalidate();
-         try {
-            String sql="SELECT name,mobile,category,kg,total_kg,status,date,descr FROM returntable WHERE status='"+"damage"+"'";
-            pst=conn.prepareStatement(sql);
-            rs=pst.executeQuery();
+        try {
+            String sql = "SELECT name,mobile,category,kg,total_kg,status,date,descr FROM returntable WHERE status='" + "damage" + "'";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
             jTable20.setModel(DbUtils.resultSetToTableModel(rs));
         } catch (Exception e) {
         }
@@ -7254,7 +7153,7 @@ public void getKiloPackets2(){
 
     private void jButton36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton36ActionPerformed
         // TODO add your handling code here:
-           menp.removeAll();
+        menp.removeAll();
         menp.add(mep1);
         menp.repaint();
         menp.revalidate();
@@ -7262,7 +7161,7 @@ public void getKiloPackets2(){
 
     private void jButton37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton37ActionPerformed
         // TODO add your handling code here:
-           menp.removeAll();
+        menp.removeAll();
         menp.add(mep2);
         menp.repaint();
         menp.revalidate();
@@ -7270,7 +7169,7 @@ public void getKiloPackets2(){
 
     private void jButton38ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton38ActionPerformed
         // TODO add your handling code here:
-           menp.removeAll();
+        menp.removeAll();
         menp.add(mep3);
         menp.repaint();
         menp.revalidate();
@@ -7285,69 +7184,69 @@ public void getKiloPackets2(){
     }//GEN-LAST:event_jTextField10ActionPerformed
 
     private void jButton40ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton40ActionPerformed
-           TableColumnModel cm=jTable8.getTableHeader().getColumnModel();
-            while(cm.getColumnCount()>0){
-                cm.removeColumn(cm.getColumn(0));
-            }
-            cm.addColumn(new TableColumn(0,100));
-            cm.getColumn(0).setHeaderValue("Item_Name");
-            
-             cm.addColumn(new TableColumn(1,100));
-            cm.getColumn(1).setHeaderValue("Type of unit");
-            
-             cm.addColumn(new TableColumn(2,100));
-            cm.getColumn(2).setHeaderValue("IN");
-            
-             cm.addColumn(new TableColumn(3,100));
-            cm.getColumn(3).setHeaderValue("Luuse IN");
-            
-            cm.addColumn(new TableColumn(4,100));
-            cm.getColumn(4).setHeaderValue("Total Units");
-            
-             cm.addColumn(new TableColumn(5,100));
-            cm.getColumn(5).setHeaderValue("OUT");
-            
-               cm.addColumn(new TableColumn(6,100));
-            cm.getColumn(6).setHeaderValue("Luuse OUT");
-         cm.addColumn(new TableColumn(7,100));
-            cm.getColumn(7).setHeaderValue("Total Units");
-            
-              int row=jTable9.getSelectedRow();
-        String item=jTable9.getValueAt(row, 1).toString();
-        
+        TableColumnModel cm = jTable8.getTableHeader().getColumnModel();
+        while (cm.getColumnCount() > 0) {
+            cm.removeColumn(cm.getColumn(0));
+        }
+        cm.addColumn(new TableColumn(0, 100));
+        cm.getColumn(0).setHeaderValue("Item_Name");
+
+        cm.addColumn(new TableColumn(1, 100));
+        cm.getColumn(1).setHeaderValue("Type of unit");
+
+        cm.addColumn(new TableColumn(2, 100));
+        cm.getColumn(2).setHeaderValue("IN");
+
+        cm.addColumn(new TableColumn(3, 100));
+        cm.getColumn(3).setHeaderValue("Luuse IN");
+
+        cm.addColumn(new TableColumn(4, 100));
+        cm.getColumn(4).setHeaderValue("Total Units");
+
+        cm.addColumn(new TableColumn(5, 100));
+        cm.getColumn(5).setHeaderValue("OUT");
+
+        cm.addColumn(new TableColumn(6, 100));
+        cm.getColumn(6).setHeaderValue("Luuse OUT");
+        cm.addColumn(new TableColumn(7, 100));
+        cm.getColumn(7).setHeaderValue("Total Units");
+
+        int row = jTable9.getSelectedRow();
+        String item = jTable9.getValueAt(row, 1).toString();
+
         SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
         String fdate = d.format(jDateChooser4.getDate());
-       
-       int qIN=0;
-String iname="";
-String type="";
- String qOUT="";  
- String totIN="";
- String totOUT=""; 
-        String luseOUT="";
-        int total_l_OUT_pluse_q=0;
-        int total_l_IN_pluse_q=0;
-        
+
+        int qIN = 0;
+        String iname = "";
+        String type = "";
+        String qOUT = "";
+        String totIN = "";
+        String totOUT = "";
+        String luseOUT = "";
+        int total_l_OUT_pluse_q = 0;
+        int total_l_IN_pluse_q = 0;
+
 //         DefaultTableModel df =(DefaultTableModel)jTable8.getModel();
 //            df.setRowCount(0);
-            DefaultTableModel df =(DefaultTableModel)jTable8.getModel();
-            int r =jTable8.getRowCount();
-            
-            df.setRowCount(0);
-           int t=0;
+        DefaultTableModel df = (DefaultTableModel) jTable8.getModel();
+        int r = jTable8.getRowCount();
+
+        df.setRowCount(0);
+        int t = 0;
         try {
-            String sql="SELECT item_name,type_of_kg,"
+            String sql = "SELECT item_name,type_of_kg,"
                     + "sum(CASE WHEN movement = 'IN' THEN quantity ELSE 0 END)AS qin,"
                     + "sum(CASE WHEN movement = 'IN' THEN total_kg ELSE 0 END)AS tqtyi,"
                     + "sum(CASE WHEN movement = 'OUT' THEN quantity ELSE 0 END)AS qout,"
-                    + "sum(CASE WHEN movement = 'OUT' THEN total_kg ELSE 0 END)AS tqty FROM stock WHERE item_name='"+item+"' AND date='"+fdate+"' GROUP BY type_of_kg ";
-            
-            String sql4="SELECT type_of_kg,sum(CASE WHEN move = 'OUT' THEN total_luuse ELSE 0 END) as luse,sum(CASE WHEN move = 'IN' THEN total_luuse ELSE 0 END) as luseIN FROM luuse WHERE date='"+fdate+"' AND cat_name='"+item+"' GROUP BY type_of_kg";
-            pst=conn.prepareStatement(sql);
-            pst1=conn.prepareStatement(sql4);
-            rs=pst.executeQuery();
-            rs1=pst1.executeQuery();
-            
+                    + "sum(CASE WHEN movement = 'OUT' THEN total_kg ELSE 0 END)AS tqty FROM stock WHERE item_name='" + item + "' AND date='" + fdate + "' GROUP BY type_of_kg ";
+
+            String sql4 = "SELECT type_of_kg,sum(CASE WHEN move = 'OUT' THEN total_luuse ELSE 0 END) as luse,sum(CASE WHEN move = 'IN' THEN total_luuse ELSE 0 END) as luseIN FROM luuse WHERE date='" + fdate + "' AND cat_name='" + item + "' GROUP BY type_of_kg";
+            pst = conn.prepareStatement(sql);
+            pst1 = conn.prepareStatement(sql4);
+            rs = pst.executeQuery();
+            rs1 = pst1.executeQuery();
+
             // Create a map to store luse values for each type_of_kg
             Map<String, Integer> luseMap = new HashMap<>();
             Map<String, Integer> luseINMap = new HashMap<>();
@@ -7355,178 +7254,167 @@ String type="";
             while (rs1.next()) {
                 String type1 = rs1.getString("type_of_kg");
                 int luseValue = rs1.getInt("luse");
-                 int luseINValue = rs1.getInt("luseIN");
+                int luseINValue = rs1.getInt("luseIN");
                 luseMap.put(type1, luseValue);
                 luseINMap.put(type1, luseINValue);
             }
-            
-            while(rs.next()){
-            iname=rs.getString("item_name");
-            type=rs.getString("type_of_kg");
-            qIN=rs.getInt("qin");
-             totIN=rs.getString("tqtyi"); 
-             
-             qOUT=rs.getString("qout");
-            totOUT=rs.getString("tqty");  
-            
-            
-            // Get the corresponding luse value from the map
-            int luseOUT1 = luseMap.getOrDefault(type, 0);
-            int luseIN = luseINMap.getOrDefault(type, 0);
-            total_l_IN_pluse_q=Integer.parseInt(totIN)+luseIN;
-            total_l_OUT_pluse_q=Integer.parseInt(totOUT)+luseOUT1;
-            
-                        df.addRow(new Object []{
-        
-                        iname,
-                        type,
-                        qIN,
-                         luseIN,
-                         total_l_IN_pluse_q,
-                       qOUT,
-                        luseOUT1,
-                        total_l_OUT_pluse_q
 
-                    });
-                    
-       
+            while (rs.next()) {
+                iname = rs.getString("item_name");
+                type = rs.getString("type_of_kg");
+                qIN = rs.getInt("qin");
+                totIN = rs.getString("tqtyi");
+
+                qOUT = rs.getString("qout");
+                totOUT = rs.getString("tqty");
+
+                // Get the corresponding luse value from the map
+                int luseOUT1 = luseMap.getOrDefault(type, 0);
+                int luseIN = luseINMap.getOrDefault(type, 0);
+                total_l_IN_pluse_q = Integer.parseInt(totIN) + luseIN;
+                total_l_OUT_pluse_q = Integer.parseInt(totOUT) + luseOUT1;
+
+                df.addRow(new Object[]{
+                    iname,
+                    type,
+                    qIN,
+                    luseIN,
+                    total_l_IN_pluse_q,
+                    qOUT,
+                    luseOUT1,
+                    total_l_OUT_pluse_q
+
+                });
+
             }
-            
-            
-                        
+
         } catch (Exception e) {
         }
-           
- 
+
+
     }//GEN-LAST:event_jButton40ActionPerformed
 
     private void jTable10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable10MouseClicked
-       //add quantitiy (IN or OUT) to the table when user bress the jtable10 row
-      TableColumnModel cm=jTable8.getTableHeader().getColumnModel();
-            while(cm.getColumnCount()>0){
-                cm.removeColumn(cm.getColumn(0));
-            }
-            cm.addColumn(new TableColumn(0,100));
-            cm.getColumn(0).setHeaderValue("Item_Name");
-            
-             cm.addColumn(new TableColumn(1,100));
-            cm.getColumn(1).setHeaderValue("Type of unit");
-            
-             cm.addColumn(new TableColumn(2,100));
-            cm.getColumn(2).setHeaderValue("IN");
-            
-             cm.addColumn(new TableColumn(3,100));
-            cm.getColumn(3).setHeaderValue("Luuse IN");
-            
-            cm.addColumn(new TableColumn(4,100));
-            cm.getColumn(4).setHeaderValue("Total Units");
-            
-             cm.addColumn(new TableColumn(5,100));
-            cm.getColumn(5).setHeaderValue("OUT");
-            
-               cm.addColumn(new TableColumn(6,100));
-            cm.getColumn(6).setHeaderValue("Luuse OUT");
-         cm.addColumn(new TableColumn(7,100));
-            cm.getColumn(7).setHeaderValue("Total Units");
-        
-        
-        int row=jTable9.getSelectedRow();
-        String item=jTable9.getValueAt(row, 1).toString();
-        
+        //add quantitiy (IN or OUT) to the table when user bress the jtable10 row
+        TableColumnModel cm = jTable8.getTableHeader().getColumnModel();
+        while (cm.getColumnCount() > 0) {
+            cm.removeColumn(cm.getColumn(0));
+        }
+        cm.addColumn(new TableColumn(0, 100));
+        cm.getColumn(0).setHeaderValue("Item_Name");
+
+        cm.addColumn(new TableColumn(1, 100));
+        cm.getColumn(1).setHeaderValue("Type of unit");
+
+        cm.addColumn(new TableColumn(2, 100));
+        cm.getColumn(2).setHeaderValue("IN");
+
+        cm.addColumn(new TableColumn(3, 100));
+        cm.getColumn(3).setHeaderValue("Luuse IN");
+
+        cm.addColumn(new TableColumn(4, 100));
+        cm.getColumn(4).setHeaderValue("Total Units");
+
+        cm.addColumn(new TableColumn(5, 100));
+        cm.getColumn(5).setHeaderValue("OUT");
+
+        cm.addColumn(new TableColumn(6, 100));
+        cm.getColumn(6).setHeaderValue("Luuse OUT");
+        cm.addColumn(new TableColumn(7, 100));
+        cm.getColumn(7).setHeaderValue("Total Units");
+
+        int row = jTable9.getSelectedRow();
+        String item = jTable9.getValueAt(row, 1).toString();
+
         SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
         String fdate = d.format(jDateChooser4.getDate());
-        int r2=jTable10.getSelectedRow();
-        
-        String ty=jTable10.getValueAt(r2, 0).toString();
-        
-String qIN="";
-String iname="";
-String type="";
- String qOUT="";  
- int totIN=0;
- int totOUT=0;
- int luseIN=0;
- int luseOUT=0;
- int total_l_pluse_q_IN=0;
-  int total_l_pluse_q_OUT=0;
+        int r2 = jTable10.getSelectedRow();
+
+        String ty = jTable10.getValueAt(r2, 0).toString();
+
+        String qIN = "";
+        String iname = "";
+        String type = "";
+        String qOUT = "";
+        int totIN = 0;
+        int totOUT = 0;
+        int luseIN = 0;
+        int luseOUT = 0;
+        int total_l_pluse_q_IN = 0;
+        int total_l_pluse_q_OUT = 0;
         try {
-            String sql="SELECT item_name,type_of_kg,sum(quantity),sum(total_kg) FROM stock WHERE date='"+fdate+"' AND item_name='"+item+"' AND type_of_kg='"+ty+"' AND movement='"+"IN"+"'";
-            pst=conn.prepareStatement(sql);
-            rs =pst.executeQuery();
-           if(rs.next()){
-           iname=rs.getString("item_name");
-           type=rs.getString("type_of_kg");
-           qIN=rs.getString("sum(quantity)");
-           totIN=rs.getInt("sum(total_kg)");
-           }
-            
-            
-        } catch (Exception e) {
-        }
-          try {
-            String sql="SELECT sum(quantity),sum(total_kg) FROM stock WHERE date='"+fdate+"' AND item_name='"+item+"' AND type_of_kg='"+ty+"' AND movement='"+"OUT"+"'";
-            pst=conn.prepareStatement(sql);
-            rs =pst.executeQuery();
-           
-            if(rs.next()){
-            qOUT=rs.getString("sum(quantity)");
-            totOUT=rs.getInt("sum(total_kg)");
-          
-           
+            String sql = "SELECT item_name,type_of_kg,sum(quantity),sum(total_kg) FROM stock WHERE date='" + fdate + "' AND item_name='" + item + "' AND type_of_kg='" + ty + "' AND movement='" + "IN" + "'";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                iname = rs.getString("item_name");
+                type = rs.getString("type_of_kg");
+                qIN = rs.getString("sum(quantity)");
+                totIN = rs.getInt("sum(total_kg)");
             }
-            
+
         } catch (Exception e) {
         }
         try {
-            String sqlq="SELECT sum(CASE WHEN move = 'IN' THEN total_luuse ELSE 0 END) as luseIN,sum(CASE WHEN move = 'OUT' THEN total_luuse ELSE 0 END) as luseOUT FROM luuse WHERE date='"+fdate+"' AND cat_name='"+item+"' AND type_of_kg='"+ty+"' ";
-            pst=conn.prepareStatement(sqlq);
-            rs=pst.executeQuery();
-             if(rs.next()){
-            luseIN=rs.getInt("luseIN");
-            luseOUT=rs.getInt("luseOUT");
-          
-           
+            String sql = "SELECT sum(quantity),sum(total_kg) FROM stock WHERE date='" + fdate + "' AND item_name='" + item + "' AND type_of_kg='" + ty + "' AND movement='" + "OUT" + "'";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+                qOUT = rs.getString("sum(quantity)");
+                totOUT = rs.getInt("sum(total_kg)");
+
             }
-            
+
+        } catch (Exception e) {
+        }
+        try {
+            String sqlq = "SELECT sum(CASE WHEN move = 'IN' THEN total_luuse ELSE 0 END) as luseIN,sum(CASE WHEN move = 'OUT' THEN total_luuse ELSE 0 END) as luseOUT FROM luuse WHERE date='" + fdate + "' AND cat_name='" + item + "' AND type_of_kg='" + ty + "' ";
+            pst = conn.prepareStatement(sqlq);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                luseIN = rs.getInt("luseIN");
+                luseOUT = rs.getInt("luseOUT");
+
+            }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
-           total_l_pluse_q_IN=(totIN+luseIN);
-           total_l_pluse_q_OUT=(totOUT+luseOUT);
-            DefaultTableModel df =(DefaultTableModel)jTable8.getModel();
-            df.setRowCount(0);
-        df.addRow(new Object []{
-        
+        total_l_pluse_q_IN = (totIN + luseIN);
+        total_l_pluse_q_OUT = (totOUT + luseOUT);
+        DefaultTableModel df = (DefaultTableModel) jTable8.getModel();
+        df.setRowCount(0);
+        df.addRow(new Object[]{
             iname,
             type,
             qIN,
             luseIN,
-           total_l_pluse_q_IN,
+            total_l_pluse_q_IN,
             qOUT,
             luseOUT,
-             total_l_pluse_q_OUT
-        
+            total_l_pluse_q_OUT
+
         });
-        
-        
+
         try {
-            String sw="SELECT sum(total_kg) FROM stock WHERE date='"+fdate+"' AND item_name='"+item+"' AND movement='"+"IN"+"'";
-              pst=conn.prepareStatement(sw);
-            rs =pst.executeQuery();
-            
-            if(rs.next()){
-                String t=rs.getString("sum(total_kg)");
+            String sw = "SELECT sum(total_kg) FROM stock WHERE date='" + fdate + "' AND item_name='" + item + "' AND movement='" + "IN" + "'";
+            pst = conn.prepareStatement(sw);
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+                String t = rs.getString("sum(total_kg)");
                 jLabel76.setText(String.valueOf(t));
             }
         } catch (Exception e) {
         }
         try {
-            String sw="SELECT sum(total_kg) FROM stock WHERE date='"+fdate+"' AND item_name='"+item+"' AND movement='"+"OUT"+"'";
-              pst=conn.prepareStatement(sw);
-            rs =pst.executeQuery();
-            
-            if(rs.next()){
-                String t1=rs.getString("sum(total_kg)");
+            String sw = "SELECT sum(total_kg) FROM stock WHERE date='" + fdate + "' AND item_name='" + item + "' AND movement='" + "OUT" + "'";
+            pst = conn.prepareStatement(sw);
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+                String t1 = rs.getString("sum(total_kg)");
                 jLabel79.setText(String.valueOf(t1));
             }
         } catch (Exception e) {
@@ -7534,766 +7422,738 @@ String type="";
     }//GEN-LAST:event_jTable10MouseClicked
 
     private void jTable11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable11MouseClicked
-           rightPanel.removeAll();
+        rightPanel.removeAll();
         rightPanel.add(p3);
         rightPanel.repaint();
         rightPanel.revalidate();
-boolean cv=jRadioButton2.isSelected();
-jTextField9.setEditable(true);
-jTextField9.setEnabled(true);
-jTextField11.setText("");
+        boolean cv = jRadioButton2.isSelected();
+        jTextField9.setEditable(true);
+        jTextField9.setEnabled(true);
+        jTextField11.setText("");
         int row = jTable11.getSelectedRow();
-String name2="";
- String name1 = jTable11.getValueAt(row, 2).toString();
- 
- if(name1.equals("Salt")){
- 
-     jRadioButton1.setSelected(true);
-     jRadioButton2.setSelected(false);
-     jRadioButton3.setSelected(false);
-     jRadioButton4.setSelected(false);
- }else if(name1.equals("Deliver/Detor")){
-    jRadioButton1.setSelected(false);
-    jRadioButton3.setSelected(false);
-     jRadioButton4.setSelected(false);
-    jRadioButton2.setSelected(true);
- }else if(name1.equals("Customer")){
-    jRadioButton1.setSelected(false);
-    jRadioButton2.setSelected(false);
-     jRadioButton4.setSelected(false);
-    jRadioButton3.setSelected(true);
- }else if(name1.equals("Shop")){
-    jRadioButton1.setSelected(false);
-    jRadioButton3.setSelected(false);
-     jRadioButton2.setSelected(false);
-    jRadioButton4.setSelected(true);
- }
- jTable3.getColumnModel().getColumn(0).setMinWidth(0);
-      jTable3.getColumnModel().getColumn(0).setMaxWidth(0);
+        String name2 = "";
+        String name1 = jTable11.getValueAt(row, 2).toString();
+
+        if (name1.equals("Salt")) {
+
+            jRadioButton1.setSelected(true);
+            jRadioButton2.setSelected(false);
+            jRadioButton3.setSelected(false);
+            jRadioButton4.setSelected(false);
+        } else if (name1.equals("Deliver/Detor")) {
+            jRadioButton1.setSelected(false);
+            jRadioButton3.setSelected(false);
+            jRadioButton4.setSelected(false);
+            jRadioButton2.setSelected(true);
+        } else if (name1.equals("Customer")) {
+            jRadioButton1.setSelected(false);
+            jRadioButton2.setSelected(false);
+            jRadioButton4.setSelected(false);
+            jRadioButton3.setSelected(true);
+        } else if (name1.equals("Shop")) {
+            jRadioButton1.setSelected(false);
+            jRadioButton3.setSelected(false);
+            jRadioButton2.setSelected(false);
+            jRadioButton4.setSelected(true);
+        }
+        jTable3.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable3.getColumnModel().getColumn(0).setMaxWidth(0);
         try {
-           
+
             name2 = jTable11.getValueAt(row, 3).toString();
             Date fDate = new SimpleDateFormat("yyyy-MM-dd").parse((String) jTable11.getValueAt(row, 4).toString());
             SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
             String fda = d.format(fDate);
-            String s = "SELECT * FROM sales_list WHERE date ='" + fda + "' AND dealer_name='" + name2 + "' AND dealer='"+name1+"'";
+            String s = "SELECT * FROM sales_list WHERE date ='" + fda + "' AND dealer_name='" + name2 + "' AND dealer='" + name1 + "'";
             pst = conn.prepareStatement(s);
             rs = pst.executeQuery();
-            
+
             jTable7.setModel(DbUtils.resultSetToTableModel(rs));
-                   //getArius amount
-        
-        
-        
+            //getArius amount
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
-        
+
         try {
             name2 = jTable11.getValueAt(row, 3).toString();
             Date fDate = new SimpleDateFormat("yyyy-MM-dd").parse((String) jTable11.getValueAt(row, 4).toString());
             SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
             String fda = d.format(fDate);
-            String s = "SELECT * FROM sales_list WHERE date ='" + fda + "' AND dealer_name='" + name2 + "' AND dealer='"+name1+"'";
+            String s = "SELECT * FROM sales_list WHERE date ='" + fda + "' AND dealer_name='" + name2 + "' AND dealer='" + name1 + "'";
             pst = conn.prepareStatement(s);
             rs = pst.executeQuery();
-            
-            if(rs.next()){
-            
-            String n=rs.getString("dealer_name");
-            String mn=rs.getString("mobile");
-            String ln=rs.getString("lorry_number");
-           
-            String route=rs.getString("route");
-            String collector=rs.getString("collector");
-            jTextField7.setText(n);
-            jTextField8.setText(mn);
-            jTextField9.setText(ln);
-            jTextField45.setText(collector);
-            jComboBox2.setSelectedItem(route);
-            
+
+            if (rs.next()) {
+
+                String n = rs.getString("dealer_name");
+                String mn = rs.getString("mobile");
+                String ln = rs.getString("lorry_number");
+
+                String route = rs.getString("route");
+                String collector = rs.getString("collector");
+                jTextField7.setText(n);
+                jTextField8.setText(mn);
+                jTextField9.setText(ln);
+                jTextField45.setText(collector);
+                jComboBox2.setSelectedItem(route);
+
             }
         } catch (Exception e) {
         }
-            jTable7.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable7.getColumnModel().getColumn(0).setMinWidth(0);
         jTable7.getColumnModel().getColumn(0).setMaxWidth(0);
-        
+
         getProductdata();
         try {
-         
-            String s = "SELECT type_of_kg,quantity,rest_of_quantity as luuse,total_quantity as total_kg FROM   product_properties WHERE p_id='"+"ww"+"'";
+
+            String s = "SELECT type_of_kg,quantity,rest_of_quantity as luuse,total_quantity as total_kg FROM   product_properties WHERE p_id='" + "ww" + "'";
             pst = conn.prepareStatement(s);
             rs = pst.executeQuery();
             jTable4.setModel(DbUtils.resultSetToTableModel(rs));
-           
-    
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, e);
-    }
-        String newAriusamount="0";
-//get arius amount        
-try {
-            String sql="SELECT sum(arius_amount) FROM arius_amount WHERE name='"+name2+"' AND dealer='"+name1+"'";
-               pst = conn.prepareStatement(sql);
-                 rs = pst.executeQuery();
-                 if(rs.next()){
-                 String amount=rs.getString("sum(arius_amount)");
-                 newAriusamount=amount;
-                 
-                 if(newAriusamount==null){
-                 
-                     jTextField46.setText("0.0");
-                 jLabel88.setText("0.0");
-                 }else{
-                 jTextField46.setText(String.valueOf(amount));
-                 jLabel88.setText(String.valueOf(amount));
-                 }
-                 
-                 }
-                 
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
-   
-    jButton43.setEnabled(false);
-      jButton46.setEnabled(true);
+        String newAriusamount = "0";
+//get arius amount        
+        try {
+            String sql = "SELECT sum(arius_amount) FROM arius_amount WHERE name='" + name2 + "' AND dealer='" + name1 + "'";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                String amount = rs.getString("sum(arius_amount)");
+                newAriusamount = amount;
+
+                if (newAriusamount == null) {
+
+                    jTextField46.setText("0.0");
+                    jLabel88.setText("0.0");
+                } else {
+                    jTextField46.setText(String.valueOf(amount));
+                    jLabel88.setText(String.valueOf(amount));
+                }
+
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
+
+        jButton43.setEnabled(false);
+        jButton46.setEnabled(true);
     }//GEN-LAST:event_jTable11MouseClicked
 
     private void jTextField15KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField15KeyReleased
-        int tkg=Integer.parseInt(jTextField14.getText());
-         int p=Integer.parseInt(jTextField15.getText());
-         
-         int top=(tkg * p);
-         jTextField16.setText(String.valueOf(top));
-         
-         if(evt.getKeyCode()==KeyEvent.VK_BACK_SPACE){
-         jTextField16.setText("");
-         
-         }
-         
-         
+        int tkg = Integer.parseInt(jTextField14.getText());
+        int p = Integer.parseInt(jTextField15.getText());
+
+        int top = (tkg * p);
+        jTextField16.setText(String.valueOf(top));
+
+        if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+            jTextField16.setText("");
+
+        }
+
+
     }//GEN-LAST:event_jTextField15KeyReleased
 //add data to bill view
-    public void addDataToBillView(){
-        
-         boolean bt=jButton46.isEnabled();
-            String cname=jTextField7.getText();
-            String ll=jTextField9.getText();
-            String k=jTextField12.getText();
-            String q=jTextField13.getText();
-            String tkk=jTextField14.getText();
-            String c=jTextField11.getText();
-            String p=jTextField15.getText();
-            String p2=jTextField16.getText();
-           
-           
-        if(k.equals("")||q.equals("")||tkk.equals("")||c.equals("")||p.equals("")||p2.equals("")){
+
+    public void addDataToBillView() {
+
+        boolean bt = jButton46.isEnabled();
+        String cname = jTextField7.getText();
+        String ll = jTextField9.getText();
+        String k = jTextField12.getText();
+        String q = jTextField13.getText();
+        String tkk = jTextField14.getText();
+        String c = jTextField11.getText();
+        String p = jTextField15.getText();
+        String p2 = jTextField16.getText();
+
+        if (k.equals("") || q.equals("") || tkk.equals("") || c.equals("") || p.equals("") || p2.equals("")) {
             JOptionPane.showMessageDialog(this, "please fill the text fields");
-        }else if(bt==true){
-             JOptionPane.showMessageDialog(this, "please select the Bill view");
-        } else{
-        
-            
-                //if check add/get luuse button is true
-             boolean addUse=jCheckBox1.isSelected();
-             boolean getUse=jCheckBox2.isSelected();
-             String quantity="0";
-             String luuse="0";
-             String luuseName="null";
-             if(addUse==true ||getUse==true){
-                 if(addUse==true){luuseName="AL";}else{luuseName="GL";}
-             luuse=jTextField13.getText();
-             quantity="0";
-             }else{
-             
-             quantity=jTextField13.getText();
-             luuse="0";
-             }
-        
-     
-               int rr=jTable4.getSelectedRow();
-        
-                
-                String type=jTable4.getValueAt(rr, 0).toString();
-                String pid3=jTable4.getValueAt(rr, 5).toString();
-        
-    
-       
+        } else if (bt == true) {
+            JOptionPane.showMessageDialog(this, "please select the Bill view");
+        } else {
+
+            //if check add/get luuse button is true
+            boolean addUse = jCheckBox1.isSelected();
+            boolean getUse = jCheckBox2.isSelected();
+            String quantity = "0";
+            String luuse = "0";
+            String luuseName = "null";
+            if (addUse == true || getUse == true) {
+                if (addUse == true) {
+                    luuseName = "AL";
+                } else {
+                    luuseName = "GL";
+                }
+                luuse = jTextField13.getText();
+                quantity = "0";
+            } else {
+
+                quantity = jTextField13.getText();
+                luuse = "0";
+            }
+
+            int rr = jTable4.getSelectedRow();
+
+            String type = jTable4.getValueAt(rr, 0).toString();
+            String pid3 = jTable4.getValueAt(rr, 5).toString();
+
             try {
-                String sql="SELECT sum(quantity),sum(rest_of_quantity) FROM  product_properties WHERE type_of_kg='"+type+"' AND p_id='"+pid3+"'";
-                pst =conn.prepareStatement(sql);
-                rs=pst.executeQuery();
-                
-                if(rs.next()){
-                
-                    int quat=rs.getInt("sum(quantity)");
-                    int res=rs.getInt("sum(rest_of_quantity)");
-                    int wqty=Integer.parseInt(quantity);
-                    int wluuse=Integer.parseInt(luuse);
-                    if(quat<wqty){
+                String sql = "SELECT sum(quantity),sum(rest_of_quantity) FROM  product_properties WHERE type_of_kg='" + type + "' AND p_id='" + pid3 + "'";
+                pst = conn.prepareStatement(sql);
+                rs = pst.executeQuery();
+
+                if (rs.next()) {
+
+                    int quat = rs.getInt("sum(quantity)");
+                    int res = rs.getInt("sum(rest_of_quantity)");
+                    int wqty = Integer.parseInt(quantity);
+                    int wluuse = Integer.parseInt(luuse);
+                    if (quat < wqty) {
                         JOptionPane.showMessageDialog(this, "cannot performe the task, quantitiy is higher than the stock");
-                    }else if(res==0){
-                    
-                         //add data to bill table(bill preview)  
-              int r1=jTable3.getSelectedRow();
-              int idr=jTable4.getSelectedRow();
-             String item1=jTextField11.getText();
-             String kyType=jTextField12.getText();
-             String totalQuantity=jTextField14.getText();
-             String price=jTextField15.getText();
-             double totalP=Double.parseDouble(jTextField16.getText());
-             String pid1=jTable4.getValueAt(idr, 5).toString();
-            
-         DefaultTableModel df =(DefaultTableModel)jTable7.getModel();
-        
-              df.addRow(new Object []{
-                  item1,
-                  kyType,
-                  quantity,
-                  luuse,
-                  totalQuantity,
-                  price,
-                  totalP,
-                   pid1,
-                   luuseName
-        
-        
-            });
-              
-       // DefaultTableModel df =(DefaultTableModel)jTable7.getModel();       
-              //set and get total
-        double totalq=0;
-        double sub=0;
-        int col =jTable7.getRowCount();
-        
-       
-        for(int i=0;i<col;i++){
-        
-        sub=(Double)df.getValueAt(i, 6);
-         totalq=totalq+sub;
-        }
-       jLabel86.setText(String.valueOf(totalq));
-       
-            double ariusTotalwithBillamout=0.0;
-            
-            double b=Double.parseDouble(jLabel88.getText());
-            ariusTotalwithBillamout=totalq+b;
-            jLabel90.setText(String.valueOf(ariusTotalwithBillamout));
-         
-                    }else if(wluuse>res){
+                    } else if (res == 0) {
+
+                        //add data to bill table(bill preview)  
+                        int r1 = jTable3.getSelectedRow();
+                        int idr = jTable4.getSelectedRow();
+                        String item1 = jTextField11.getText();
+                        String kyType = jTextField12.getText();
+                        String totalQuantity = jTextField14.getText();
+                        String price = jTextField15.getText();
+                        double totalP = Double.parseDouble(jTextField16.getText());
+                        String pid1 = jTable4.getValueAt(idr, 5).toString();
+
+                        DefaultTableModel df = (DefaultTableModel) jTable7.getModel();
+
+                        df.addRow(new Object[]{
+                            item1,
+                            kyType,
+                            quantity,
+                            luuse,
+                            totalQuantity,
+                            price,
+                            totalP,
+                            pid1,
+                            luuseName
+
+                        });
+
+                        // DefaultTableModel df =(DefaultTableModel)jTable7.getModel();       
+                        //set and get total
+                        double totalq = 0;
+                        double sub = 0;
+                        int col = jTable7.getRowCount();
+
+                        for (int i = 0; i < col; i++) {
+
+                            sub = (Double) df.getValueAt(i, 6);
+                            totalq = totalq + sub;
+                        }
+                        jLabel86.setText(String.valueOf(totalq));
+
+                        double ariusTotalwithBillamout = 0.0;
+
+                        double b = Double.parseDouble(jLabel88.getText());
+                        ariusTotalwithBillamout = totalq + b;
+                        jLabel90.setText(String.valueOf(ariusTotalwithBillamout));
+
+                    } else if (wluuse > res) {
                         JOptionPane.showMessageDialog(this, "cannot performe the task, luuse quantitiy is higher than the stock");
-                    }else{
-                                     
-                       //add data to bill table(bill preview)  
-              int r1=jTable3.getSelectedRow();
-              int idr=jTable4.getSelectedRow();
-             String item1=jTextField11.getText();
-             String kyType=jTextField12.getText();
-             String totalQuantity=jTextField14.getText();
-             String price=jTextField15.getText();
-             double totalP=Double.parseDouble(jTextField16.getText());
-             String pid1=jTable4.getValueAt(idr, 5).toString();
-            
-         DefaultTableModel df =(DefaultTableModel)jTable7.getModel();
-        
-              df.addRow(new Object []{
-                  item1,
-                  kyType,
-                  quantity,
-                  luuse,
-                  totalQuantity,
-                  price,
-                  totalP,
-                   pid1,
-                   luuseName
-        
-        
-            });
-              
-       // DefaultTableModel df =(DefaultTableModel)jTable7.getModel();       
-              //set and get total
-        double totalq=0;
-        double sub=0;
-        int col =jTable7.getRowCount();
-        
-       
-        for(int i=0;i<col;i++){
-        
-        sub=(Double)df.getValueAt(i, 6);
-         totalq=totalq+sub;
-        }
-       jLabel86.setText(String.valueOf(totalq));
-         
-              Double ariusTotalwithBillamout=0.0;
-            
-            Double b=Double.parseDouble(jLabel88.getText());
-            ariusTotalwithBillamout=totalq+b;
-            jLabel90.setText(String.valueOf(ariusTotalwithBillamout));
+                    } else {
+
+                        //add data to bill table(bill preview)  
+                        int r1 = jTable3.getSelectedRow();
+                        int idr = jTable4.getSelectedRow();
+                        String item1 = jTextField11.getText();
+                        String kyType = jTextField12.getText();
+                        String totalQuantity = jTextField14.getText();
+                        String price = jTextField15.getText();
+                        double totalP = Double.parseDouble(jTextField16.getText());
+                        String pid1 = jTable4.getValueAt(idr, 5).toString();
+
+                        DefaultTableModel df = (DefaultTableModel) jTable7.getModel();
+
+                        df.addRow(new Object[]{
+                            item1,
+                            kyType,
+                            quantity,
+                            luuse,
+                            totalQuantity,
+                            price,
+                            totalP,
+                            pid1,
+                            luuseName
+
+                        });
+
+                        // DefaultTableModel df =(DefaultTableModel)jTable7.getModel();       
+                        //set and get total
+                        double totalq = 0;
+                        double sub = 0;
+                        int col = jTable7.getRowCount();
+
+                        for (int i = 0; i < col; i++) {
+
+                            sub = (Double) df.getValueAt(i, 6);
+                            totalq = totalq + sub;
+                        }
+                        jLabel86.setText(String.valueOf(totalq));
+
+                        Double ariusTotalwithBillamout = 0.0;
+
+                        Double b = Double.parseDouble(jLabel88.getText());
+                        ariusTotalwithBillamout = totalq + b;
+                        jLabel90.setText(String.valueOf(ariusTotalwithBillamout));
                     }
-                
-                
-                }else{
-                
-                JOptionPane.showMessageDialog(this,"Error");
+
+                } else {
+
+                    JOptionPane.showMessageDialog(this, "Error");
                 }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this,e);
+                JOptionPane.showMessageDialog(this, e);
             }
-            
-        
+
         }
-        
-        
+
     }
     private void jButton39ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton39ActionPerformed
-              
-        
-          boolean bt=jButton46.isEnabled();
-            String cname=jTextField7.getText();
-            String ll=jTextField9.getText();
-            String k=jTextField12.getText();
-            String q=jTextField13.getText();
-            String tkk=jTextField14.getText();
-            String c=jTextField11.getText();
-            String p=jTextField15.getText();
-            String p2=jTextField16.getText();
-           
-           
-        if(k.equals("")||q.equals("")||tkk.equals("")||c.equals("")||p.equals("")||p2.equals("")){
+
+        boolean bt = jButton46.isEnabled();
+        String cname = jTextField7.getText();
+        String ll = jTextField9.getText();
+        String k = jTextField12.getText();
+        String q = jTextField13.getText();
+        String tkk = jTextField14.getText();
+        String c = jTextField11.getText();
+        String p = jTextField15.getText();
+        String p2 = jTextField16.getText();
+
+        if (k.equals("") || q.equals("") || tkk.equals("") || c.equals("") || p.equals("") || p2.equals("")) {
             JOptionPane.showMessageDialog(this, "please fill the text fields");
-        }else if(bt==true){
-             JOptionPane.showMessageDialog(this, "please select the Bill view");
-        } else{
-        
-            
-                //if check add/get luuse button is true
-             boolean addUse=jCheckBox1.isSelected();
-             boolean getUse=jCheckBox2.isSelected();
-             String quantity="0";
-             String luuse="0";
-             String luuseName="null";
-             if(addUse==true ||getUse==true){
-                 if(addUse==true){luuseName="AL";}else{luuseName="GL";}
-             luuse=jTextField13.getText();
-             quantity="0";
-             }else{
-             
-             quantity=jTextField13.getText();
-             luuse="0";
-             }
-        
-     
-               int rr=jTable4.getSelectedRow();
-        
-                
-                String type=jTable4.getValueAt(rr, 0).toString();
-                String pid3=jTable4.getValueAt(rr, 5).toString();
-        
-    
-       
+        } else if (bt == true) {
+            JOptionPane.showMessageDialog(this, "please select the Bill view");
+        } else {
+
+            //if check add/get luuse button is true
+            boolean addUse = jCheckBox1.isSelected();
+            boolean getUse = jCheckBox2.isSelected();
+            String quantity = "0";
+            String luuse = "0";
+            String luuseName = "null";
+            if (addUse == true || getUse == true) {
+                if (addUse == true) {
+                    luuseName = "AL";
+                } else {
+                    luuseName = "GL";
+                }
+                luuse = jTextField13.getText();
+                quantity = "0";
+            } else {
+
+                quantity = jTextField13.getText();
+                luuse = "0";
+            }
+
+            int rr = jTable4.getSelectedRow();
+
+            String type = jTable4.getValueAt(rr, 0).toString();
+            String pid3 = jTable4.getValueAt(rr, 5).toString();
+
             try {
-                String sql="SELECT sum(quantity),sum(rest_of_quantity) FROM  product_properties WHERE type_of_kg='"+type+"' AND p_id='"+pid3+"'";
-                pst =conn.prepareStatement(sql);
-                rs=pst.executeQuery();
-                
-                if(rs.next()){
-                
-                    int quat=rs.getInt("sum(quantity)");
-                    int res=rs.getInt("sum(rest_of_quantity)");
-                    int wqty=Integer.parseInt(quantity);
-                    int wluuse=Integer.parseInt(luuse);
-                    if(quat<wqty){
+                String sql = "SELECT sum(quantity),sum(rest_of_quantity) FROM  product_properties WHERE type_of_kg='" + type + "' AND p_id='" + pid3 + "'";
+                pst = conn.prepareStatement(sql);
+                rs = pst.executeQuery();
+
+                if (rs.next()) {
+
+                    int quat = rs.getInt("sum(quantity)");
+                    int res = rs.getInt("sum(rest_of_quantity)");
+                    int wqty = Integer.parseInt(quantity);
+                    int wluuse = Integer.parseInt(luuse);
+                    if (quat < wqty) {
                         JOptionPane.showMessageDialog(this, "cannot performe the task, quantitiy is higher than the stock");
-                    }else if(res==0){
-                    
-                         //add data to bill table(bill preview)  
-              int r1=jTable3.getSelectedRow();
-              int idr=jTable4.getSelectedRow();
-             String item1=jTextField11.getText();
-             String kyType=jTextField12.getText();
-             String totalQuantity=jTextField14.getText();
-             String price=jTextField15.getText();
-             double totalP=Double.parseDouble(jTextField16.getText());
-             String pid1=jTable4.getValueAt(idr, 5).toString();
-            
-         DefaultTableModel df =(DefaultTableModel)jTable7.getModel();
-        
-              df.addRow(new Object []{
-                  item1,
-                  kyType,
-                  quantity,
-                  luuse,
-                  totalQuantity,
-                  price,
-                  totalP,
-                   pid1,
-                   luuseName
-        
-        
-            });
-              
-       // DefaultTableModel df =(DefaultTableModel)jTable7.getModel();       
-              //set and get total
-        double totalq=0;
-        double sub=0;
-        int col =jTable7.getRowCount();
-        
-       
-        for(int i=0;i<col;i++){
-        
-        sub=(Double)df.getValueAt(i, 6);
-         totalq=totalq+sub;
-        }
-       jLabel86.setText(String.valueOf(totalq));
-       
-            double ariusTotalwithBillamout=0.0;
-            
-            double b=Double.parseDouble(jLabel88.getText());
-            ariusTotalwithBillamout=totalq+b;
-            jLabel90.setText(String.valueOf(ariusTotalwithBillamout));
-            
-            try {
-         
-                            String s = "SELECT type_of_kg,quantity,rest_of_quantity as luuse,total_quantity as total_kg FROM   product_properties WHERE p_id='"+"ww"+"'";
+                    } else if (res == 0) {
+
+                        //add data to bill table(bill preview)  
+                        int r1 = jTable3.getSelectedRow();
+                        int idr = jTable4.getSelectedRow();
+                        String item1 = jTextField11.getText();
+                        String kyType = jTextField12.getText();
+                        String totalQuantity = jTextField14.getText();
+                        String price = jTextField15.getText();
+                        double totalP = Double.parseDouble(jTextField16.getText());
+                        String pid1 = jTable4.getValueAt(idr, 5).toString();
+
+                        DefaultTableModel df = (DefaultTableModel) jTable7.getModel();
+
+                        df.addRow(new Object[]{
+                            item1,
+                            kyType,
+                            quantity,
+                            luuse,
+                            totalQuantity,
+                            price,
+                            totalP,
+                            pid1,
+                            luuseName
+
+                        });
+
+                        // DefaultTableModel df =(DefaultTableModel)jTable7.getModel();       
+                        //set and get total
+                        double totalq = 0;
+                        double sub = 0;
+                        int col = jTable7.getRowCount();
+
+                        for (int i = 0; i < col; i++) {
+
+                            sub = (Double) df.getValueAt(i, 6);
+                            totalq = totalq + sub;
+                        }
+                        jLabel86.setText(String.valueOf(totalq));
+
+                        double ariusTotalwithBillamout = 0.0;
+
+                        double b = Double.parseDouble(jLabel88.getText());
+                        ariusTotalwithBillamout = totalq + b;
+                        jLabel90.setText(String.valueOf(ariusTotalwithBillamout));
+
+                        try {
+
+                            String s = "SELECT type_of_kg,quantity,rest_of_quantity as luuse,total_quantity as total_kg FROM   product_properties WHERE p_id='" + "ww" + "'";
                             pst = conn.prepareStatement(s);
                             rs = pst.executeQuery();
                             jTable4.setModel(DbUtils.resultSetToTableModel(rs));
-           
 
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(this, e);
-                    }
-         
-            jTextField11.setText("");
-            jTextField15.setText("");
-            jTextField16.setText("");
-            jTextField12.setText("");
-            jTextField13.setText("");
-            jTextField14.setText("");
-            jCheckBox1.setSelected(false);
-            jCheckBox2.setSelected(false);
-                    }else if(wluuse>res){
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(this, e);
+                        }
+
+                        jTextField11.setText("");
+                        jTextField15.setText("");
+                        jTextField16.setText("");
+                        jTextField12.setText("");
+                        jTextField13.setText("");
+                        jTextField14.setText("");
+                        jCheckBox1.setSelected(false);
+                        jCheckBox2.setSelected(false);
+                    } else if (wluuse > res) {
                         JOptionPane.showMessageDialog(this, "cannot performe the task, luuse quantitiy is higher than the stock");
-                    }else{
-                                     
-                       //add data to bill table(bill preview)  
-              int r1=jTable3.getSelectedRow();
-              int idr=jTable4.getSelectedRow();
-             String item1=jTextField11.getText();
-             String kyType=jTextField12.getText();
-             String totalQuantity=jTextField14.getText();
-             String price=jTextField15.getText();
-             double totalP=Double.parseDouble(jTextField16.getText());
-             String pid1=jTable4.getValueAt(idr, 5).toString();
-            
-         DefaultTableModel df =(DefaultTableModel)jTable7.getModel();
-        
-              df.addRow(new Object []{
-                  item1,
-                  kyType,
-                  quantity,
-                  luuse,
-                  totalQuantity,
-                  price,
-                  totalP,
-                   pid1,
-                   luuseName
-        
-        
-            });
-              
-       // DefaultTableModel df =(DefaultTableModel)jTable7.getModel();       
-              //set and get total
-        double totalq=0;
-        double sub=0;
-        int col =jTable7.getRowCount();
-        
-       
-        for(int i=0;i<col;i++){
-        
-        sub=(Double)df.getValueAt(i, 6);
-         totalq=totalq+sub;
-        }
-       jLabel86.setText(String.valueOf(totalq));
-         
-              Double ariusTotalwithBillamout=0.0;
-            
-            Double b=Double.parseDouble(jLabel88.getText());
-            ariusTotalwithBillamout=totalq+b;
-            jLabel90.setText(String.valueOf(ariusTotalwithBillamout));
+                    } else {
+
+                        //add data to bill table(bill preview)  
+                        int r1 = jTable3.getSelectedRow();
+                        int idr = jTable4.getSelectedRow();
+                        String item1 = jTextField11.getText();
+                        String kyType = jTextField12.getText();
+                        String totalQuantity = jTextField14.getText();
+                        String price = jTextField15.getText();
+                        double totalP = Double.parseDouble(jTextField16.getText());
+                        String pid1 = jTable4.getValueAt(idr, 5).toString();
+
+                        DefaultTableModel df = (DefaultTableModel) jTable7.getModel();
+
+                        df.addRow(new Object[]{
+                            item1,
+                            kyType,
+                            quantity,
+                            luuse,
+                            totalQuantity,
+                            price,
+                            totalP,
+                            pid1,
+                            luuseName
+
+                        });
+
+                        // DefaultTableModel df =(DefaultTableModel)jTable7.getModel();       
+                        //set and get total
+                        double totalq = 0;
+                        double sub = 0;
+                        int col = jTable7.getRowCount();
+
+                        for (int i = 0; i < col; i++) {
+
+                            sub = (Double) df.getValueAt(i, 6);
+                            totalq = totalq + sub;
+                        }
+                        jLabel86.setText(String.valueOf(totalq));
+
+                        Double ariusTotalwithBillamout = 0.0;
+
+                        Double b = Double.parseDouble(jLabel88.getText());
+                        ariusTotalwithBillamout = totalq + b;
+                        jLabel90.setText(String.valueOf(ariusTotalwithBillamout));
                     }
-                
-                try {
-         
-                            String s = "SELECT type_of_kg,quantity,rest_of_quantity as luuse,total_quantity as total_kg FROM   product_properties WHERE p_id='"+"ww"+"'";
-                            pst = conn.prepareStatement(s);
-                            rs = pst.executeQuery();
-                            jTable4.setModel(DbUtils.resultSetToTableModel(rs));
-           
+
+                    try {
+
+                        String s = "SELECT type_of_kg,quantity,rest_of_quantity as luuse,total_quantity as total_kg FROM   product_properties WHERE p_id='" + "ww" + "'";
+                        pst = conn.prepareStatement(s);
+                        rs = pst.executeQuery();
+                        jTable4.setModel(DbUtils.resultSetToTableModel(rs));
 
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(this, e);
                     }
-                
-                jTextField11.setText("");
-            jTextField15.setText("");
-            jTextField16.setText("");
-            jTextField12.setText("");
-            jTextField13.setText("");
-            jTextField14.setText("");
-            jCheckBox1.setSelected(false);
-            jCheckBox2.setSelected(false);
-                }else{
-                
-                JOptionPane.showMessageDialog(this,"Error");
+
+                    jTextField11.setText("");
+                    jTextField15.setText("");
+                    jTextField16.setText("");
+                    jTextField12.setText("");
+                    jTextField13.setText("");
+                    jTextField14.setText("");
+                    jCheckBox1.setSelected(false);
+                    jCheckBox2.setSelected(false);
+                } else {
+
+                    JOptionPane.showMessageDialog(this, "Error");
                 }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this,e);
+                JOptionPane.showMessageDialog(this, e);
             }
-            
-        
+
         }
     }//GEN-LAST:event_jButton39ActionPerformed
 
     private void jButton41ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton41ActionPerformed
-          
-      int row = jTable7.getSelectedRow();
+
+        int row = jTable7.getSelectedRow();
         int rowCount = jTable7.getRowCount();
-        
-         DefaultTableModel df = (DefaultTableModel)jTable7.getModel();
-        
-        if(row >=0){
-        df.removeRow(row);
-           double total=0.00;double totalq=0;
-           double ariusTotalwithBillamout=0.00;
-            double b=Double.parseDouble(jLabel88.getText());
-        double sub=0.00;
-        int col =jTable7.getRowCount();
-        
-        
-        for(int i=0;i<col;i++){
-        
-            sub=(Double)df.getValueAt(i, 6);
-         total=total+sub;
-        
-         ariusTotalwithBillamout=total+b;
+
+        DefaultTableModel df = (DefaultTableModel) jTable7.getModel();
+
+        if (row >= 0) {
+            df.removeRow(row);
+            double total = 0.00;
+            double totalq = 0;
+            double ariusTotalwithBillamout = 0.00;
+            double b = Double.parseDouble(jLabel88.getText());
+            double sub = 0.00;
+            int col = jTable7.getRowCount();
+
+            for (int i = 0; i < col; i++) {
+
+                sub = (Double) df.getValueAt(i, 6);
+                total = total + sub;
+
+                ariusTotalwithBillamout = total + b;
+            }
+
+            jLabel86.setText(String.valueOf(total));
+            jLabel90.setText(String.valueOf(ariusTotalwithBillamout));
         }
-        
-        jLabel86.setText(String.valueOf(total));
-         jLabel90.setText(String.valueOf(ariusTotalwithBillamout));
-        }
-        
-        
-        
-        
-        
+
+
     }//GEN-LAST:event_jButton41ActionPerformed
 
     private void jTextField7KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField7KeyReleased
-       
-            
+
+
     }//GEN-LAST:event_jTextField7KeyReleased
 
     private void jButton43ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton43ActionPerformed
-     jButton43.setEnabled(false);
-      jButton41.setEnabled(false);
-     jButton46.setEnabled(true);
-     jButton43.setEnabled(false);
-       jButton47.setVisible(true);
-       jButton39.setVisible(false);
-       jTextField11.setText("Salt");
-       boolean shop=jRadioButton4.isSelected();
+        jButton43.setEnabled(false);
+        jButton41.setEnabled(false);
+        jButton46.setEnabled(true);
+        jButton43.setEnabled(false);
+        jButton47.setVisible(true);
+        jButton39.setVisible(false);
+        jTextField11.setText("Salt");
+        boolean shop = jRadioButton4.isSelected();
         try {
-             String select="SELECT * FROM detor ORDER BY id DESC";
-                pst =conn.prepareStatement(select);
-                rs=pst.executeQuery();
-                jTable7.setModel(DbUtils.resultSetToTableModel(rs));
+            String select = "SELECT * FROM detor ORDER BY id DESC";
+            pst = conn.prepareStatement(select);
+            rs = pst.executeQuery();
+            jTable7.setModel(DbUtils.resultSetToTableModel(rs));
         } catch (Exception e) {
         }
-          try {
-                String sql="SELECT DISTINCT name as Names_of_customers FROM detor";
-                pst =conn.prepareStatement(sql);
-                rs=pst.executeQuery();
-                jTable24.setModel(DbUtils.resultSetToTableModel(rs));
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e);
-            }
+        try {
+            String sql = "SELECT DISTINCT name as Names_of_customers FROM detor";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            jTable24.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
     }//GEN-LAST:event_jButton43ActionPerformed
 
     private void jButton46ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton46ActionPerformed
-boolean shop=jRadioButton4.isSelected();
-        if(shop==true){
+        boolean shop = jRadioButton4.isSelected();
+        if (shop == true) {
             try {
-                String select="SELECT * FROM detor ORDER BY id DESC";
-                pst =conn.prepareStatement(select);
-                rs=pst.executeQuery();
+                String select = "SELECT * FROM detor ORDER BY id DESC";
+                pst = conn.prepareStatement(select);
+                rs = pst.executeQuery();
                 jTable7.setModel(DbUtils.resultSetToTableModel(rs));
-                
-                   //change the table header names 
-   DefaultTableModel df1 =(DefaultTableModel)jTable7.getModel();
-   int rowCount=jTable7.getRowCount();
-   //df1.setRowCount(0);
-   for(int i = rowCount;i>0;i--){
-            df1.removeRow(i-1);
-          
-          }
-        
-        TableColumnModel cm=jTable7.getTableHeader().getColumnModel();
-            while(cm.getColumnCount()>0){
-                cm.removeColumn(cm.getColumn(0));
-            }
-            cm.addColumn(new TableColumn(0,100));
-            cm.getColumn(0).setHeaderValue("Item_Name");
-            
-             cm.addColumn(new TableColumn(1,100));
-            cm.getColumn(1).setHeaderValue("Type of unit");
-            
-             cm.addColumn(new TableColumn(2,100));
-            cm.getColumn(2).setHeaderValue("Quantity");
-            
-             cm.addColumn(new TableColumn(3,100));
-            cm.getColumn(3).setHeaderValue("qty(luuse)");
-            
-            cm.addColumn(new TableColumn(4,100));
-            cm.getColumn(4).setHeaderValue("Total Kg");
-            
-             cm.addColumn(new TableColumn(5,100));
-            cm.getColumn(5).setHeaderValue("Price");
-            
-             cm.addColumn(new TableColumn(6,100));
-            cm.getColumn(6).setHeaderValue("Total Price");
-            
-             cm.addColumn(new TableColumn(7,100));
-            cm.getColumn(7).setHeaderValue("pid");
-            
-               cm.addColumn(new TableColumn(8,100));
-            cm.getColumn(8).setHeaderValue("luuse type");
+
+                //change the table header names 
+                DefaultTableModel df1 = (DefaultTableModel) jTable7.getModel();
+                int rowCount = jTable7.getRowCount();
+                //df1.setRowCount(0);
+                for (int i = rowCount; i > 0; i--) {
+                    df1.removeRow(i - 1);
+
+                }
+
+                TableColumnModel cm = jTable7.getTableHeader().getColumnModel();
+                while (cm.getColumnCount() > 0) {
+                    cm.removeColumn(cm.getColumn(0));
+                }
+                cm.addColumn(new TableColumn(0, 100));
+                cm.getColumn(0).setHeaderValue("Item_Name");
+
+                cm.addColumn(new TableColumn(1, 100));
+                cm.getColumn(1).setHeaderValue("Type of unit");
+
+                cm.addColumn(new TableColumn(2, 100));
+                cm.getColumn(2).setHeaderValue("Quantity");
+
+                cm.addColumn(new TableColumn(3, 100));
+                cm.getColumn(3).setHeaderValue("qty(luuse)");
+
+                cm.addColumn(new TableColumn(4, 100));
+                cm.getColumn(4).setHeaderValue("Total Kg");
+
+                cm.addColumn(new TableColumn(5, 100));
+                cm.getColumn(5).setHeaderValue("Price");
+
+                cm.addColumn(new TableColumn(6, 100));
+                cm.getColumn(6).setHeaderValue("Total Price");
+
+                cm.addColumn(new TableColumn(7, 100));
+                cm.getColumn(7).setHeaderValue("pid");
+
+                cm.addColumn(new TableColumn(8, 100));
+                cm.getColumn(8).setHeaderValue("luuse type");
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e);
-            } 
+            }
             jButton43.setEnabled(true);
             jButton46.setEnabled(false);
-        jButton41.setEnabled(true);
-        }else{
+            jButton41.setEnabled(true);
+        } else {
             jButton43.setEnabled(true);
-        jButton46.setEnabled(false);
-        jButton41.setEnabled(true);
-               //change the table header names 
-   DefaultTableModel df1 =(DefaultTableModel)jTable7.getModel();
-   int rowCount=jTable7.getRowCount();
-   //df1.setRowCount(0);
-   for(int i = rowCount;i>0;i--){
-            df1.removeRow(i-1);
-          
-          }
-        
-        TableColumnModel cm=jTable7.getTableHeader().getColumnModel();
-            while(cm.getColumnCount()>0){
+            jButton46.setEnabled(false);
+            jButton41.setEnabled(true);
+            //change the table header names 
+            DefaultTableModel df1 = (DefaultTableModel) jTable7.getModel();
+            int rowCount = jTable7.getRowCount();
+            //df1.setRowCount(0);
+            for (int i = rowCount; i > 0; i--) {
+                df1.removeRow(i - 1);
+
+            }
+
+            TableColumnModel cm = jTable7.getTableHeader().getColumnModel();
+            while (cm.getColumnCount() > 0) {
                 cm.removeColumn(cm.getColumn(0));
             }
-            cm.addColumn(new TableColumn(0,100));
+            cm.addColumn(new TableColumn(0, 100));
             cm.getColumn(0).setHeaderValue("Item_Name");
-            
-             cm.addColumn(new TableColumn(1,100));
+
+            cm.addColumn(new TableColumn(1, 100));
             cm.getColumn(1).setHeaderValue("Type of unit");
-            
-             cm.addColumn(new TableColumn(2,100));
+
+            cm.addColumn(new TableColumn(2, 100));
             cm.getColumn(2).setHeaderValue("Quantity");
-            
-             cm.addColumn(new TableColumn(3,100));
+
+            cm.addColumn(new TableColumn(3, 100));
             cm.getColumn(3).setHeaderValue("qty(luuse)");
-            
-            cm.addColumn(new TableColumn(4,100));
+
+            cm.addColumn(new TableColumn(4, 100));
             cm.getColumn(4).setHeaderValue("Total Kg");
-            
-             cm.addColumn(new TableColumn(5,100));
+
+            cm.addColumn(new TableColumn(5, 100));
             cm.getColumn(5).setHeaderValue("Price");
-            
-             cm.addColumn(new TableColumn(6,100));
+
+            cm.addColumn(new TableColumn(6, 100));
             cm.getColumn(6).setHeaderValue("Total Price");
-            
-             cm.addColumn(new TableColumn(7,100));
+
+            cm.addColumn(new TableColumn(7, 100));
             cm.getColumn(7).setHeaderValue("pid");
-            
-               cm.addColumn(new TableColumn(8,100));
+
+            cm.addColumn(new TableColumn(8, 100));
             cm.getColumn(8).setHeaderValue("luuse type");
-        
-        
-        
+
         }
         jTable7.getColumnModel().getColumn(7).setMinWidth(0);
-      jTable7.getColumnModel().getColumn(7).setMaxWidth(0);
+        jTable7.getColumnModel().getColumn(7).setMaxWidth(0);
         jTable7.getColumnModel().getColumn(8).setMinWidth(0);
-      jTable7.getColumnModel().getColumn(8).setMaxWidth(0);
+        jTable7.getColumnModel().getColumn(8).setMaxWidth(0);
     }//GEN-LAST:event_jButton46ActionPerformed
 
     private void jTable24MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable24MouseClicked
-        int r=jTable24.getSelectedRow();
-        boolean detorq =jRadioButton1.isSelected();
-        boolean deliver =jRadioButton2.isSelected();
-         boolean customer =jRadioButton3.isSelected();
-         boolean shop =jRadioButton4.isSelected();
-         String n=jTable24.getValueAt(r,0).toString();
-         jTextField7.setText(n);
-         String newAriusamount="0";
-    String dealer="";
-    if(detorq == true){
-    dealer="Salt";
-    }else if(deliver==true){
-    dealer="Deliver/Detor";
-    
-    }else if(customer==true){
-    dealer="Customer";
-    
-    }else if(shop==true){
-    dealer="Shop";
-    
-    }
-    
+        int r = jTable24.getSelectedRow();
+        boolean detorq = jRadioButton1.isSelected();
+        boolean deliver = jRadioButton2.isSelected();
+        boolean customer = jRadioButton3.isSelected();
+        boolean shop = jRadioButton4.isSelected();
+        String n = jTable24.getValueAt(r, 0).toString();
+        jTextField7.setText(n);
+        String newAriusamount = "0";
+        String dealer = "";
+        if (detorq == true) {
+            dealer = "Salt";
+        } else if (deliver == true) {
+            dealer = "Deliver/Detor";
+
+        } else if (customer == true) {
+            dealer = "Customer";
+
+        } else if (shop == true) {
+            dealer = "Shop";
+
+        }
+
         //get arius amount        
-try {
-            String sql="SELECT sum(arius_amount) FROM arius_amount WHERE name='"+n+"' AND dealer='"+dealer+"'";
-               pst = conn.prepareStatement(sql);
-                 rs = pst.executeQuery();
-                 if(rs.next()){
-                 String amount=rs.getString("sum(arius_amount)");
-                 newAriusamount=amount;
-                 if(newAriusamount==null){
-                 
-                 jTextField46.setText("0.0");
-                 jLabel88.setText("0.0");
-                 }else{
-                 jTextField46.setText(String.valueOf(amount));
-                 jLabel88.setText(String.valueOf(amount));
-                 
-                 }
-                 
-                 }
-                 
+        try {
+            String sql = "SELECT sum(arius_amount) FROM arius_amount WHERE name='" + n + "' AND dealer='" + dealer + "'";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                String amount = rs.getString("sum(arius_amount)");
+                newAriusamount = amount;
+                if (newAriusamount == null) {
+
+                    jTextField46.setText("0.0");
+                    jLabel88.setText("0.0");
+                } else {
+                    jTextField46.setText(String.valueOf(amount));
+                    jLabel88.setText(String.valueOf(amount));
+
+                }
+
+            }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
     }//GEN-LAST:event_jTable24MouseClicked
 
     private void jButton42ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton42ActionPerformed
-        String creditorname=txtCreditorName.getText();
-         SimpleDateFormat g = new SimpleDateFormat("yyyy-MM-dd");
-         String fdate = g.format(jDateChooser1.getDate());
+        String creditorname = txtCreditorName.getText();
+        SimpleDateFormat g = new SimpleDateFormat("yyyy-MM-dd");
+        String fdate = g.format(jDateChooser1.getDate());
         try {
-            setCreditorAriusAmount(creditorname,fdate,jTextField49.getText());
-           JOptionPane.showMessageDialog(this,"send data to arius table");
+            setCreditorAriusAmount(creditorname, fdate, jTextField49.getText());
+            JOptionPane.showMessageDialog(this, "send data to arius table");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
-        
-        
-        
-         txtCreditorName.requestFocus();
+
+        txtCreditorName.requestFocus();
         txtCreditorName.setText("");
         jTextField2.setText("");
         jTextField5.setText("");
         jTextField4.setText("");
-        
+
         jLabel11.setText("");
         txtQuantity.setText("");
         jTextField3.setText("");
@@ -8303,18 +8163,18 @@ try {
         jTextField48.setText("");
         jTextField47.setText("");
         jTextField49.setText("");
-         jkg.removeAllItems();
-                 jr1.setSelected(true);
-            txtQuantity.setEnabled(false);
-            txtQuantity.setEditable(false);
+        jkg.removeAllItems();
+        jr1.setSelected(true);
+        txtQuantity.setEnabled(false);
+        txtQuantity.setEditable(false);
     }//GEN-LAST:event_jButton42ActionPerformed
 
     private void jButton44ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton44ActionPerformed
-     SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
         String fdate = d.format(jDateChooser6.getDate());
-        
+
         try {
-            String s = "SELECT * FROM  set_status WHERE date LIKE '%"+fdate+"%' ORDER BY date desc";
+            String s = "SELECT * FROM  set_status WHERE date LIKE '%" + fdate + "%' ORDER BY date desc";
             pst = conn.prepareStatement(s);
             rs = pst.executeQuery();
             jTable2.setModel(DbUtils.resultSetToTableModel(rs));
@@ -8323,81 +8183,79 @@ try {
     }//GEN-LAST:event_jButton44ActionPerformed
 
     private void jTextField50KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField50KeyReleased
-       int luuse=Integer.parseInt(jTextField50.getText());
-        
-        if(evt.getKeyCode() == KeyEvent.VK_BACK_SPACE){
-        int tkg=Integer.parseInt(jTextField22.getText());
-        
-        
-        int tr=tkg-luuse;
-        jTextField22.setText("");
-       }else{
-              
-        int tkg=Integer.parseInt(jTextField22.getText());
-        
-        int t=luuse+tkg;
-        jTextField22.setText(String.valueOf(t));
-       
-       }
-        
+        int luuse = Integer.parseInt(jTextField50.getText());
+
+        if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+            int tkg = Integer.parseInt(jTextField22.getText());
+
+            int tr = tkg - luuse;
+            jTextField22.setText("");
+        } else {
+
+            int tkg = Integer.parseInt(jTextField22.getText());
+
+            int t = luuse + tkg;
+            jTextField22.setText(String.valueOf(t));
+
+        }
+
 
     }//GEN-LAST:event_jTextField50KeyReleased
 
     private void jTable6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable6MouseClicked
-        int r=jTable6.getSelectedRow();
-        
-        String name=jTable6.getValueAt(r, 3).toString();
-        String cat=jTable6.getValueAt(r, 7).toString();
-        String mn=jTable6.getValueAt(r, 4).toString();
-        String kg=jTable6.getValueAt(r, 8).toString();
-        String qua=jTable6.getValueAt(r, 9).toString();
-         String tkg=jTable6.getValueAt(r, 10).toString();  
-         if(qua.equals(tkg)){
+        int r = jTable6.getSelectedRow();
+
+        String name = jTable6.getValueAt(r, 3).toString();
+        String cat = jTable6.getValueAt(r, 7).toString();
+        String mn = jTable6.getValueAt(r, 4).toString();
+        String kg = jTable6.getValueAt(r, 8).toString();
+        String qua = jTable6.getValueAt(r, 9).toString();
+        String tkg = jTable6.getValueAt(r, 10).toString();
+        if (qua.equals(tkg)) {
             jTextField50.setText(qua);
-             jTextField20.setText("0");
-         }else{
-                 jTextField20.setText(qua);
-                 jTextField50.setText("0");
-         }
-       
+            jTextField20.setText("0");
+        } else {
+            jTextField20.setText(qua);
+            jTextField50.setText("0");
+        }
 
-jTextField17.setText(name);
-jTextField21.setText(cat);
-jTextField18.setText(mn);
-jTextField19.setText(kg);
+        jTextField17.setText(name);
+        jTextField21.setText(cat);
+        jTextField18.setText(mn);
+        jTextField19.setText(kg);
 
-jTextField22.setText(tkg);
+        jTextField22.setText(tkg);
     }//GEN-LAST:event_jTable6MouseClicked
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-    if (jCheckBox1.isSelected()) {
-        jCheckBox2.setEnabled(false);
-    }else {
-        jCheckBox2.setEnabled(true);
-    }
+        if (jCheckBox1.isSelected()) {
+            jCheckBox2.setEnabled(false);
+        } else {
+            jCheckBox2.setEnabled(true);
+        }
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jButton45ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton45ActionPerformed
         jRadioButton1.setSelected(true);
-          jButton47.setVisible(true);
-             jButton39.setVisible(false);
-             jTextField11.setText("Salt");
+        jButton47.setVisible(true);
+        jButton39.setVisible(false);
+        jTextField11.setText("Salt");
         try {
-            String select="SELECT * FROM detor ORDER BY id DESC";
-            pst =conn.prepareStatement(select);
-            rs=pst.executeQuery();
+            String select = "SELECT * FROM detor ORDER BY id DESC";
+            pst = conn.prepareStatement(select);
+            rs = pst.executeQuery();
             jTable7.setModel(DbUtils.resultSetToTableModel(rs));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
         try {
-                String sql="SELECT DISTINCT name as Names_of_customers FROM detor";
-                pst =conn.prepareStatement(sql);
-                rs=pst.executeQuery();
-                jTable24.setModel(DbUtils.resultSetToTableModel(rs));
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e);
-            }
+            String sql = "SELECT DISTINCT name as Names_of_customers FROM detor";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            jTable24.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
         jTextField17.setText("");
         jTextField21.setText("");
         jTextField18.setText("");
@@ -8410,97 +8268,99 @@ jTextField22.setText(tkg);
         jTextField46.setText("");
         jTextField15.setText("");
         jTextField16.setText("");
-        jCheckBox1.setSelected(false);jCheckBox2.setSelected(false);
-       jTextField12.setText("");
-       jTextField13.setText("");
-       jTextField14.setText("");
+        jCheckBox1.setSelected(false);
+        jCheckBox2.setSelected(false);
+        jTextField12.setText("");
+        jTextField13.setText("");
+        jTextField14.setText("");
         jButton46.setEnabled(true);
         jButton43.setEnabled(false);
         jComboBox2.setSelectedIndex(0);
         jTextField45.setText("");
-        
+
         jLabel86.setText("0.0");
         jLabel88.setText("0.0");
         jLabel90.setText("0.0");
     }//GEN-LAST:event_jButton45ActionPerformed
 
     private void jButton47ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton47ActionPerformed
- boolean bt=jButton46.isEnabled();
-          String cname=jTextField7.getText();
-            String ll=jTextField9.getText();
-            String k=jTextField12.getText();
-            String q=jTextField13.getText();
-            String tkk=jTextField14.getText();
-            String c=jTextField11.getText();
-            String p=jTextField15.getText();
-            String p2=jTextField16.getText();
-           
-           
-        if(cname.equals("")||ll.equals("")||k.equals("")||q.equals("")||tkk.equals("")||c.equals("")||p.equals("")||p2.equals("")){
+        boolean bt = jButton46.isEnabled();
+        String cname = jTextField7.getText();
+        String ll = jTextField9.getText();
+        String k = jTextField12.getText();
+        String q = jTextField13.getText();
+        String tkk = jTextField14.getText();
+        String c = jTextField11.getText();
+        String p = jTextField15.getText();
+        String p2 = jTextField16.getText();
+
+        if (cname.equals("") || ll.equals("") || k.equals("") || q.equals("") || tkk.equals("") || c.equals("") || p.equals("") || p2.equals("")) {
             JOptionPane.showMessageDialog(this, "please fill the text fields");
-        }else if(bt==true){
-             JOptionPane.showMessageDialog(this, "please select the Bill view");
-        }else{
-                //if check add/get luuse button is true
-             boolean addUse=jCheckBox1.isSelected();
-             boolean getUse=jCheckBox2.isSelected();
-             String quantity="0";
-             String luuse="0";
-             String luuseName="null";
-             if(addUse==true ||getUse==true){
-                 if(addUse==true){luuseName="AL";}else{luuseName="GL";}
-             luuse=jTextField13.getText();
-             quantity="0";
-             }else{
-             
-             quantity=jTextField13.getText();
-             luuse="0";
-             }
-               
-              //add data to bill table(bill preview)  
-              int r1=jTable3.getSelectedRow();
-              int idr=jTable4.getSelectedRow();
-             String item1="Salt";
-             String kyType=jTextField12.getText();
-             String totalQuantity=jTextField14.getText();
-             String price=jTextField15.getText();
-             double totalP=Double.parseDouble(jTextField16.getText());
-             String pid1="wwe";
-            
-         DefaultTableModel df =(DefaultTableModel)jTable7.getModel();
-        
-              df.addRow(new Object []{
-                  item1,
-                  kyType,
-                  quantity,
-                  luuse,
-                  totalQuantity,
-                  price,
-                  totalP,
-                   pid1,
-                   luuseName
-        
-        
+        } else if (bt == true) {
+            JOptionPane.showMessageDialog(this, "please select the Bill view");
+        } else {
+            //if check add/get luuse button is true
+            boolean addUse = jCheckBox1.isSelected();
+            boolean getUse = jCheckBox2.isSelected();
+            String quantity = "0";
+            String luuse = "0";
+            String luuseName = "null";
+            if (addUse == true || getUse == true) {
+                if (addUse == true) {
+                    luuseName = "AL";
+                } else {
+                    luuseName = "GL";
+                }
+                luuse = jTextField13.getText();
+                quantity = "0";
+            } else {
+
+                quantity = jTextField13.getText();
+                luuse = "0";
+            }
+
+            //add data to bill table(bill preview)  
+            int r1 = jTable3.getSelectedRow();
+            int idr = jTable4.getSelectedRow();
+            String item1 = "Salt";
+            String kyType = jTextField12.getText();
+            String totalQuantity = jTextField14.getText();
+            String price = jTextField15.getText();
+            double totalP = Double.parseDouble(jTextField16.getText());
+            String pid1 = "wwe";
+
+            DefaultTableModel df = (DefaultTableModel) jTable7.getModel();
+
+            df.addRow(new Object[]{
+                item1,
+                kyType,
+                quantity,
+                luuse,
+                totalQuantity,
+                price,
+                totalP,
+                pid1,
+                luuseName
+
             });
-              
-                // DefaultTableModel df =(DefaultTableModel)jTable7.getModel();       
-              //set and get total
-        double totalq=0;
-        double sub=0;
-        int col =jTable7.getRowCount();
-        
-       
-        for(int i=0;i<col;i++){
-        
-        sub=(Double)df.getValueAt(i, 6);
-         totalq=totalq+sub;
-        }
-       jLabel86.setText(String.valueOf(totalq));
-       
-            double ariusTotalwithBillamout=0.0;
-            
-            double b=Double.parseDouble(jLabel88.getText());
-            ariusTotalwithBillamout=totalq+b;
+
+            // DefaultTableModel df =(DefaultTableModel)jTable7.getModel();       
+            //set and get total
+            double totalq = 0;
+            double sub = 0;
+            int col = jTable7.getRowCount();
+
+            for (int i = 0; i < col; i++) {
+
+                sub = (Double) df.getValueAt(i, 6);
+                totalq = totalq + sub;
+            }
+            jLabel86.setText(String.valueOf(totalq));
+
+            double ariusTotalwithBillamout = 0.0;
+
+            double b = Double.parseDouble(jLabel88.getText());
+            ariusTotalwithBillamout = totalq + b;
             jLabel90.setText(String.valueOf(ariusTotalwithBillamout));
         }
     }//GEN-LAST:event_jButton47ActionPerformed
@@ -8508,23 +8368,22 @@ jTextField22.setText(tkg);
     private void jButton48ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton48ActionPerformed
         SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
         String fdate = d.format(jDateChooser7.getDate());
-        
-        
+
         try {
-            String sql="SELECT name,mobile,category,kg,total_kg,status,date,descr FROM returntable WHERE status='"+"damage"+"' AND date='"+fdate+"' ORDER BY date desc";
-            pst=conn.prepareStatement(sql);
-            rs=pst.executeQuery();
+            String sql = "SELECT name,mobile,category,kg,total_kg,status,date,descr FROM returntable WHERE status='" + "damage" + "' AND date='" + fdate + "' ORDER BY date desc";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
             jTable20.setModel(DbUtils.resultSetToTableModel(rs));
         } catch (Exception e) {
         }
     }//GEN-LAST:event_jButton48ActionPerformed
 
     private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
-      if (jCheckBox2.isSelected()) {
-        jCheckBox1.setEnabled(false);
-    }else {
-        jCheckBox1.setEnabled(true);
-    }
+        if (jCheckBox2.isSelected()) {
+            jCheckBox1.setEnabled(false);
+        } else {
+            jCheckBox1.setEnabled(true);
+        }
     }//GEN-LAST:event_jCheckBox2ActionPerformed
 
     private void jTextField51ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField51ActionPerformed
@@ -8532,16 +8391,16 @@ jTextField22.setText(tkg);
     }//GEN-LAST:event_jTextField51ActionPerformed
 
     private void jTable12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable12MouseClicked
-         //         Cash/Banking Section
+        //         Cash/Banking Section
         int selectedRow = jTable12.getSelectedRow();
-                if (selectedRow != -1) {
-                    String selectedName = jTable12.getValueAt(selectedRow, 0).toString();
-                    displayAriusAmount(selectedName); 
-                }
+        if (selectedRow != -1) {
+            String selectedName = jTable12.getValueAt(selectedRow, 0).toString();
+            displayAriusAmount(selectedName);
+        }
     }//GEN-LAST:event_jTable12MouseClicked
 
     private void jTextField23MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField23MouseClicked
-      
+
     }//GEN-LAST:event_jTextField23MouseClicked
 
     private void jButton50ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton50ActionPerformed
@@ -8550,7 +8409,7 @@ jTextField22.setText(tkg);
         String fdate = d.format(jDateChooser8.getDate());
 
         try {
-            String s = "SELECT * FROM  cash_in_hand WHERE date LIKE '%"+fdate+"%' ORDER BY date desc";
+            String s = "SELECT * FROM  cash_in_hand WHERE date LIKE '%" + fdate + "%' ORDER BY date desc";
             pst = conn.prepareStatement(s);
             rs = pst.executeQuery();
             jTable13.setModel(DbUtils.resultSetToTableModel(rs));
@@ -8564,28 +8423,28 @@ jTextField22.setText(tkg);
     }//GEN-LAST:event_jDateChooser8MouseClicked
 
     private void jButton29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton29ActionPerformed
-         //        Cash/Banking Section
+        //        Cash/Banking Section
         try {
             String amount23 = jTextField23.getText();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String currentDate = dateFormat.format(new Date());
             String amount51 = jTextField51.getText();
             String amount24 = jTextField24.getText();
-            
+
             String insertQuery = "INSERT INTO cash_in_hand (name, Date, cash_in, Arius_amont) VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(insertQuery);
             preparedStatement.setString(1, amount51);
             preparedStatement.setString(2, currentDate);
             preparedStatement.setString(3, amount23);
             preparedStatement.setString(4, amount24);
-            
+
             String updateQuery = "UPDATE arius_amount SET arius_amount = ? WHERE name = ?";
             PreparedStatement updateStatement = conn.prepareStatement(updateQuery);
             updateStatement.setString(1, amount24);
             updateStatement.setString(2, amount51);
             updateStatement.executeUpdate();
             preparedStatement.executeUpdate();
-            
+
             // Clear the text fields after insertion
             jTextField23.setText("");
             jTextField51.setText("");
@@ -8595,7 +8454,7 @@ jTextField22.setText(tkg);
             JOptionPane.showMessageDialog(this, "Cash Added successfully");
             displayCashInHand();
             calculateAndDisplaySum();
-            
+
         } catch (NumberFormatException | SQLException ex) {
             ex.printStackTrace();
             // Handle exceptions here
@@ -8603,8 +8462,8 @@ jTextField22.setText(tkg);
     }//GEN-LAST:event_jButton29ActionPerformed
 
     private void jTextField23KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField23KeyReleased
-         //         Cash/Banking Section
-       try {
+        //         Cash/Banking Section
+        try {
             double value23 = Double.parseDouble(jTextField23.getText());
             double value25 = Double.parseDouble(jTextField25.getText());
             double sum = value25 - value23;
@@ -8617,14 +8476,14 @@ jTextField22.setText(tkg);
     private void jTable14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable14MouseClicked
         //         Cash/Banking Section
         int selectedRow = jTable14.getSelectedRow();
-                if (selectedRow != -1) {
-                    String selectedName = jTable14.getValueAt(selectedRow, 0).toString();
-                    displayAriusAmountcheque(selectedName); 
-                }
+        if (selectedRow != -1) {
+            String selectedName = jTable14.getValueAt(selectedRow, 0).toString();
+            displayAriusAmountcheque(selectedName);
+        }
     }//GEN-LAST:event_jTable14MouseClicked
 
     private void jButton30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton30ActionPerformed
-         //         Cash/Banking Section
+        //         Cash/Banking Section
         try {
             String chname = jTextField53.getText();
             String chenumber = jTextField26.getText();
@@ -8635,9 +8494,7 @@ jTextField22.setText(tkg);
             String currentDate = dateFormat.format(new Date());
             String cheavailableamount = jTextField28.getText();
             String newavailble = jTextField29.getText();
-            
-            
-            
+
             String insertQuery = "INSERT INTO cheque_in_hand (name, cheque_no,cheque_amount, cheque_date,Date,old_amount,new_amount) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(insertQuery);
             preparedStatement.setString(1, chname);
@@ -8645,18 +8502,17 @@ jTextField22.setText(tkg);
             preparedStatement.setString(3, cheamount);
             preparedStatement.setString(4, chedate);
             preparedStatement.setString(5, currentDate);
-             preparedStatement.setString(6, cheavailableamount);
+            preparedStatement.setString(6, cheavailableamount);
             preparedStatement.setString(7, newavailble);
-            
+
             try {
-                String sq="UPDATE arius_amount SET arius_amount ='"+newavailble+"' WHERE name ='"+chname+"'";
-                    pst=conn.prepareStatement(sq);
-                    pst.execute();
+                String sq = "UPDATE arius_amount SET arius_amount ='" + newavailble + "' WHERE name ='" + chname + "'";
+                pst = conn.prepareStatement(sq);
+                pst.execute();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e);
             }
 
-            
             // Clear the text fields after insertion
             jTextField53.setText("");
             jTextField26.setText("");
@@ -8667,7 +8523,7 @@ jTextField22.setText(tkg);
             JOptionPane.showMessageDialog(this, "Cheque Added successfully");
             displayChequeInHand();
             calculateAndDisplayChequeSum();
-            
+
         } catch (NumberFormatException ex) {
             ex.printStackTrace();
             // Handle exceptions here
@@ -8679,7 +8535,7 @@ jTextField22.setText(tkg);
 
     private void jTextField27KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField27KeyReleased
         //         Cash/Banking Section
-       try {
+        try {
             double value23 = Double.parseDouble(jTextField28.getText());
             double value25 = Double.parseDouble(jTextField27.getText());
             double sum = value23 - value25;
@@ -8697,9 +8553,9 @@ jTextField22.setText(tkg);
         //         Cash/Banking Section - cheque
         SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
         String fdate = d.format(jDateChooser10.getDate());
-        
+
         try {
-            String s = "SELECT * FROM  cheque_in_hand WHERE date LIKE '%"+fdate+"%' ORDER BY date desc";
+            String s = "SELECT * FROM  cheque_in_hand WHERE date LIKE '%" + fdate + "%' ORDER BY date desc";
             pst = conn.prepareStatement(s);
             rs = pst.executeQuery();
             jTable15.setModel(DbUtils.resultSetToTableModel(rs));
@@ -8709,28 +8565,26 @@ jTextField22.setText(tkg);
     }//GEN-LAST:event_jButton51ActionPerformed
 
     private void jTable16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable16MouseClicked
-         //         Cash/Banking Section
+        //         Cash/Banking Section
         int selectedRow = jTable16.getSelectedRow();
-                if (selectedRow != -1) {
-                    String selectedName = jTable16.getValueAt(selectedRow, 0).toString();
-                    displayAriusAmountdebit(selectedName); 
-                }
+        if (selectedRow != -1) {
+            String selectedName = jTable16.getValueAt(selectedRow, 0).toString();
+            displayAriusAmountdebit(selectedName);
+        }
     }//GEN-LAST:event_jTable16MouseClicked
 
     private void jButton52ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton52ActionPerformed
-         SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
-        String fdate = d.format(jDateChooser11.getDate());        
+        SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
+        String fdate = d.format(jDateChooser11.getDate());
         try {
-            
-                    String sq ="SELECT * FROM set_sales WHERE date='"+fdate+"' ORDER BY date desc";
-                    pst = conn.prepareStatement(sq);
-                    rs = pst.executeQuery();
-                    jTable11.setModel(DbUtils.resultSetToTableModel(rs));
+
+            String sq = "SELECT * FROM set_sales WHERE date='" + fdate + "' ORDER BY date desc";
+            pst = conn.prepareStatement(sq);
+            rs = pst.executeQuery();
+            jTable11.setModel(DbUtils.resultSetToTableModel(rs));
         } catch (Exception e) {
         }
-        
-        
-        
+
         jTable11.getColumnModel().getColumn(0).setMinWidth(0);
         jTable11.getColumnModel().getColumn(0).setMaxWidth(0);
     }//GEN-LAST:event_jButton52ActionPerformed
@@ -8755,9 +8609,9 @@ jTextField22.setText(tkg);
             JOptionPane.showMessageDialog(this, "Successfully Add Customer");
             jTextField55.setText("");
             jTextField52.setText("");
-            
+
             try {
-                String sq ="SELECT DISTINCT name FROM arius_amount";
+                String sq = "SELECT DISTINCT name FROM arius_amount";
                 pst = conn.prepareStatement(sq);
                 rs = pst.executeQuery();
                 jTable12.setModel(DbUtils.resultSetToTableModel(rs));
@@ -8765,7 +8619,7 @@ jTextField22.setText(tkg);
                 calculateAndDisplaySum();
             } catch (Exception e) {
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
         }
     }//GEN-LAST:event_jButton55ActionPerformed
 
@@ -8781,9 +8635,9 @@ jTextField22.setText(tkg);
         //         Cash/Banking Section - cheque
         SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
         String fdate = d.format(jDateChooser13.getDate());
-        
+
         try {
-            String s = "SELECT * FROM  credit_today WHERE Date LIKE '%"+fdate+"%' ORDER BY Date desc";
+            String s = "SELECT * FROM  credit_today WHERE Date LIKE '%" + fdate + "%' ORDER BY Date desc";
             pst = conn.prepareStatement(s);
             rs = pst.executeQuery();
             jTable17.setModel(DbUtils.resultSetToTableModel(rs));
@@ -8807,7 +8661,7 @@ jTextField22.setText(tkg);
         jTextField28.setText("");
         jTextField29.setText("");
     }//GEN-LAST:event_jButton49ActionPerformed
-  private void displayAriusAmountdebit(String selectedName) {
+    private void displayAriusAmountdebit(String selectedName) {
         //        Cash/Banking Section
         try {
             String sql = "SELECT arius_amount FROM arius_amount WHERE name=?";
@@ -8829,27 +8683,29 @@ jTextField22.setText(tkg);
             e.printStackTrace();
         }
     }
-public void setSubcat(String c){
- 
+
+    public void setSubcat(String c) {
+
         try {
-           jkg.removeAllItems();
-            String s = "SELECT * FROM catqua WHERE cat='"+c+"'";
+            jkg.removeAllItems();
+            String s = "SELECT * FROM catqua WHERE cat='" + c + "'";
             pst = conn.prepareStatement(s);
             rs = pst.executeQuery();
-            
+
             while (rs.next()) {
                 String cat = rs.getString("qua");
                 jkg.addItem(cat);
 
             }
-            
+
             //jkg.addItem("other");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
-}
+    }
 //retrive product to table in sales tab
-public void getProductToSales(){
+
+    public void getProductToSales() {
 
 //    try {
 //            String s = "SELECT * FROM catqua WHERE cat='"+c+"'";
@@ -8857,55 +8713,54 @@ public void getProductToSales(){
 //            rs = pst.executeQuery();
 //    } catch (Exception e) {
 //    }
+    }
 
+    public void getCurrentDateTime() {
 
-}
-public void getCurrentDateTime(){
-    
-    new Timer(0, new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-             
-            java.text.SimpleDateFormat SimpleDateFormat = new java.text.SimpleDateFormat("HH:mm:ss");
-            String displayTime = SimpleDateFormat.format(new Date());
-            String displayDate = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH).format(new Date());
-     
-            
-            jLabel38.setText(displayDate);
-            //d=displayDate;ctime
-            ctime=displayTime;
-            cdate=displayDate;
-        }
-    }).start();
-  
-   
+        new Timer(0, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                java.text.SimpleDateFormat SimpleDateFormat = new java.text.SimpleDateFormat("HH:mm:ss");
+                String displayTime = SimpleDateFormat.format(new Date());
+                String displayDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(new Date());
+
+                jLabel38.setText(displayDate);
+                //d=displayDate;ctime
+                ctime = displayTime;
+                cdate = displayDate;
+            }
+        }).start();
+
     }
 //set movement
-public void insertIntoMovement(String user,String movement,String descr,String date,String time){
 
-    try {
-        String insert="INSERT INTO movement_table(user,movement,description,date,time)"
-                + "VALUES('"+user+"','"+movement+"','"+descr+"','"+date+"','"+time+"')";
-        pst=conn.prepareStatement(insert);
-        pst.execute();
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, e);
+    public void insertIntoMovement(String user, String movement, String descr, String date, String time) {
+
+        try {
+            String insert = "INSERT INTO movement_table(user,movement,description,date,time)"
+                    + "VALUES('" + user + "','" + movement + "','" + descr + "','" + date + "','" + time + "')";
+            pst = conn.prepareStatement(insert);
+            pst.execute();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
+
     }
-
-
-}
 //insert data into stock
-public void insertDataStock(String dname,String Iname,String kg,String qua,String totalKg,String price,double toP,String move,String date,String user){
 
-    try {
-        String insert="INSERT INTO stock(dealer_name,item_name,type_of_kg,quantity,total_kg,price_per_1kg,total_price,movement,date,user)VALUES('"+dname+"','"+Iname+"','"+kg+"','"+qua+"','"+totalKg+"','"+price+"','"+toP+"','"+move+"','"+date+"','"+user+"')";
-        pst=conn.prepareStatement(insert);
-        pst.execute();
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, e);
+    public void insertDataStock(String dname, String Iname, String kg, String qua, String totalKg, String price, double toP, String move, String date, String user) {
+
+        try {
+            String insert = "INSERT INTO stock(dealer_name,item_name,type_of_kg,quantity,total_kg,price_per_1kg,total_price,movement,date,user)VALUES('" + dname + "','" + Iname + "','" + kg + "','" + qua + "','" + totalKg + "','" + price + "','" + toP + "','" + move + "','" + date + "','" + user + "')";
+            pst = conn.prepareStatement(insert);
+            pst.execute();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
+
     }
 
-}
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -8935,7 +8790,7 @@ public void insertDataStock(String dname,String Iname,String kg,String qua,Strin
             public void run() {
                 try {
                     new MainPage().setVisible(true);
-                    
+
                 } catch (SQLException ex) {
                     Logger.getLogger(MainPage.class.getName()).log(Level.SEVERE, null, ex);
                 }
