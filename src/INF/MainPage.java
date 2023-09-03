@@ -38,18 +38,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import net.proteanit.sql.DbUtils;
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRResultSetDataSource;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.data.JRTableModelDataSource;
-import net.sf.jasperreports.engine.design.JRDesignQuery;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
-import net.sf.jasperreports.view.JasperViewer;
+
 import java.awt.*;
 import java.awt.print.*;
 import static java.awt.print.Printable.NO_SUCH_PAGE;
@@ -320,11 +309,7 @@ public class MainPage extends javax.swing.JFrame {
         SimpleDateFormat g1 = new SimpleDateFormat("yyyy-MM-dd");
         String dat = g1.format(jDateChooser2.getDate());
        
-        String kg=jTextField12.getText();
-        String qua=jTextField13.getText();
-        String totalKg=jTextField14.getText();
-        String price=jTextField15.getText();
-        String totalP=jTextField16.getText();  
+      
         String status="pending";
         String route=jComboBox2.getSelectedItem().toString();
         String collectr=jTextField45.getText();
@@ -5971,7 +5956,7 @@ public void getProductPropeties(){
                     + "VALUES('"+dat+"','"+cat+"','"+kg+"','"+qua+"','"+totalKg+"','"+price+"','"+totalP+"')";
             pst=conn.prepareStatement(insert);
             pst.execute();
-            JOptionPane.showMessageDialog(this, "Data added to table");
+            
         } catch (Exception e) {
              JOptionPane.showMessageDialog(this, e);
         }try {
@@ -6127,7 +6112,7 @@ public void getProductPropeties(){
                                        String tkg=(String)df2.getValueAt(i, 4);
                                        String pp=(String)df2.getValueAt(i, 5);
                                        double tpp=(Double)df2.getValueAt(i, 6);
-                                       String pid=(String)df2.getValueAt(i, 7);
+                                       String pid7=(String)df2.getValueAt(i, 7);
                                        String getUser=jLabel20.getText();
                                        String move="OUT";
                                        String cred="Salt";
