@@ -441,7 +441,30 @@ public class MainPage extends javax.swing.JFrame {
         }
 
     }
-
+ public void insertDataToSales_Bill_list(String bill,String dealer,String name,String amount){
+                SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
+                String addDate = d.format(jDateChooser2.getDate());
+                  String n = jTextField7.getText();
+             
+        try {
+                    String sq ="SELECT * FROM sales_bill_list WHERE dealer_name='"+name+"' AND dealer='"+dealer+"' AND bil_num='"+bill+"'";
+                    pst = conn.prepareStatement(sq);
+                    rs = pst.executeQuery();
+                    
+                      if(rs.next()){
+                      
+                          
+                      
+                      }else{
+                          String sd="INSERT INTO sales_bill_list(bil_num,date,dealer,dealer_name,bil_amount)"
+                                  + "VALUES('"+bill+"','"+cdate+"','"+dealer+"','"+name+"','"+amount+"')";
+                          pst=conn.prepareStatement(sd);
+                          pst.execute();
+                      
+                      }
+        } catch (Exception e) {
+        }
+    }
     //add or update arius table
     public void addOrUpdateariusTable(String dealer, String n, String date, String sum_of_arius) {
 
@@ -864,6 +887,9 @@ public class MainPage extends javax.swing.JFrame {
         jDateChooser5 = new com.toedter.calendar.JDateChooser();
         jTextField50 = new javax.swing.JTextField();
         jLabel91 = new javax.swing.JLabel();
+        jButton56 = new javax.swing.JButton();
+        jLabel55 = new javax.swing.JLabel();
+        jLabel116 = new javax.swing.JLabel();
         p5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane9 = new javax.swing.JScrollPane();
@@ -2428,6 +2454,19 @@ public class MainPage extends javax.swing.JFrame {
 
         jLabel91.setText("Luuse");
 
+        jButton56.setText("ADD");
+        jButton56.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton56ActionPerformed(evt);
+            }
+        });
+
+        jLabel55.setFont(new java.awt.Font("Iskoola Pota", 1, 12)); // NOI18N
+        jLabel55.setText("රු.");
+
+        jLabel116.setFont(new java.awt.Font("Iskoola Pota", 0, 14)); // NOI18N
+        jLabel116.setText("0.0");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -2463,11 +2502,6 @@ public class MainPage extends javax.swing.JFrame {
                                                     .addComponent(jTextField20, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                                .addGap(52, 52, 52)
-                                                .addComponent(jRadioButton9)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jRadioButton10))
-                                            .addGroup(jPanel5Layout.createSequentialGroup()
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(jLabel91)
@@ -2479,14 +2513,25 @@ public class MainPage extends javax.swing.JFrame {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(jLabel37))))))
-                                .addGap(102, 102, 102)
+                                                    .addComponent(jLabel37)))
+                                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                                .addGap(52, 52, 52)
+                                                .addComponent(jRadioButton9)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jRadioButton10)
+                                                .addGap(28, 28, 28)
+                                                .addComponent(jLabel55)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jLabel116)))))
+                                .addGap(141, 141, 141)
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel36)
                                     .addGroup(jPanel5Layout.createSequentialGroup()
                                         .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jButton56, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addComponent(jRadioButton5)
                                 .addGap(10, 10, 10)
@@ -2499,7 +2544,7 @@ public class MainPage extends javax.swing.JFrame {
                                 .addComponent(jDateChooser5, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton20)))
-                        .addGap(0, 12, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(34, 34, 34))
         );
         jPanel5Layout.setVerticalGroup(
@@ -2527,7 +2572,9 @@ public class MainPage extends javax.swing.JFrame {
                                 .addGap(6, 6, 6))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                                 .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(44, 44, 44))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton56)
+                                .addGap(27, 27, 27))))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel5Layout.createSequentialGroup()
@@ -2540,7 +2587,9 @@ public class MainPage extends javax.swing.JFrame {
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jTextField21, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jRadioButton9)
-                                    .addComponent(jRadioButton10))))
+                                    .addComponent(jRadioButton10)
+                                    .addComponent(jLabel55, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel116))))
                         .addGap(8, 8, 8)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel5Layout.createSequentialGroup()
@@ -6090,6 +6139,7 @@ public class MainPage extends javax.swing.JFrame {
                         }
                         String cred = "Salt";
                         getSalesData(cred);
+                                                           insertDataToSales_Bill_list(jLabel85.getText(),cred,jTextField7.getText(),jLabel86.getText());
                         addOrUpdateariusTable(cred, jTextField7.getText(), cdate, jLabel90.getText());
                         printBill();
                         invID();
@@ -6176,7 +6226,7 @@ public class MainPage extends javax.swing.JFrame {
                         }//loop end here
                         String cred = "Deliver/Detor";
                         getSalesData(cred);
-
+                                   insertDataToSales_Bill_list(jLabel85.getText(),cred,jTextField7.getText(),jLabel86.getText());
                         addOrUpdateariusTable(cred, jTextField7.getText(), cdate, jLabel90.getText());
                         printBill();
                         invID();
@@ -6259,7 +6309,7 @@ public class MainPage extends javax.swing.JFrame {
                         }//loop end here
                         String cred = "Customer";
                         getSalesData(cred);
-
+                                   insertDataToSales_Bill_list(jLabel85.getText(),cred,jTextField7.getText(),jLabel86.getText());
                         addOrUpdateariusTable(cred, jTextField7.getText(), cdate, jLabel90.getText());
                         printBill();
                         invID();
@@ -6343,7 +6393,7 @@ public class MainPage extends javax.swing.JFrame {
                         }//loop end here
                         String cred = "Shop";
                         getSalesData(cred);
-
+                                   insertDataToSales_Bill_list(jLabel85.getText(),cred,jTextField7.getText(),jLabel86.getText());
                         addOrUpdateariusTable(cred, jTextField7.getText(), cdate, jLabel90.getText());
                         printBill();
                         invID();
@@ -8147,7 +8197,24 @@ public class MainPage extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
-
+    try {
+            String se="SELECT * FROM creditor_bill_list WHERE bill_num='"+jTextField33.getText()+"'";
+            pst=conn.prepareStatement(se);
+            rs=pst.executeQuery();
+            
+            if(rs.next()){
+            
+            }else{
+                String sw="INSERT INTO creditor_bill_list(bill_num,creditor_name,date,bill_amount)"
+                        + "VALUES('"+jTextField33.getText()+"','"+txtCreditorName.getText()+"','"+fdate+"','"+jTextField48.getText()+"')";
+                pst1=conn.prepareStatement(sw);
+                pst1.execute();
+            
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
+ 
         txtCreditorName.requestFocus();
         txtCreditorName.setText("");
         jTextField2.setText("");
@@ -8661,6 +8728,19 @@ public class MainPage extends javax.swing.JFrame {
         jTextField28.setText("");
         jTextField29.setText("");
     }//GEN-LAST:event_jButton49ActionPerformed
+
+    private void jButton56ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton56ActionPerformed
+        // TODO add your handling code here:
+        jTextField17.setText("");
+      jTextField18.setText("");
+       jTextField19.setText("");
+       jTextField20.setText("");
+       jTextArea1.setText("");
+       jTextField21.setText("");
+       jTextArea1.setText("Write Here");
+       jTextField22.setText("");
+       jLabel116.setText("0.0");
+    }//GEN-LAST:event_jButton56ActionPerformed
     private void displayAriusAmountdebit(String selectedName) {
         //        Cash/Banking Section
         try {
@@ -8855,6 +8935,7 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JButton jButton53;
     private javax.swing.JButton jButton54;
     private javax.swing.JButton jButton55;
+    private javax.swing.JButton jButton56;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
@@ -8896,6 +8977,7 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel113;
     private javax.swing.JLabel jLabel114;
     private javax.swing.JLabel jLabel115;
+    private javax.swing.JLabel jLabel116;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -8943,6 +9025,7 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel54;
+    private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel58;
