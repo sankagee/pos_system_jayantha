@@ -2454,7 +2454,7 @@ public class MainPage extends javax.swing.JFrame {
 
         jLabel91.setText("Luuse");
 
-        jButton56.setText("ADD");
+        jButton56.setText("Clear");
         jButton56.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton56ActionPerformed(evt);
@@ -4194,7 +4194,7 @@ public class MainPage extends javax.swing.JFrame {
                 .addGroup(topmenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton33)
                     .addComponent(jButton34))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         tmenu.setLayout(new java.awt.CardLayout());
