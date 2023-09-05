@@ -442,8 +442,36 @@ public class MainPage extends javax.swing.JFrame {
 
     }
 
-    //add or update arius table
-    public void addOrUpdateariusTable(String dealer, String n, String date, String sum_of_arius) {
+ //send data to sale_bill_list table
+
+    public void insertDataToSales_Bill_list(String bill,String dealer,String name,String amount){
+                SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
+                String addDate = d.format(jDateChooser2.getDate());
+                  String n = jTextField7.getText();
+             
+        try {
+                    String sq ="SELECT * FROM sales_bill_list WHERE dealer_name='"+name+"' AND dealer='"+dealer+"' AND bil_num='"+bill+"'";
+                    pst = conn.prepareStatement(sq);
+                    rs = pst.executeQuery();
+                    
+                      if(rs.next()){
+                      
+                          
+                      
+                      }else{
+                          String sd="INSERT INTO sales_bill_list(bil_num,date,dealer,dealer_name,bil_amount)"
+                                  + "VALUES('"+bill+"','"+cdate+"','"+dealer+"','"+name+"','"+amount+"')";
+                          pst=conn.prepareStatement(sd);
+                          pst.execute();
+                      
+                      }
+        } catch (Exception e) {
+        }
+    }
+ //add or update arius table
+    public void addOrUpdateariusTable(String dealer,String n,String date,String sum_of_arius ){
+      
+        
 
         try {
 
@@ -864,6 +892,9 @@ public class MainPage extends javax.swing.JFrame {
         jDateChooser5 = new com.toedter.calendar.JDateChooser();
         jTextField50 = new javax.swing.JTextField();
         jLabel91 = new javax.swing.JLabel();
+        jLabel55 = new javax.swing.JLabel();
+        jLabel116 = new javax.swing.JLabel();
+        jButton56 = new javax.swing.JButton();
         p5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane9 = new javax.swing.JScrollPane();
@@ -2344,6 +2375,11 @@ public class MainPage extends javax.swing.JFrame {
 
         jLabel33.setText("Mobile Number");
 
+        jTextField18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField18ActionPerformed(evt);
+            }
+        });
         jTextField18.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTextField18KeyReleased(evt);
@@ -2407,6 +2443,12 @@ public class MainPage extends javax.swing.JFrame {
 
         Category.setText("Category");
 
+        jTextField22.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField22KeyReleased(evt);
+            }
+        });
+
         jLabel39.setText("Total Kg");
 
         jButton20.setText("OK");
@@ -2428,6 +2470,17 @@ public class MainPage extends javax.swing.JFrame {
 
         jLabel91.setText("Luuse");
 
+        jLabel55.setText("රු.");
+
+        jLabel116.setText("0.0");
+
+        jButton56.setText("Clear");
+        jButton56.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton56ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -2435,58 +2488,10 @@ public class MainPage extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane6)
-                    .addComponent(jScrollPane5)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jTextField18, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel32, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextField17, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel33))
-                                .addGap(4, 4, 4)
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Category)
-                                    .addGroup(jPanel5Layout.createSequentialGroup()
-                                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(jTextField21, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
-                                                .addGap(6, 6, 6)
-                                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel34)
-                                                    .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel35)
-                                                    .addComponent(jTextField20, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                                .addGap(52, 52, 52)
-                                                .addComponent(jRadioButton9)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jRadioButton10))
-                                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel91)
-                                                    .addComponent(jTextField50, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel39)
-                                                    .addComponent(jTextField22, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(jLabel37))))))
-                                .addGap(102, 102, 102)
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel36)
-                                    .addGroup(jPanel5Layout.createSequentialGroup()
-                                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jScrollPane6)
+                            .addComponent(jScrollPane5)
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addComponent(jRadioButton5)
                                 .addGap(10, 10, 10)
@@ -2498,9 +2503,66 @@ public class MainPage extends javax.swing.JFrame {
                                 .addGap(50, 50, 50)
                                 .addComponent(jDateChooser5, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton20)))
-                        .addGap(0, 12, Short.MAX_VALUE)))
-                .addGap(34, 34, 34))
+                                .addComponent(jButton20)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(34, 34, 34))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jTextField18, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel32, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jTextField17, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel33))
+                        .addGap(4, 4, 4)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Category)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jTextField21, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(jLabel34)
+                                        .addGap(23, 23, 23)
+                                        .addComponent(jLabel35)
+                                        .addGap(23, 23, 23)))
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addGap(52, 52, 52)
+                                        .addComponent(jRadioButton9)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jRadioButton10)
+                                        .addGap(36, 36, 36)
+                                        .addComponent(jLabel55)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel116, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel91)
+                                        .addGap(47, 47, 47)
+                                        .addComponent(jLabel39)
+                                        .addGap(67, 67, 67)
+                                        .addComponent(jLabel37))))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextField20, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextField50, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextField22, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel36)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jButton17, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
+                                    .addComponent(jButton56, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(112, Short.MAX_VALUE))))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2515,20 +2577,10 @@ public class MainPage extends javax.swing.JFrame {
                     .addComponent(jDateChooser5, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                     .addComponent(jButton20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel36)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                                .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(44, 44, 44))))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(13, 13, 13)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addComponent(jLabel32)
@@ -2540,35 +2592,42 @@ public class MainPage extends javax.swing.JFrame {
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jTextField21, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jRadioButton9)
-                                    .addComponent(jRadioButton10))))
+                                    .addComponent(jRadioButton10)
+                                    .addComponent(jLabel55)
+                                    .addComponent(jLabel116))))
                         .addGap(8, 8, 8)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel33)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel34)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel35)
-                                    .addComponent(jLabel91))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel33, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel34, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel35)
+                                .addComponent(jLabel91))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel39)
+                                .addComponent(jLabel37)))
+                        .addGap(3, 3, 3)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jTextField20, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField50, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel39)
-                                    .addComponent(jLabel37))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jTextField50, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField22, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                                    .addComponent(jDateChooser3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                                    .addComponent(jTextField22)
+                                    .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel36)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                                .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton56)
+                                .addGap(4, 4, 4)))))
+                .addGap(14, 14, 14)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
                 .addGap(34, 34, 34))
         );
 
@@ -5998,366 +6057,395 @@ public class MainPage extends javax.swing.JFrame {
 
     }
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
-        int r = jTable7.getRowCount();
-        boolean bt = jButton46.isEnabled();
-        if (r == 0 || bt == true) {
-            JOptionPane.showMessageDialog(this, "Bill is empty");
-        } else {
-            String name = jTextField7.getText();
-            String mn = jTextField8.getText();
-            String ln = jTextField9.getText();
-            SimpleDateFormat g1 = new SimpleDateFormat("yyyy-MM-dd");
-            Date dat = jDateChooser2.getDate();
-            String cat = jTextField11.getText();
-            String kg = jTextField12.getText();
-            String qua = jTextField13.getText();
-            String totalKg = jTextField14.getText();
-            String price = jTextField15.getText();
-            String totalP = jTextField16.getText();
+     int r=jTable7.getRowCount();
+     boolean bt=jButton46.isEnabled();
+        if(r==0||bt==true){
+             JOptionPane.showMessageDialog(this, "Bill is empty");
+        }else{
+          String name=jTextField7.getText();
+       String mn=jTextField8.getText();
+       String ln=jTextField9.getText();
+       SimpleDateFormat g1 = new SimpleDateFormat("yyyy-MM-dd");
+       Date dat = jDateChooser2.getDate();
+        String cat=jTextField11.getText();
+        String kg=jTextField12.getText();
+        String qua=jTextField13.getText();
+        String totalKg=jTextField14.getText();
+        String price=jTextField15.getText();
+        String totalP=jTextField16.getText();
+        
+        String collector=jTextField45.getText();
+        int route=jComboBox2.getSelectedIndex();
+        
+        boolean detor2 =jRadioButton1.isSelected();
+        boolean deliver =jRadioButton2.isSelected();
+         boolean customer =jRadioButton3.isSelected();
+         boolean shop =jRadioButton4.isSelected();
+        
+         if(detor2==true){
+             if(dat==null||name.equals("")||mn.equals("")||cat.equals("")||kg.equals("")||qua.equals("")||totalKg.equals("")||price.equals("")||totalP.equals("")||ln.equals("")){
+             
+             JOptionPane.showMessageDialog(this, "Fil the empty fields");
+             }else{
+               //ask the user that, he needs to print the bill
+                 int msg =JOptionPane.showConfirmDialog(this, "Do you want to print the bill");
+                if(msg==0){
+                            DefaultTableModel df2 =(DefaultTableModel)jTable7.getModel();
+                                   int newRC=jTable7.getRowCount();
+                                   String nqty="";
+                                   String newluse="";
+                                   String switchName="null";
+                                   
+                                   for(int i=0;i<newRC;i++){
+                                       
+                                       //get dealer name,mobile number,lorry number...etc
+                                       
+                                       String bil=jLabel85.getText();
+                                       String ktype=(String)df2.getValueAt(i, 1);
+                                       String item=(String)df2.getValueAt(i, 0);
+                                       String qty=(String)df2.getValueAt(i, 2);
+                                       String luuseqty=(String)df2.getValueAt(i, 3);
+                                       if(qty.equals("0")){
+                                           nqty="L"+luuseqty;
+                                           newluse=luuseqty;
+                                       }else{
+                                           nqty=qty;
+                                           newluse=qty;
+                                       }
+                                       String lVaue=(String)df2.getValueAt(i, 8);
+                                       String tkg=(String)df2.getValueAt(i, 4);
+                                       String pp=(String)df2.getValueAt(i, 5);
+                                       double tpp=(Double)df2.getValueAt(i, 6);
+                                       String pid7=(String)df2.getValueAt(i, 7);
+                                       String getUser=jLabel20.getText();
+                                       String move="OUT";
+                                       String cred="Salt";
+                                       switch (lVaue) {
+                                           case "AL":
+                                               switchName="AL";
+                                               insertLuuse(item,ktype,"0",luuseqty,luuseqty,cdate,move);
+                                               insertDataToSales(cred,ktype,nqty,tkg,pp,tpp,item);
+                                               insertDataStock(cred,item+"/luuse",ktype,newluse,tkg,pp,tpp,move,cdate,getUser);
+                                               
+                                               break;
+                                           case "GL":
+                                               switchName="GL";
+                                               
+                                               insertLuuse(item,ktype,"1",luuseqty,luuseqty,cdate,move);
+                                               
+                                               insertDataToSales(cred,ktype,nqty,tkg,pp,tpp,item);
+                                               insertDataStock(cred,item+"/luuse",ktype,newluse,tkg,pp,tpp,move,cdate,getUser);
+                                               break;
+                                           default:
+                                               switchName="null";
+                                               
+                                               insertDataStock(cred,item,ktype,qty,tkg,pp,tpp,move,cdate,getUser);
+                                               insertDataToSales(cred,ktype,qty,tkg,pp,tpp,item);
+                                               break;
+                                       }
+                                    
+                                       insertToDetor(item,ktype,nqty,tkg,pp,tpp);
+                                       //sen to bill
+                                       generateBill(jLabel85.getText(),item,ktype,qty,luuseqty,tkg,pp,tpp,jLabel86.getText(),jLabel88.getText(),jLabel90.getText(),jTextField7.getText());
+                                   }
+                                   String cred="Salt"; 
+                                   getSalesData(cred);
+                                   //send data to sale_bill_list
+                                   insertDataToSales_Bill_list(jLabel85.getText(),cred,jTextField7.getText(),jLabel86.getText());
+                                    addOrUpdateariusTable(cred,jTextField7.getText(),cdate,jLabel90.getText());
+                                    printBill();
+                                    invID();
+                                    DefaultTableModel df1 =(DefaultTableModel)jTable7.getModel();
+                                    int rowCount=jTable7.getRowCount();
+                                    //df1.setRowCount(0);
+                                    for(int i = rowCount;i>0;i--){
+                                             df1.removeRow(i-1);
 
-            String collector = jTextField45.getText();
-            int route = jComboBox2.getSelectedIndex();
-
-            boolean detor2 = jRadioButton1.isSelected();
-            boolean deliver = jRadioButton2.isSelected();
-            boolean customer = jRadioButton3.isSelected();
-            boolean shop = jRadioButton4.isSelected();
-
-            if (detor2 == true) {
-                if (dat == null || name.equals("") || mn.equals("") || cat.equals("") || kg.equals("") || qua.equals("") || totalKg.equals("") || price.equals("") || totalP.equals("") || ln.equals("")) {
-
-                    JOptionPane.showMessageDialog(this, "Fil the empty fields");
-                } else {
-                    //ask the user that, he needs to print the bill
-                    int msg = JOptionPane.showConfirmDialog(this, "Do you want to print the bill");
-                    if (msg == 0) {
-                        DefaultTableModel df2 = (DefaultTableModel) jTable7.getModel();
-                        int newRC = jTable7.getRowCount();
-                        String nqty = "";
-                        String newluse = "";
-                        String switchName = "null";
-
-                        for (int i = 0; i < newRC; i++) {
-
-                            //get dealer name,mobile number,lorry number...etc
-                            String bil = jLabel85.getText();
-                            String ktype = (String) df2.getValueAt(i, 1);
-                            String item = (String) df2.getValueAt(i, 0);
-                            String qty = (String) df2.getValueAt(i, 2);
-                            String luuseqty = (String) df2.getValueAt(i, 3);
-                            if (qty.equals("0")) {
-                                nqty = "L" + luuseqty;
-                                newluse = luuseqty;
-                            } else {
-                                nqty = qty;
-                                newluse = qty;
-                            }
-                            String lVaue = (String) df2.getValueAt(i, 8);
-                            String tkg = (String) df2.getValueAt(i, 4);
-                            String pp = (String) df2.getValueAt(i, 5);
-                            double tpp = (Double) df2.getValueAt(i, 6);
-                            String pid7 = (String) df2.getValueAt(i, 7);
-                            String getUser = jLabel20.getText();
-                            String move = "OUT";
-                            String cred = "Salt";
-                            switch (lVaue) {
-                                case "AL":
-                                    switchName = "AL";
-                                    insertLuuse(item, ktype, "0", luuseqty, luuseqty, cdate, move);
-                                    insertDataToSales(cred, ktype, nqty, tkg, pp, tpp, item);
-                                    insertDataStock(cred, item + "/luuse", ktype, newluse, tkg, pp, tpp, move, cdate, getUser);
-
-                                    break;
-                                case "GL":
-                                    switchName = "GL";
-
-                                    insertLuuse(item, ktype, "1", luuseqty, luuseqty, cdate, move);
-
-                                    insertDataToSales(cred, ktype, nqty, tkg, pp, tpp, item);
-                                    insertDataStock(cred, item + "/luuse", ktype, newluse, tkg, pp, tpp, move, cdate, getUser);
-                                    break;
-                                default:
-                                    switchName = "null";
-
-                                    insertDataStock(cred, item, ktype, qty, tkg, pp, tpp, move, cdate, getUser);
-                                    insertDataToSales(cred, ktype, qty, tkg, pp, tpp, item);
-                                    break;
-                            }
-
-                            insertToDetor(item, ktype, nqty, tkg, pp, tpp);
-                            //sen to bill
-                            generateBill(jLabel85.getText(), item, ktype, qty, luuseqty, tkg, pp, tpp, jLabel86.getText(), jLabel88.getText(), jLabel90.getText(), jTextField7.getText());
-                        }
-                        String cred = "Salt";
-                        getSalesData(cred);
-                        addOrUpdateariusTable(cred, jTextField7.getText(), cdate, jLabel90.getText());
-                        printBill();
-                        invID();
-                        DefaultTableModel df1 = (DefaultTableModel) jTable7.getModel();
-                        int rowCount = jTable7.getRowCount();
-                        //df1.setRowCount(0);
-                        for (int i = rowCount; i > 0; i--) {
-                            df1.removeRow(i - 1);
-
-                        }
-
-                        clearFields();
-                    } else {
-                        JOptionPane.showMessageDialog(this, "please use 'YES' option ");
-                    }
-
+                                    }
+                                    
+                                 
+                                    
+                                    clearFields();
+                 }else{
+                            JOptionPane.showMessageDialog(this, "please use 'YES' option ");
                 }
+                   
 
-            } else if (deliver == true) {
-                if (dat == null || name.equals("") || ln.equals("") || collector.equals("") || route == 0) {
+             
+             }
 
-                    JOptionPane.showMessageDialog(this, "Fil the empty fields");
-                } else {
+         }else if(deliver==true){
+             if(dat==null||name.equals("")||ln.equals("")||collector.equals("")||route==0){
+             
+             JOptionPane.showMessageDialog(this, "Fil the empty fields");
+             }else{
+                 
+                 //ask the user that, he needs to print the bill
+                 int msg =JOptionPane.showConfirmDialog(this, "Do you want to print the bill");
+                if(msg==0){
+                            DefaultTableModel df2 =(DefaultTableModel)jTable7.getModel();
+                                   int newRC=jTable7.getRowCount();
+                                   String nqty="";
+                                   String newluse="";
+                                   String switchName="null";
+                                   for(int i=0;i<newRC;i++){
+                                       
+                                       //get dealer name,mobile number,lorry number...etc
+                                         
+                                       
+                                       String ktype=(String)df2.getValueAt(i, 1);
+                                        String item=(String)df2.getValueAt(i, 0);
+                                       String qty=(String)df2.getValueAt(i, 2);
+                                       String luuseqty=(String)df2.getValueAt(i, 3);
+                                                if(qty.equals("0")){
+                                                    nqty="L"+luuseqty;
+                                                    newluse=luuseqty;
+                                                }else{
+                                                     nqty=qty;
+                                                     newluse=qty;
+                                                }
+                                        String lVaue=(String)df2.getValueAt(i, 8);
+                                        String tkg=(String)df2.getValueAt(i, 4);
+                                       String pp=(String)df2.getValueAt(i, 5);
+                                       double tpp=(Double)df2.getValueAt(i, 6);
+                                       String pid=(String)df2.getValueAt(i, 7);
+                                       String getUser=jLabel20.getText();
+                                       String move="OUT";
 
-                    //ask the user that, he needs to print the bill
-                    int msg = JOptionPane.showConfirmDialog(this, "Do you want to print the bill");
-                    if (msg == 0) {
-                        DefaultTableModel df2 = (DefaultTableModel) jTable7.getModel();
-                        int newRC = jTable7.getRowCount();
-                        String nqty = "";
-                        String newluse = "";
-                        String switchName = "null";
-                        for (int i = 0; i < newRC; i++) {
+                                        String cred="Deliver/Detor"; 
+                                switch (lVaue) {
+                                    case "AL":
+                                        switchName="AL";
+                                        insertLuuse(item,ktype,"0",luuseqty,luuseqty,cdate,move);
+                                        insertDataToSales(cred,ktype,nqty,tkg,pp,tpp,item);
+                                        insertDataStock(cred,item+"/luuse",ktype,newluse,tkg,pp,tpp,move,cdate,getUser);
 
-                            //get dealer name,mobile number,lorry number...etc
-                            String ktype = (String) df2.getValueAt(i, 1);
-                            String item = (String) df2.getValueAt(i, 0);
-                            String qty = (String) df2.getValueAt(i, 2);
-                            String luuseqty = (String) df2.getValueAt(i, 3);
-                            if (qty.equals("0")) {
-                                nqty = "L" + luuseqty;
-                                newluse = luuseqty;
-                            } else {
-                                nqty = qty;
-                                newluse = qty;
-                            }
-                            String lVaue = (String) df2.getValueAt(i, 8);
-                            String tkg = (String) df2.getValueAt(i, 4);
-                            String pp = (String) df2.getValueAt(i, 5);
-                            double tpp = (Double) df2.getValueAt(i, 6);
-                            String pid = (String) df2.getValueAt(i, 7);
-                            String getUser = jLabel20.getText();
-                            String move = "OUT";
+                                        break;
+                                    case "GL":
+                                        switchName="GL";
+                                            
+                                        insertLuuse(item,ktype,"1",luuseqty,luuseqty,cdate,move);
+                                        insertDataToSales(cred,ktype,nqty,tkg,pp,tpp,item);
+                                         insertDataStock(cred,item+"/luuse",ktype,newluse,tkg,pp,tpp,move,cdate,getUser);
+                                        break;
+                                    default:
+                                        switchName="null";
+                                           
+                                            insertDataStock(cred,item,ktype,qty,tkg,pp,tpp,move,cdate,getUser);
+                                           insertDataToSales(cred,ktype,qty,tkg,pp,tpp,item);
+                                        break;
+                                }
+                                
+                                       
+                                        
+                                              
+                                      
+                                      insertToDeliver(item,ktype,nqty,tkg,pp,tpp);
+                                        //update product properties table(addition/subtraction)
+                                        
+                                       reduceCategoryAmount(switchName,ktype,qty,luuseqty,tkg,pid);
+                                       generateBill(jLabel85.getText(),item,ktype,qty,luuseqty,tkg,pp,tpp,jLabel86.getText(),jLabel88.getText(),jLabel90.getText(),jTextField7.getText());
+                                   }//loop end here
+                                   String cred="Deliver/Detor"; 
+                                   getSalesData(cred);
+                                    //send data to sale_bill_list
+                                   insertDataToSales_Bill_list(jLabel85.getText(),cred,jTextField7.getText(),jLabel86.getText());
+                                   addOrUpdateariusTable(cred,jTextField7.getText(),cdate,jLabel90.getText());
+                                   printBill();
+                                   invID();
+                                   DefaultTableModel df1 =(DefaultTableModel)jTable7.getModel();
+                                    int rowCount=jTable7.getRowCount();
+                                    //df1.setRowCount(0);
+                                    for(int i = rowCount;i>0;i--){
+                                             df1.removeRow(i-1);
 
-                            String cred = "Deliver/Detor";
-                            switch (lVaue) {
-                                case "AL":
-                                    switchName = "AL";
-                                    insertLuuse(item, ktype, "0", luuseqty, luuseqty, cdate, move);
-                                    insertDataToSales(cred, ktype, nqty, tkg, pp, tpp, item);
-                                    insertDataStock(cred, item + "/luuse", ktype, newluse, tkg, pp, tpp, move, cdate, getUser);
-
-                                    break;
-                                case "GL":
-                                    switchName = "GL";
-
-                                    insertLuuse(item, ktype, "1", luuseqty, luuseqty, cdate, move);
-                                    insertDataToSales(cred, ktype, nqty, tkg, pp, tpp, item);
-                                    insertDataStock(cred, item + "/luuse", ktype, newluse, tkg, pp, tpp, move, cdate, getUser);
-                                    break;
-                                default:
-                                    switchName = "null";
-
-                                    insertDataStock(cred, item, ktype, qty, tkg, pp, tpp, move, cdate, getUser);
-                                    insertDataToSales(cred, ktype, qty, tkg, pp, tpp, item);
-                                    break;
-                            }
-
-                            insertToDeliver(item, ktype, nqty, tkg, pp, tpp);
-                            //update product properties table(addition/subtraction)
-
-                            reduceCategoryAmount(switchName, ktype, qty, luuseqty, tkg, pid);
-                            generateBill(jLabel85.getText(), item, ktype, qty, luuseqty, tkg, pp, tpp, jLabel86.getText(), jLabel88.getText(), jLabel90.getText(), jTextField7.getText());
-                        }//loop end here
-                        String cred = "Deliver/Detor";
-                        getSalesData(cred);
-
-                        addOrUpdateariusTable(cred, jTextField7.getText(), cdate, jLabel90.getText());
-                        printBill();
-                        invID();
-                        DefaultTableModel df1 = (DefaultTableModel) jTable7.getModel();
-                        int rowCount = jTable7.getRowCount();
-                        //df1.setRowCount(0);
-                        for (int i = rowCount; i > 0; i--) {
-                            df1.removeRow(i - 1);
-
-                        }
-                        clearFields();
-                    } else {
-                        JOptionPane.showMessageDialog(this, "please use 'YES' option");
-                    }
-
+                                    }
+                                   clearFields();
+                 }else{
+                            JOptionPane.showMessageDialog(this, "please use 'YES' option");
                 }
-            } else if (customer == true) {
-                if (dat == null || name.equals("")) {
+                 
+         
+             }
+         }else if(customer==true){
+             if(dat==null||name.equals("")){
+             
+             JOptionPane.showMessageDialog(this, "Fil the empty fields");
+             }else{
+                 
+                  //ask the user that, he needs to print the bill
+                 int msg =JOptionPane.showConfirmDialog(this, "Do you want to print the bill");
+                if(msg==0){
+                            DefaultTableModel df2 =(DefaultTableModel)jTable7.getModel();
+                                   int newRC=jTable7.getRowCount();
+                                   String nqty="";
+                                   String newluse="";
+                                   String switchName="null";
+                                   for(int i=0;i<newRC;i++){
+                                       
+                                       //get dealer name,mobile number,lorry number...etc
+                                         
+                                       
+                                       String ktype=(String)df2.getValueAt(i, 1);
+                                        String item=(String)df2.getValueAt(i, 0);
+                                       String qty=(String)df2.getValueAt(i, 2);
+                                       String luuseqty=(String)df2.getValueAt(i, 3);
+                                                if(qty.equals("0")){
+                                                    nqty="L"+luuseqty;
+                                                    newluse=luuseqty;
+                                                }else{
+                                                     nqty=qty;
+                                                     newluse=qty;
+                                                }
+                                        String lVaue=(String)df2.getValueAt(i, 8);
+                                        String tkg=(String)df2.getValueAt(i, 4);
+                                       String pp=(String)df2.getValueAt(i, 5);
+                                       double tpp=(Double)df2.getValueAt(i, 6);
+                                       String pid6=(String)df2.getValueAt(i, 7);
+                                       String getUser=jLabel20.getText();
+                                       String move="OUT";
 
-                    JOptionPane.showMessageDialog(this, "Fil the empty fields");
-                } else {
+                                        String cred="Customer"; 
+                                switch (lVaue) {
+                                    case "AL":
+                                        switchName="AL";
+                                        insertLuuse(item,ktype,"0",luuseqty,luuseqty,cdate,move);
+                                         insertDataToSales(cred,ktype,nqty,tkg,pp,tpp,item);
+                                          insertDataStock(cred,item+"/luuse",ktype,newluse,tkg,pp,tpp,move,cdate,getUser);
+                                        break;
+                                    case "GL":
+                                        switchName="GL";
+                                            
+                                        insertLuuse(item,ktype,"1",luuseqty,luuseqty,cdate,move);
+                                         insertDataToSales(cred,ktype,nqty,tkg,pp,tpp,item);
+                                         insertDataStock(cred,item+"/luuse",ktype,newluse,tkg,pp,tpp,move,cdate,getUser);
+                                        break;
+                                    default:
+                                        switchName="null";
+                                           
+                                            insertDataStock(cred,item,ktype,qty,tkg,pp,tpp,move,cdate,getUser);
+                                            insertDataToSales(cred,ktype,qty,tkg,pp,tpp,item);
+                                        break;
+                                }
+                                
+                                       
+                                       
+                                              
+                                      
+                                      insertToCustomer(item,ktype,nqty,tkg,pp,tpp);
+                                        //update product properties table(addition/subtraction)
+                                        reduceCategoryAmount(switchName,ktype,qty,luuseqty,tkg,pid6);
+                                        generateBill(jLabel85.getText(),item,ktype,qty,luuseqty,tkg,pp,tpp,jLabel86.getText(),jLabel88.getText(),jLabel90.getText(),jTextField7.getText());
+                                   }//loop end here
+                                   String cred="Customer"; 
+                                   getSalesData(cred);
+                                    //send data to sale_bill_list
+                                   insertDataToSales_Bill_list(jLabel85.getText(),cred,jTextField7.getText(),jLabel86.getText());
+                                    addOrUpdateariusTable(cred,jTextField7.getText(),cdate,jLabel90.getText());
+                                    printBill();
+                                    invID();
+                                     DefaultTableModel df1 =(DefaultTableModel)jTable7.getModel();
+                                    int rowCount=jTable7.getRowCount();
+                                    //df1.setRowCount(0);
+                                    for(int i = rowCount;i>0;i--){
+                                             df1.removeRow(i-1);
 
-                    //ask the user that, he needs to print the bill
-                    int msg = JOptionPane.showConfirmDialog(this, "Do you want to print the bill");
-                    if (msg == 0) {
-                        DefaultTableModel df2 = (DefaultTableModel) jTable7.getModel();
-                        int newRC = jTable7.getRowCount();
-                        String nqty = "";
-                        String newluse = "";
-                        String switchName = "null";
-                        for (int i = 0; i < newRC; i++) {
-
-                            //get dealer name,mobile number,lorry number...etc
-                            String ktype = (String) df2.getValueAt(i, 1);
-                            String item = (String) df2.getValueAt(i, 0);
-                            String qty = (String) df2.getValueAt(i, 2);
-                            String luuseqty = (String) df2.getValueAt(i, 3);
-                            if (qty.equals("0")) {
-                                nqty = "L" + luuseqty;
-                                newluse = luuseqty;
-                            } else {
-                                nqty = qty;
-                                newluse = qty;
-                            }
-                            String lVaue = (String) df2.getValueAt(i, 8);
-                            String tkg = (String) df2.getValueAt(i, 4);
-                            String pp = (String) df2.getValueAt(i, 5);
-                            double tpp = (Double) df2.getValueAt(i, 6);
-                            String pid6 = (String) df2.getValueAt(i, 7);
-                            String getUser = jLabel20.getText();
-                            String move = "OUT";
-
-                            String cred = "Customer";
-                            switch (lVaue) {
-                                case "AL":
-                                    switchName = "AL";
-                                    insertLuuse(item, ktype, "0", luuseqty, luuseqty, cdate, move);
-                                    insertDataToSales(cred, ktype, nqty, tkg, pp, tpp, item);
-                                    insertDataStock(cred, item + "/luuse", ktype, newluse, tkg, pp, tpp, move, cdate, getUser);
-                                    break;
-                                case "GL":
-                                    switchName = "GL";
-
-                                    insertLuuse(item, ktype, "1", luuseqty, luuseqty, cdate, move);
-                                    insertDataToSales(cred, ktype, nqty, tkg, pp, tpp, item);
-                                    insertDataStock(cred, item + "/luuse", ktype, newluse, tkg, pp, tpp, move, cdate, getUser);
-                                    break;
-                                default:
-                                    switchName = "null";
-
-                                    insertDataStock(cred, item, ktype, qty, tkg, pp, tpp, move, cdate, getUser);
-                                    insertDataToSales(cred, ktype, qty, tkg, pp, tpp, item);
-                                    break;
-                            }
-
-                            insertToCustomer(item, ktype, nqty, tkg, pp, tpp);
-                            //update product properties table(addition/subtraction)
-                            reduceCategoryAmount(switchName, ktype, qty, luuseqty, tkg, pid6);
-                            generateBill(jLabel85.getText(), item, ktype, qty, luuseqty, tkg, pp, tpp, jLabel86.getText(), jLabel88.getText(), jLabel90.getText(), jTextField7.getText());
-                        }//loop end here
-                        String cred = "Customer";
-                        getSalesData(cred);
-
-                        addOrUpdateariusTable(cred, jTextField7.getText(), cdate, jLabel90.getText());
-                        printBill();
-                        invID();
-                        DefaultTableModel df1 = (DefaultTableModel) jTable7.getModel();
-                        int rowCount = jTable7.getRowCount();
-                        //df1.setRowCount(0);
-                        for (int i = rowCount; i > 0; i--) {
-                            df1.removeRow(i - 1);
-
-                        }
-                        clearFields();
-                    } else {
-                        JOptionPane.showMessageDialog(this, "please use 'YES' option");
-                    }
-
+                                    }
+                                    clearFields();
+                 }else{
+                            JOptionPane.showMessageDialog(this, "please use 'YES' option");
                 }
-            } else if (shop == true) {
-                if (dat == null) {
+                   
 
-                    JOptionPane.showMessageDialog(this, "Fil the empty fields");
-                } else {
+         }
+         }else if(shop==true){
+             if(dat==null){
+             
+             JOptionPane.showMessageDialog(this, "Fil the empty fields");
+             }else{
+                 
+                  //ask the user that, he needs to print the bill
+                 int msg =JOptionPane.showConfirmDialog(this, "Do you want to print the bill");
+                if(msg==0){
+                            DefaultTableModel df2 =(DefaultTableModel)jTable7.getModel();
+                                   int newRC=jTable7.getRowCount();
+                                   String nqty="";
+                                   String newluse="";
+                                   String switchName="null";
+                                   for(int i=0;i<newRC;i++){
+                                       
+                                       //get dealer name,mobile number,lorry number...etc
+                                         
+                                       
+                                       String ktype=(String)df2.getValueAt(i, 1);
+                                        String item=(String)df2.getValueAt(i, 0);
+                                       String qty=(String)df2.getValueAt(i, 2);
+                                       String luuseqty=(String)df2.getValueAt(i, 3);
+                                                if(qty.equals("0")){
+                                                    nqty="L"+luuseqty;
+                                                    newluse=luuseqty;
+                                                }else{
+                                                     nqty=qty;
+                                                     newluse=qty;
+                                                }
+                                        String lVaue=(String)df2.getValueAt(i, 8);
+                                        String tkg=(String)df2.getValueAt(i, 4);
+                                       String pp=(String)df2.getValueAt(i, 5);
+                                       double tpp=(Double)df2.getValueAt(i, 6);
+                                       String pid=(String)df2.getValueAt(i, 7);
+                                       String getUser=jLabel20.getText();
+                                       String move="OUT";
 
-                    //ask the user that, he needs to print the bill
-                    int msg = JOptionPane.showConfirmDialog(this, "Do you want to print the bill");
-                    if (msg == 0) {
-                        DefaultTableModel df2 = (DefaultTableModel) jTable7.getModel();
-                        int newRC = jTable7.getRowCount();
-                        String nqty = "";
-                        String newluse = "";
-                        String switchName = "null";
-                        for (int i = 0; i < newRC; i++) {
+                                        String cred="Shop"; 
+                                switch (lVaue) {
+                                    case "AL":
+                                        switchName="AL";
+                                        insertLuuse(item,ktype,"0",luuseqty,luuseqty,cdate,move);
+                                        insertDataToSales(cred,ktype,nqty,tkg,pp,tpp,item);
+                                        insertDataStock(cred,item+"/luuse",ktype,newluse,tkg,pp,tpp,move,cdate,getUser);
+                                        break;
+                                    case "GL":
+                                        switchName="GL";
+                                            
+                                        insertLuuse(item,ktype,"1",luuseqty,luuseqty,cdate,move);
+                                        insertDataToSales(cred,ktype,nqty,tkg,pp,tpp,item);
+                                        insertDataStock(cred,item+"/luuse",ktype,newluse,tkg,pp,tpp,move,cdate,getUser);
+                                        break;
+                                    default:
+                                        switchName="null";
+                                           
+                                            insertDataStock(cred,item,ktype,qty,tkg,pp,tpp,move,cdate,getUser);
+                                            insertDataToSales(cred,ktype,qty,tkg,pp,tpp,item);
+                                        break;
+                                }
+                                
+                                       
+                                       
+                                              
+                                      
+                                      insertToShop(item,ktype,nqty,tkg,pp,tpp);
+                                        //update product properties table(addition/subtraction)
+                                        reduceCategoryAmount(switchName,ktype,qty,luuseqty,tkg,pid);
+                                        
+                                        generateBill(jLabel85.getText(),item,ktype,qty,luuseqty,tkg,pp,tpp,jLabel86.getText(),jLabel88.getText(),jLabel90.getText(),jTextField7.getText());
+                                   }//loop end here
+                                   String cred="Shop"; 
+                                   getSalesData(cred);
+                                   //send data to sale_bill_list
+                                   insertDataToSales_Bill_list(jLabel85.getText(),cred,jTextField7.getText(),jLabel86.getText());
+                                    addOrUpdateariusTable(cred,jTextField7.getText(),cdate,jLabel90.getText());
+                                     printBill();
+                                     invID();
+                                    DefaultTableModel df1 =(DefaultTableModel)jTable7.getModel();
+                                    int rowCount=jTable7.getRowCount();
+                                    //df1.setRowCount(0);
+                                    for(int i = rowCount;i>0;i--){
+                                             df1.removeRow(i-1);
 
-                            //get dealer name,mobile number,lorry number...etc
-                            String ktype = (String) df2.getValueAt(i, 1);
-                            String item = (String) df2.getValueAt(i, 0);
-                            String qty = (String) df2.getValueAt(i, 2);
-                            String luuseqty = (String) df2.getValueAt(i, 3);
-                            if (qty.equals("0")) {
-                                nqty = "L" + luuseqty;
-                                newluse = luuseqty;
-                            } else {
-                                nqty = qty;
-                                newluse = qty;
-                            }
-                            String lVaue = (String) df2.getValueAt(i, 8);
-                            String tkg = (String) df2.getValueAt(i, 4);
-                            String pp = (String) df2.getValueAt(i, 5);
-                            double tpp = (Double) df2.getValueAt(i, 6);
-                            String pid = (String) df2.getValueAt(i, 7);
-                            String getUser = jLabel20.getText();
-                            String move = "OUT";
-
-                            String cred = "Shop";
-                            switch (lVaue) {
-                                case "AL":
-                                    switchName = "AL";
-                                    insertLuuse(item, ktype, "0", luuseqty, luuseqty, cdate, move);
-                                    insertDataToSales(cred, ktype, nqty, tkg, pp, tpp, item);
-                                    insertDataStock(cred, item + "/luuse", ktype, newluse, tkg, pp, tpp, move, cdate, getUser);
-                                    break;
-                                case "GL":
-                                    switchName = "GL";
-
-                                    insertLuuse(item, ktype, "1", luuseqty, luuseqty, cdate, move);
-                                    insertDataToSales(cred, ktype, nqty, tkg, pp, tpp, item);
-                                    insertDataStock(cred, item + "/luuse", ktype, newluse, tkg, pp, tpp, move, cdate, getUser);
-                                    break;
-                                default:
-                                    switchName = "null";
-
-                                    insertDataStock(cred, item, ktype, qty, tkg, pp, tpp, move, cdate, getUser);
-                                    insertDataToSales(cred, ktype, qty, tkg, pp, tpp, item);
-                                    break;
-                            }
-
-                            insertToShop(item, ktype, nqty, tkg, pp, tpp);
-                            //update product properties table(addition/subtraction)
-                            reduceCategoryAmount(switchName, ktype, qty, luuseqty, tkg, pid);
-
-                            generateBill(jLabel85.getText(), item, ktype, qty, luuseqty, tkg, pp, tpp, jLabel86.getText(), jLabel88.getText(), jLabel90.getText(), jTextField7.getText());
-                        }//loop end here
-                        String cred = "Shop";
-                        getSalesData(cred);
-
-                        addOrUpdateariusTable(cred, jTextField7.getText(), cdate, jLabel90.getText());
-                        printBill();
-                        invID();
-                        DefaultTableModel df1 = (DefaultTableModel) jTable7.getModel();
-                        int rowCount = jTable7.getRowCount();
-                        //df1.setRowCount(0);
-                        for (int i = rowCount; i > 0; i--) {
-                            df1.removeRow(i - 1);
-
-                        }
-                        clearFields();
-                    } else {
-                        JOptionPane.showMessageDialog(this, "please use 'YES' option");
-                    }
+                                    }
+                                   clearFields();
+                 }else{
+                            JOptionPane.showMessageDialog(this, "please use 'YES' option");
 
                 }
             }
@@ -6550,29 +6638,79 @@ public class MainPage extends javax.swing.JFrame {
                     double tpp = Double.parseDouble(totalP);
                     insertDataStock(cred, cat, kg, qua, jTextField22.getText(), price, tpp, move, cdate, getUser);
 
-                } else {
-                    String inser = "INSERT INTO returntable(name,mobile,category,kg,quantity,total_kg,status,date,descr)"
-                            + "VALUES('" + name + "','" + mn + "','" + cat + "','" + kg + "','" + qua + "','" + jTextField22.getText() + "','" + s + "','" + ys + "','" + des + "')";
-                    pst = conn.prepareStatement(inser);
-                    pst.execute();
 
-                }
+                         } catch (Exception e) {
+                          JOptionPane.showMessageDialog(this, e);
+                         }
+                         String inser="INSERT INTO returntable(name,mobile,category,kg,quantity,total_kg,status,date,descr)"
+                                + "VALUES('"+name+"','"+mn+"','"+cat+"','"+kg+"','"+qua+"','"+jTextField22.getText()+"','"+s+"','"+ys+"','"+des+"')";
+                         pst=conn.prepareStatement(inser);
+                         pst.execute();
+                         
+                                double total=0.0;
+                                double finalTotal=Double.parseDouble(jLabel116.getText());
+                                int row=jTable6.getSelectedRow();
+                                String p=jTable6.getValueAt(row, 11).toString();
+                                String dealerTYPE=jTable6.getValueAt(row, 2).toString();
+                                String dealerName=jTable6.getValueAt(row, 3).toString();
+                                double pricew=Double.parseDouble(p);
+                                int qty=Integer.parseInt(jTextField22.getText());
 
-                JOptionPane.showMessageDialog(this, "added data to return");
-                getDataFromReturnTable();
+                                total=total+(qty*pricew);
+                                finalTotal=finalTotal+total;
+                                jLabel116.setText(String.valueOf(finalTotal));
 
-                jTextField17.setText("");
-                jTextField18.setText("");
-                jTextField19.setText("");
-                jTextField20.setText("");
-                jTextArea1.setText("");
-                jTextField21.setText("");
-                jTextArea1.setText("Write Here");
-                jTextField22.setText("");
-            } catch (Exception e) {
-            }
 
-        }
+                                try {
+                                    String sa="UPDATE arius_amount SET arius_amount=arius_amount-'"+finalTotal+"' WHERE dealer='"+dealerTYPE+"' AND name='"+dealerName+"'";
+                                    pst1=conn.prepareStatement(sa);
+                                    pst1.execute();
+                                } catch (Exception e) {
+                                    JOptionPane.showMessageDialog(this, e);
+                                }
+                         
+                         
+                         
+                         
+                         
+                          String getUser=jLabel20.getText();
+                            String move="IN";
+                            String price="0";
+                            String totalP="0";
+                            double tpp=Double.parseDouble(totalP);
+                            insertDataStock(cred,cat,kg,qua,jTextField22.getText(),price,tpp,move,cdate,getUser);
+               
+         }else{
+                        String inser="INSERT INTO returntable(name,mobile,category,kg,quantity,total_kg,status,date,descr)"
+                       + "VALUES('"+name+"','"+mn+"','"+cat+"','"+kg+"','"+qua+"','"+jTextField22.getText()+"','"+s+"','"+ys+"','"+des+"')";
+                        pst=conn.prepareStatement(inser);
+                        pst.execute();
+        
+         }
+             
+               
+               
+               
+              
+                 JOptionPane.showMessageDialog(this, "added data to return");
+                  getDataFromReturnTable();
+                  
+                    jTextField17.setText("");
+      jTextField18.setText("");
+       jTextField19.setText("");
+       jTextField20.setText("");
+       jTextArea1.setText("");
+       jTextField21.setText("");
+       jTextArea1.setText("Write Here");
+       jTextField22.setText("");
+       jLabel116.setText("0.0");
+           } catch (Exception e) {
+           }
+           
+           
+       }
+
+               
     }//GEN-LAST:event_jButton17ActionPerformed
 
     private void jTextArea1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextArea1MouseClicked
@@ -8148,7 +8286,26 @@ public class MainPage extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, e);
         }
 
-        txtCreditorName.requestFocus();
+        
+        try {
+            String se="SELECT * FROM creditor_bill_list WHERE bill_num='"+jTextField33.getText()+"'";
+            pst=conn.prepareStatement(se);
+            rs=pst.executeQuery();
+            
+            if(rs.next()){
+            
+            }else{
+                String sw="INSERT INTO creditor_bill_list(bill_num,creditor_name,date,bill_amount)"
+                        + "VALUES('"+jTextField33.getText()+"','"+txtCreditorName.getText()+"','"+fdate+"','"+jTextField48.getText()+"')";
+                pst1=conn.prepareStatement(sw);
+                pst1.execute();
+            
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
+         txtCreditorName.requestFocus();
+
         txtCreditorName.setText("");
         jTextField2.setText("");
         jTextField5.setText("");
@@ -8661,7 +8818,30 @@ public class MainPage extends javax.swing.JFrame {
         jTextField28.setText("");
         jTextField29.setText("");
     }//GEN-LAST:event_jButton49ActionPerformed
-    private void displayAriusAmountdebit(String selectedName) {
+
+
+    private void jTextField18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField18ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField18ActionPerformed
+
+    private void jButton56ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton56ActionPerformed
+      jTextField17.setText("");
+      jTextField18.setText("");
+       jTextField19.setText("");
+       jTextField20.setText("");
+       jTextArea1.setText("");
+       jTextField21.setText("");
+       jTextArea1.setText("Write Here");
+       jTextField22.setText("");
+       jLabel116.setText("0.0");
+    }//GEN-LAST:event_jButton56ActionPerformed
+
+    private void jTextField22KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField22KeyReleased
+         
+       
+    }//GEN-LAST:event_jTextField22KeyReleased
+  private void displayAriusAmountdebit(String selectedName) {
+
         //        Cash/Banking Section
         try {
             String sql = "SELECT arius_amount FROM arius_amount WHERE name=?";
@@ -8855,6 +9035,7 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JButton jButton53;
     private javax.swing.JButton jButton54;
     private javax.swing.JButton jButton55;
+    private javax.swing.JButton jButton56;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
@@ -8896,6 +9077,7 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel113;
     private javax.swing.JLabel jLabel114;
     private javax.swing.JLabel jLabel115;
+    private javax.swing.JLabel jLabel116;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -8943,6 +9125,7 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel54;
+    private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel58;
