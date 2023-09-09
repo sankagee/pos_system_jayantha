@@ -433,14 +433,30 @@ isloChecked();
     }//GEN-LAST:event_jLabel6MouseExited
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
-         
+         String user=JOptionPane.showInputDialog(this, "Enter username");
+        if(user.equals("")){
+        
+        }else{
         try {
-           register r = new register();
-           r.setVisible(true);
-           this.dispose();
+            String sc="SELECT uname FROM register WHERE uname='"+user+"' AND type='"+"Admin"+"'";
+            pst=conn.prepareStatement(sc);
+            rs=pst.executeQuery();
+            
+            if(rs.next()){
+            
+                register r = new register();
+                r.setVisible(true);
+                this.dispose();
+            }else{
+            
+                JOptionPane.showMessageDialog(this, "Username is incorrect OR you are not an Admin ");
+            }
+           
          } catch (SQLException ex) {
              Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
          }
+        
+        }
     }//GEN-LAST:event_jLabel6MouseClicked
 
     private void txtPasswordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyReleased
@@ -488,7 +504,7 @@ isloChecked();
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
+                if ("Nibas".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
