@@ -28,17 +28,18 @@ import javax.swing.Timer;
  */
 public class Login extends javax.swing.JFrame {
 
-     Connection conn = null;
-   PreparedStatement pst=null;
-    PreparedStatement pst1=null;
-   ResultSet rs = null;
-   String ctime="";
-String cdate="";
-    public Login() throws SQLException{
-        
+    Connection conn = null;
+    PreparedStatement pst = null;
+    PreparedStatement pst1 = null;
+    ResultSet rs = null;
+    String ctime = "";
+    String cdate = "";
+
+    public Login() throws SQLException {
+
         initComponents();
         conn = DBConnect.connect();
-        
+
         txtUsername.requestFocus();
         getCurrentDateTime();
     }
@@ -272,77 +273,69 @@ String cdate="";
         System.exit(0);
     }//GEN-LAST:event_btnCancelMouseClicked
 
-    public void checkDetails(String username, String password) throws SQLException{
-       
-           
+    public void checkDetails(String username, String password) throws SQLException {
+
         try {
-                           
-                    if(username.equals("")&& password.equals("")){
-            JOptionPane.showMessageDialog(this, "Please fill the empty fields", "Login Error", JOptionPane.ERROR_MESSAGE);
-            txtUsername.requestFocus();
-        }else if(username.equals("")){
-                     JOptionPane.showMessageDialog(this, "Please fill the username field", "Login Error", JOptionPane.ERROR_MESSAGE);
-                     txtUsername.requestFocus();
-        }else if(password.equals("")){
-                     JOptionPane.showMessageDialog(this, "Please fill the password field", "Login Error", JOptionPane.ERROR_MESSAGE);
-                     txtUsername.requestFocus();
-        }else if(!username.equals("")&& !password.equals("")){
-        
-            String getuser="SELECT * FROM register WHERE uname='"+username+"' AND pasw='"+password+"'";
-             pst = conn.prepareStatement(getuser);
-             rs = pst.executeQuery();
-             
-             if(rs.next()){
-                 String n=rs.getString("name");
-                 String type=rs.getString("type");
-              MainPage p = new MainPage();
-              p.setVisible(true);
-              p.getUserD(n,type);
-              
-              
-               String getUser=n;
-                String move="Loged IN";
-                String descr="loged user";
-                
-             
-              this.dispose();
-             
-             }else{
-              String getu="SELECT * FROM register WHERE uname='"+username+"' OR pasw='"+password+"'";
-             pst = conn.prepareStatement(getu);
-             rs = pst.executeQuery();
-             
-             if(rs.next()){
-                 
-                 String un=rs.getString("uname");
-                  String pw=rs.getString("pasw");
-             if(username.equals(un)){
-                JOptionPane.showMessageDialog(this, "Username OR Password is incorrect", "Login Error", JOptionPane.ERROR_MESSAGE);
+
+            if (username.equals("") && password.equals("")) {
+                JOptionPane.showMessageDialog(this, "Please fill the empty fields", "Login Error", JOptionPane.ERROR_MESSAGE);
                 txtUsername.requestFocus();
-                txtPassword.setText("");
-                txtUsername.setText("");
-            }
-            else if(password.equals(pw)){
-                JOptionPane.showMessageDialog(this, "Username OR Password is incorrect", "Login Error", JOptionPane.ERROR_MESSAGE);
+            } else if (username.equals("")) {
+                JOptionPane.showMessageDialog(this, "Please fill the username field", "Login Error", JOptionPane.ERROR_MESSAGE);
                 txtUsername.requestFocus();
-                txtUsername.setText("");
-                txtPassword.setText("");
-            }
-             
-             }else{
-            JOptionPane.showMessageDialog(this, "Both Username and Password are incorrect", "Login Error", JOptionPane.ERROR_MESSAGE);
-             txtUsername.requestFocus();
-                txtUsername.setText("");
-                txtPassword.setText("");
-            }
-             }
-           
-        
-        }else if(!username.equals("")&& !password.equals("")){
-        
-                
-                    
-                  
+            } else if (password.equals("")) {
+                JOptionPane.showMessageDialog(this, "Please fill the password field", "Login Error", JOptionPane.ERROR_MESSAGE);
+                txtUsername.requestFocus();
+            } else if (!username.equals("") && !password.equals("")) {
+
+                String getuser = "SELECT * FROM register WHERE uname='" + username + "' AND pasw='" + password + "'";
+                pst = conn.prepareStatement(getuser);
+                rs = pst.executeQuery();
+
+                if (rs.next()) {
+                    String n = rs.getString("name");
+                    String type = rs.getString("type");
+                    MainPage p = new MainPage();
+                    p.setVisible(true);
+                    p.getUserD(n, type);
+
+                    String getUser = n;
+                    String move = "Loged IN";
+                    String descr = "loged user";
+
+                    this.dispose();
+
+                } else {
+                    String getu = "SELECT * FROM register WHERE uname='" + username + "' OR pasw='" + password + "'";
+                    pst = conn.prepareStatement(getu);
+                    rs = pst.executeQuery();
+
+                    if (rs.next()) {
+
+                        String un = rs.getString("uname");
+                        String pw = rs.getString("pasw");
+                        if (username.equals(un)) {
+                            JOptionPane.showMessageDialog(this, "Username OR Password is incorrect", "Login Error", JOptionPane.ERROR_MESSAGE);
+                            txtUsername.requestFocus();
+                            txtPassword.setText("");
+                            txtUsername.setText("");
+                        } else if (password.equals(pw)) {
+                            JOptionPane.showMessageDialog(this, "Username OR Password is incorrect", "Login Error", JOptionPane.ERROR_MESSAGE);
+                            txtUsername.requestFocus();
+                            txtUsername.setText("");
+                            txtPassword.setText("");
+                        }
+
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Both Username and Password are incorrect", "Login Error", JOptionPane.ERROR_MESSAGE);
+                        txtUsername.requestFocus();
+                        txtUsername.setText("");
+                        txtPassword.setText("");
+                    }
+                }
+
+            } else if (!username.equals("") && !password.equals("")) {
+
 //                    if(username.equals(uname)&& password.equals(paw)&& status.equals("User")){
 //                        
 //
@@ -365,61 +358,53 @@ String cdate="";
 //                txtUsername.setText("");
 //            }
 //                    
-                 
-            
-        
-        }
-                    
+            }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
-                    
-     
-                    
-        
+
     }
-    
-    public void isloChecked(){
-        if(cbxShowpw.isSelected()){
-            txtPassword.setEchoChar((char)0);
-        }else{
-        txtPassword.setEchoChar('*');
+
+    public void isloChecked() {
+        if (cbxShowpw.isSelected()) {
+            txtPassword.setEchoChar((char) 0);
+        } else {
+            txtPassword.setEchoChar('*');
         }
     }
-    
-    
+
+
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-      
-         try {
-             String username = txtUsername.getText();
-             String password = txtPassword.getText();
-             String loginStatus ="";
-             checkDetails(username,password);
-         } catch (SQLException ex) {
-             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-         }
-      
-        
-       
-        
+
+        try {
+            String username = txtUsername.getText();
+            String password = txtPassword.getText();
+            String loginStatus = "";
+            checkDetails(username, password);
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void cbxShowpwActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxShowpwActionPerformed
-isloChecked();     
+        isloChecked();
     }//GEN-LAST:event_cbxShowpwActionPerformed
 
     private void btnLoginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnLoginKeyPressed
-        if(evt.getKeyCode()== KeyEvent.VK_ENTER){
-           String username = txtUsername.getText();
-        String password = txtPassword.getText();
-       String loginStatus ="";
-        
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String username = txtUsername.getText();
+            String password = txtPassword.getText();
+            String loginStatus = "";
+
             try {
-                checkDetails(username,password);
+                checkDetails(username, password);
             } catch (SQLException ex) {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             }
-        
+
         }
     }//GEN-LAST:event_btnLoginKeyPressed
 
@@ -433,53 +418,67 @@ isloChecked();
     }//GEN-LAST:event_jLabel6MouseExited
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
-         
-        try {
-           register r = new register();
-           r.setVisible(true);
-           this.dispose();
-         } catch (SQLException ex) {
-             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-         }
+        String user = JOptionPane.showInputDialog(this, "Enter username");
+        if (user.equals("")) {
+
+        } else {
+            try {
+                String sc = "SELECT uname FROM register WHERE uname='" + user + "' AND type='" + "Admin" + "'";
+                pst = conn.prepareStatement(sc);
+                rs = pst.executeQuery();
+
+                if (rs.next()) {
+
+                    register r = new register();
+                    r.setVisible(true);
+                    this.dispose();
+                } else {
+
+                    JOptionPane.showMessageDialog(this, "Username is incorrect OR you are not an Admin ");
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
     }//GEN-LAST:event_jLabel6MouseClicked
 
     private void txtPasswordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyReleased
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-        
-        try {
-             String username = txtUsername.getText();
-             String password = txtPassword.getText();
-             String loginStatus ="";
-             checkDetails(username,password);
-         } catch (SQLException ex) {
-             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-         }
-        
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+
+            try {
+                String username = txtUsername.getText();
+                String password = txtPassword.getText();
+                String loginStatus = "";
+                checkDetails(username, password);
+            } catch (SQLException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
-         
-      
+
+
     }//GEN-LAST:event_txtPasswordKeyReleased
 
-   public void getCurrentDateTime(){
-    
-    new Timer(0, new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-             
-            java.text.SimpleDateFormat SimpleDateFormat = new java.text.SimpleDateFormat("HH:mm:ss");
-            String displayTime = SimpleDateFormat.format(new Date());
-            String displayDate = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH).format(new Date());
-     
-            
-           
-            //d=displayDate;ctime
-            ctime=displayTime;
-            cdate=displayDate;
-        }
-    }).start();
-  
-   
+    public void getCurrentDateTime() {
+
+        new Timer(0, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                java.text.SimpleDateFormat SimpleDateFormat = new java.text.SimpleDateFormat("HH:mm:ss");
+                String displayTime = SimpleDateFormat.format(new Date());
+                String displayDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(new Date());
+
+                //d=displayDate;ctime
+                ctime = displayTime;
+                cdate = displayDate;
+            }
+        }).start();
+
     }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -488,7 +487,7 @@ isloChecked();
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
+                if ("Nibas".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
