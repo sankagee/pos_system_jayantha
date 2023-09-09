@@ -41,6 +41,7 @@ import net.proteanit.sql.DbUtils;
 import java.awt.*;
 import java.awt.print.*;
 import static java.awt.print.Printable.NO_SUCH_PAGE;
+import java.text.DecimalFormat;
 
 /**
  *
@@ -59,7 +60,8 @@ public class MainPage extends javax.swing.JFrame {
     String cdate = "";
     String Usertype = "";
     double toCreditorArius = 0.0;
-
+    DecimalFormat decimalFormat = new DecimalFormat("#,###.00");
+    
     public MainPage() throws SQLException {
         initComponents();
         conn = DBConnect.connect();
@@ -441,30 +443,30 @@ public class MainPage extends javax.swing.JFrame {
         }
 
     }
- public void insertDataToSales_Bill_list(String bill,String dealer,String name,String amount){
-                SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
-                String addDate = d.format(jDateChooser2.getDate());
-                  String n = jTextField7.getText();
-             
+
+    public void insertDataToSales_Bill_list(String bill, String dealer, String name, String amount) {
+        SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
+        String addDate = d.format(jDateChooser2.getDate());
+        String n = jTextField7.getText();
+
         try {
-                    String sq ="SELECT * FROM sales_bill_list WHERE dealer_name='"+name+"' AND dealer='"+dealer+"' AND bil_num='"+bill+"'";
-                    pst = conn.prepareStatement(sq);
-                    rs = pst.executeQuery();
-                    
-                      if(rs.next()){
-                      
-                          
-                      
-                      }else{
-                          String sd="INSERT INTO sales_bill_list(bil_num,date,dealer,dealer_name,bil_amount)"
-                                  + "VALUES('"+bill+"','"+cdate+"','"+dealer+"','"+name+"','"+amount+"')";
-                          pst=conn.prepareStatement(sd);
-                          pst.execute();
-                      
-                      }
+            String sq = "SELECT * FROM sales_bill_list WHERE dealer_name='" + name + "' AND dealer='" + dealer + "' AND bil_num='" + bill + "'";
+            pst = conn.prepareStatement(sq);
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+
+            } else {
+                String sd = "INSERT INTO sales_bill_list(bil_num,date,dealer,dealer_name,bil_amount)"
+                        + "VALUES('" + bill + "','" + cdate + "','" + dealer + "','" + name + "','" + amount + "')";
+                pst = conn.prepareStatement(sd);
+                pst.execute();
+
+            }
         } catch (Exception e) {
         }
     }
+
     //add or update arius table
     public void addOrUpdateariusTable(String dealer, String n, String date, String sum_of_arius) {
 
@@ -2163,6 +2165,8 @@ public class MainPage extends javax.swing.JFrame {
 
         jLabel83.setText("Arius Amount");
         jPanel4.add(jLabel83, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 280, -1, -1));
+
+        jTextField46.setEditable(false);
         jPanel4.add(jTextField46, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 300, 96, 37));
 
         jLabel85.setEditable(false);
@@ -4094,6 +4098,11 @@ public class MainPage extends javax.swing.JFrame {
         jLabel65.setText("Arrias");
 
         jButton35.setText("Add");
+        jButton35.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton35ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout p9Layout = new javax.swing.GroupLayout(p9);
         p9.setLayout(p9Layout);
@@ -4194,7 +4203,7 @@ public class MainPage extends javax.swing.JFrame {
                 .addGroup(topmenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton33)
                     .addComponent(jButton34))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         tmenu.setLayout(new java.awt.CardLayout());
@@ -6028,7 +6037,9 @@ public class MainPage extends javax.swing.JFrame {
     private void printBill() {
         try {
             BillPrinter billPrinter = new BillPrinter();
-            billPrinter.printBill(jLabel85.getText(), jLabel86.getText(), jLabel88.getText(), jLabel90.getText(), cdate, jTextField7.getText(), jLabel20.getText());
+            String jLabel86Text = jLabel86.getText().replace(",", ""); // Remove commas
+            jLabel86Text = jLabel86Text.replace(".00", ".0"); // Remove .00 if present (optional)
+            billPrinter.printBill(jLabel85.getText(), jLabel86Text, jLabel88.getText(), jLabel90.getText(), cdate, jTextField7.getText(), jLabel20.getText());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
@@ -6135,11 +6146,15 @@ public class MainPage extends javax.swing.JFrame {
 
                             insertToDetor(item, ktype, nqty, tkg, pp, tpp);
                             //sen to bill
-                            generateBill(jLabel85.getText(), item, ktype, qty, luuseqty, tkg, pp, tpp, jLabel86.getText(), jLabel88.getText(), jLabel90.getText(), jTextField7.getText());
+                            String jLabel86Text = jLabel86.getText().replace(",", "");
+                            jLabel86Text = jLabel86Text.replace(".00", ".0");
+                            generateBill(jLabel85.getText(), item, ktype, qty, luuseqty, tkg, pp, tpp, jLabel86Text, jLabel88.getText(), jLabel90.getText(), jTextField7.getText());
                         }
                         String cred = "Salt";
                         getSalesData(cred);
-                                                           insertDataToSales_Bill_list(jLabel85.getText(),cred,jTextField7.getText(),jLabel86.getText());
+                        String jLabel86Text2 = jLabel86.getText().replace(",", "");
+                        jLabel86Text2 = jLabel86Text2.replace(".00", ".0");
+                        insertDataToSales_Bill_list(jLabel85.getText(), cred, jTextField7.getText(), jLabel86Text2);
                         addOrUpdateariusTable(cred, jTextField7.getText(), cdate, jLabel90.getText());
                         printBill();
                         invID();
@@ -6222,11 +6237,15 @@ public class MainPage extends javax.swing.JFrame {
                             //update product properties table(addition/subtraction)
 
                             reduceCategoryAmount(switchName, ktype, qty, luuseqty, tkg, pid);
-                            generateBill(jLabel85.getText(), item, ktype, qty, luuseqty, tkg, pp, tpp, jLabel86.getText(), jLabel88.getText(), jLabel90.getText(), jTextField7.getText());
+                            String jLabel86Text = jLabel86.getText().replace(",", "");
+                            jLabel86Text = jLabel86Text.replace(".00", ".0");
+                            generateBill(jLabel85.getText(), item, ktype, qty, luuseqty, tkg, pp, tpp, jLabel86Text, jLabel88.getText(), jLabel90.getText(), jTextField7.getText());
                         }//loop end here
                         String cred = "Deliver/Detor";
                         getSalesData(cred);
-                                   insertDataToSales_Bill_list(jLabel85.getText(),cred,jTextField7.getText(),jLabel86.getText());
+                        String jLabel86Text2 = jLabel86.getText().replace(",", "");
+                        jLabel86Text2 = jLabel86Text2.replace(".00", ".0");
+                        insertDataToSales_Bill_list(jLabel85.getText(), cred, jTextField7.getText(), jLabel86.getText());
                         addOrUpdateariusTable(cred, jTextField7.getText(), cdate, jLabel90.getText());
                         printBill();
                         invID();
@@ -6305,11 +6324,15 @@ public class MainPage extends javax.swing.JFrame {
                             insertToCustomer(item, ktype, nqty, tkg, pp, tpp);
                             //update product properties table(addition/subtraction)
                             reduceCategoryAmount(switchName, ktype, qty, luuseqty, tkg, pid6);
-                            generateBill(jLabel85.getText(), item, ktype, qty, luuseqty, tkg, pp, tpp, jLabel86.getText(), jLabel88.getText(), jLabel90.getText(), jTextField7.getText());
+                            String jLabel86Text = jLabel86.getText().replace(",", "");
+                            jLabel86Text = jLabel86Text.replace(".00", ".0");
+                            generateBill(jLabel85.getText(), item, ktype, qty, luuseqty, tkg, pp, tpp, jLabel86Text, jLabel88.getText(), jLabel90.getText(), jTextField7.getText());
                         }//loop end here
                         String cred = "Customer";
                         getSalesData(cred);
-                                   insertDataToSales_Bill_list(jLabel85.getText(),cred,jTextField7.getText(),jLabel86.getText());
+                        String jLabel86Text2 = jLabel86.getText().replace(",", "");
+                        jLabel86Text2 = jLabel86Text2.replace(".00", ".0");
+                        insertDataToSales_Bill_list(jLabel85.getText(), cred, jTextField7.getText(), jLabel86Text2);
                         addOrUpdateariusTable(cred, jTextField7.getText(), cdate, jLabel90.getText());
                         printBill();
                         invID();
@@ -6388,12 +6411,15 @@ public class MainPage extends javax.swing.JFrame {
                             insertToShop(item, ktype, nqty, tkg, pp, tpp);
                             //update product properties table(addition/subtraction)
                             reduceCategoryAmount(switchName, ktype, qty, luuseqty, tkg, pid);
-
-                            generateBill(jLabel85.getText(), item, ktype, qty, luuseqty, tkg, pp, tpp, jLabel86.getText(), jLabel88.getText(), jLabel90.getText(), jTextField7.getText());
+                            String jLabel86Text = jLabel86.getText().replace(",", "");
+                            jLabel86Text = jLabel86Text.replace(".00", ".0");
+                            generateBill(jLabel85.getText(), item, ktype, qty, luuseqty, tkg, pp, tpp, jLabel86Text, jLabel88.getText(), jLabel90.getText(), jTextField7.getText());
                         }//loop end here
                         String cred = "Shop";
                         getSalesData(cred);
-                                   insertDataToSales_Bill_list(jLabel85.getText(),cred,jTextField7.getText(),jLabel86.getText());
+                        String jLabel86Text2 = jLabel86.getText().replace(",", "");
+                        jLabel86Text2 = jLabel86Text2.replace(".00", ".0");
+                        insertDataToSales_Bill_list(jLabel85.getText(), cred, jTextField7.getText(), jLabel86Text2);
                         addOrUpdateariusTable(cred, jTextField7.getText(), cdate, jLabel90.getText());
                         printBill();
                         invID();
@@ -7704,7 +7730,9 @@ public class MainPage extends javax.swing.JFrame {
                             sub = (Double) df.getValueAt(i, 6);
                             totalq = totalq + sub;
                         }
-                        jLabel86.setText(String.valueOf(totalq));
+                        
+                        String formattedTotalq = decimalFormat.format(totalq);
+                        jLabel86.setText(formattedTotalq);
 
                         double ariusTotalwithBillamout = 0.0;
 
@@ -7752,7 +7780,9 @@ public class MainPage extends javax.swing.JFrame {
                             sub = (Double) df.getValueAt(i, 6);
                             totalq = totalq + sub;
                         }
-                        jLabel86.setText(String.valueOf(totalq));
+
+                        String formattedTotalq = decimalFormat.format(totalq);
+                        jLabel86.setText(formattedTotalq);
 
                         Double ariusTotalwithBillamout = 0.0;
 
@@ -7866,7 +7896,9 @@ public class MainPage extends javax.swing.JFrame {
                             sub = (Double) df.getValueAt(i, 6);
                             totalq = totalq + sub;
                         }
-                        jLabel86.setText(String.valueOf(totalq));
+
+                        String formattedTotalq = decimalFormat.format(totalq);
+                        jLabel86.setText(formattedTotalq);
 
                         double ariusTotalwithBillamout = 0.0;
 
@@ -7933,7 +7965,9 @@ public class MainPage extends javax.swing.JFrame {
                             sub = (Double) df.getValueAt(i, 6);
                             totalq = totalq + sub;
                         }
-                        jLabel86.setText(String.valueOf(totalq));
+
+                        String formattedTotalq = decimalFormat.format(totalq);
+                        jLabel86.setText(formattedTotalq);
 
                         Double ariusTotalwithBillamout = 0.0;
 
@@ -7995,8 +8029,9 @@ public class MainPage extends javax.swing.JFrame {
 
                 ariusTotalwithBillamout = total + b;
             }
-
-            jLabel86.setText(String.valueOf(total));
+            DecimalFormat decimalFormat = new DecimalFormat("#,###.00");
+            String formattedtotal = decimalFormat.format(total);
+            jLabel86.setText(formattedtotal);
             jLabel90.setText(String.valueOf(ariusTotalwithBillamout));
         }
 
@@ -8197,24 +8232,24 @@ public class MainPage extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
-    try {
-            String se="SELECT * FROM creditor_bill_list WHERE bill_num='"+jTextField33.getText()+"'";
-            pst=conn.prepareStatement(se);
-            rs=pst.executeQuery();
-            
-            if(rs.next()){
-            
-            }else{
-                String sw="INSERT INTO creditor_bill_list(bill_num,creditor_name,date,bill_amount)"
-                        + "VALUES('"+jTextField33.getText()+"','"+txtCreditorName.getText()+"','"+fdate+"','"+jTextField48.getText()+"')";
-                pst1=conn.prepareStatement(sw);
+        try {
+            String se = "SELECT * FROM creditor_bill_list WHERE bill_num='" + jTextField33.getText() + "'";
+            pst = conn.prepareStatement(se);
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+
+            } else {
+                String sw = "INSERT INTO creditor_bill_list(bill_num,creditor_name,date,bill_amount)"
+                        + "VALUES('" + jTextField33.getText() + "','" + txtCreditorName.getText() + "','" + fdate + "','" + jTextField48.getText() + "')";
+                pst1 = conn.prepareStatement(sw);
                 pst1.execute();
-            
+
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
- 
+
         txtCreditorName.requestFocus();
         txtCreditorName.setText("");
         jTextField2.setText("");
@@ -8422,7 +8457,9 @@ public class MainPage extends javax.swing.JFrame {
                 sub = (Double) df.getValueAt(i, 6);
                 totalq = totalq + sub;
             }
-            jLabel86.setText(String.valueOf(totalq));
+            DecimalFormat decimalFormat = new DecimalFormat("#,###.00");
+            String formattedTotalq = decimalFormat.format(totalq);
+            jLabel86.setText(formattedTotalq);
 
             double ariusTotalwithBillamout = 0.0;
 
@@ -8732,15 +8769,19 @@ public class MainPage extends javax.swing.JFrame {
     private void jButton56ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton56ActionPerformed
         // TODO add your handling code here:
         jTextField17.setText("");
-      jTextField18.setText("");
-       jTextField19.setText("");
-       jTextField20.setText("");
-       jTextArea1.setText("");
-       jTextField21.setText("");
-       jTextArea1.setText("Write Here");
-       jTextField22.setText("");
-       jLabel116.setText("0.0");
+        jTextField18.setText("");
+        jTextField19.setText("");
+        jTextField20.setText("");
+        jTextArea1.setText("");
+        jTextField21.setText("");
+        jTextArea1.setText("Write Here");
+        jTextField22.setText("");
+        jLabel116.setText("0.0");
     }//GEN-LAST:event_jButton56ActionPerformed
+
+    private void jButton35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton35ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton35ActionPerformed
     private void displayAriusAmountdebit(String selectedName) {
         //        Cash/Banking Section
         try {
