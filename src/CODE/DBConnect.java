@@ -33,6 +33,12 @@ public class DBConnect {
     
       
         return conn;
+        
+        /*
+        හෙල්ලෝඕඕඕඔක්ඩ්ජ්ක්ව්ඩ්ජ්ව්බ්ඩ්ජ්ව්බ්ජ්ජ්ව්ජ්ඩ්බ්ව්ජ්
+        ක්ද්ක්ද්ච්ච්ච්ච්ච්ක්ද්ච්ද්ච්ච්ද්ච්ඩ්ක්
+        
+        */
 }
  public static void main(String []args) throws SQLException{
         
