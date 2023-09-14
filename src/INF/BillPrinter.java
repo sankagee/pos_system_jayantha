@@ -15,7 +15,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-public class BillPrinter {
+public class BillPrinter extends Frame{
 
     Connection conn = null;
     PreparedStatement pst = null;
@@ -26,9 +26,11 @@ public class BillPrinter {
     public BillPrinter() throws SQLException {
 
         conn = DBConnect.connect();
+        
     }
 
     public void printBill(String inv, String bilamount, String arius, String totalArius, String da, String cname, String user) {
+        
         PrinterJob job = PrinterJob.getPrinterJob();
         job.setPrintable(new Printable() {
             @Override
@@ -61,7 +63,8 @@ public class BillPrinter {
                 String totalqty = "Total Quantity";
                 String price = "Price per";
                 String tp = "Total Price";
-
+                
+                String cashInHanddddddd = "Cash ......................:";
                 String billamounttitlee = "Bill Amount.............:";
                 String ariustitleeeeeee = "Arius Amount..........:";
                 String tsriusssssssssss = "Total Arius Amount.:";
@@ -168,13 +171,52 @@ public class BillPrinter {
         });
 
         boolean doPrint = job.printDialog();
-        if (doPrint) {
-            try {
-                job.print();
-            } catch (PrinterException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+         //loader start here    
+                        JDialog dialog = createLoadingDialog(this);
+                        SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
 
+                            @Override
+                            protected Void doInBackground() throws Exception {
+                                SwingUtilities.invokeLater(() -> {
+                                    dialog.setVisible(true);
+                                });
+
+                                if (doPrint) {
+                                try {
+                                    job.print();
+                                } catch (PrinterException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                                return null;
+                            }
+                            @Override
+                            protected void done() {
+
+                                 SwingUtilities.invokeLater(() -> {
+                                if (dialog != null) {
+                                    dialog.dispose();
+                                    //JOptionPane.showMessageDialog(null, "Product Added");
+                                }
+                                });
+                            }
+                        };
+                        worker.execute(); // Execute the SwingWorker
+                        //loader start here  
+                        //loader dialogd
+    
 }
+      private JDialog createLoadingDialog(Frame para) {
+    JDialog dialog = new JDialog(para, "Loading...", true);
+    JLabel label = new JLabel("Loading... Please wait.");
+    dialog.add(label);
+    dialog.setSize(200, 100);
+    dialog.setLocationRelativeTo(this);
+    dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE); // Prevent closing the dialog
+    return dialog; 
+      }
+    }
+       
+
+ 

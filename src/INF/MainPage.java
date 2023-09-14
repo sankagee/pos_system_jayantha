@@ -7,6 +7,7 @@ package INF;
 
 import CODE.DBConnect;
 import CODE.FontUtils;
+import com.mysql.cj.x.protobuf.MysqlxNotice.Frame;
 import com.sun.tools.javac.Main;
 import java.awt.Color;
 import java.awt.Font;
@@ -41,6 +42,10 @@ import net.proteanit.sql.DbUtils;
 import java.awt.*;
 import java.awt.print.*;
 import static java.awt.print.Printable.NO_SUCH_PAGE;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 
 /**
  *
@@ -59,6 +64,8 @@ public class MainPage extends javax.swing.JFrame {
     String cdate = "";
     String Usertype = "";
     double toCreditorArius = 0.0;
+    int totalInReturn=0;
+    double toArius=0.0;
 
     public MainPage() throws SQLException {
         initComponents();
@@ -71,6 +78,7 @@ public class MainPage extends javax.swing.JFrame {
         //fetchProductData();
 
         fetchEmpty();
+        
         jTextField11.setText("Salt");
         jTextField5.setEditable(false);
         jTextField4.setEditable(false);
@@ -203,11 +211,12 @@ public class MainPage extends javax.swing.JFrame {
     
     //show creditor's namein dropdown
     public void showCeditorNames(){
-         jComboBox4.removeAllItems();
+        
         try {
             String d="SELECT DISTINCT creditor_name FROM creditor_table ";
             pst=conn.prepareStatement(d);
-            rs=pst.executeQuery();
+            rs=pst.executeQuery(); 
+           
             jComboBox4.addItem("Select");
             while(rs.next()){
              String n=rs.getString("creditor_name");
@@ -215,7 +224,25 @@ public class MainPage extends javax.swing.JFrame {
             
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, "error"+e);
+        }
+    
+    }
+     public void showCeditorNames2(){
+        
+        try {
+            
+            String d="SELECT DISTINCT creditor_name FROM creditor_table ORDER BY creditor_id DESC LIMIT 1";
+            pst=conn.prepareStatement(d);
+            rs=pst.executeQuery(); 
+           
+            if(rs.next()){
+             String n=rs.getString("creditor_name");
+            jComboBox4.addItem(n);
+            
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "error"+e);
         }
     
     
@@ -276,6 +303,32 @@ public class MainPage extends javax.swing.JFrame {
         jDateChooser1.setDate(date1);
         txtPrice.setText(price);
         jTextField4.setText(totalprice);
+        
+        
+         String arius_amountnew = "0";
+        try {
+            String sd = "SELECT sum(arius_amount) FROM arius_creditor_amount WHERE name='" + creditor_name + "'";
+            pst = conn.prepareStatement(sd);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+
+                String arius_amount = rs.getString("sum(arius_amount)");
+                arius_amountnew = arius_amount;
+
+                if (arius_amountnew == null) {
+
+                    //JOptionPane.showMessageDialog(this, "0");
+                    jTextField47.setText("0");
+                } else {
+                    // JOptionPane.showMessageDialog(this, arius_amountnew);
+                    jTextField47.setText(arius_amountnew);
+                }
+
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
+        
 
     }
 
@@ -297,12 +350,13 @@ public class MainPage extends javax.swing.JFrame {
         } catch (Exception e) {
             //JOptionPane.showMessageDialog(this , e);
         }
-
+        //show creditors name
+        //showCeditorNames();
     }
 
     // fetch data to sale list tab
     public void setDataToSaleList() throws SQLException {
-        String sq = "SELECT * FROM set_sales ORDER BY status,date DESC";
+        String sq = "SELECT * FROM set_sales ORDER BY CASE WHEN status = 'pending' THEN 1  WHEN status = 'completed' THEN 2 ELSE 0 END,date DESC";
         pst = conn.prepareStatement(sq);
         rs = pst.executeQuery();
         jTable11.setModel(DbUtils.resultSetToTableModel(rs));
@@ -312,7 +366,8 @@ public class MainPage extends javax.swing.JFrame {
 
     public void fetchCreditordat() throws SQLException {
 
-        String sq = "SELECT id,name,lorry_number,date,status FROM set_status ORDER BY status, date DESC";
+        String sq = "SELECT id,name,lorry_number,date,status FROM set_status "
+                + "ORDER BY CASE WHEN status = 'pending' THEN 1 WHEN status = 'pending_payment' THEN 2 WHEN status = 'completed' THEN 3 ELSE 0 END,date DESC";
         pst = conn.prepareStatement(sq);
         rs = pst.executeQuery();
         jTable2.setModel(DbUtils.resultSetToTableModel(rs));
@@ -376,7 +431,7 @@ public class MainPage extends javax.swing.JFrame {
         jTextField18.setText("");
         jTextField19.setText("");
         jTextField11.setText("");
-        jTextField7.setText("");
+        
         jTextField22.setText("");
         jTextField8.setText("");
         jTextField9.setText("");
@@ -557,6 +612,22 @@ public class MainPage extends javax.swing.JFrame {
 
 //code end here
     //check if there is any pending order under perticular creditor
+    //check 2
+    public void checkC(String n, String addDate){
+    
+        try {
+            
+            String st = "pending";
+            String j = "SELECT creditor_name,lorry_number,date,status FROM creditor_details WHERE status='" + st + "' AND creditor_name='" + n + "' AND date='" + addDate + "' ";
+            pst = conn.prepareStatement(j);
+            rs = pst.executeQuery();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
+    
+    
+    }
     public void getCreditorData(String n, String addDate) {
 
         try {
@@ -582,16 +653,16 @@ public class MainPage extends javax.swing.JFrame {
                     String update = "UPDATE set_status SET status='" + "pending" + "' WHERE name='" + cn + "' AND date='" + dtt + "'";
                     pst = conn.prepareStatement(update);
                     pst.execute();
-                    //UpdateAriusCreditorTable(String name,String date,String arius_amoun);
+                   
                 } else {
                     String insert = "INSERT INTO set_status(name,lorry_number,date,status)VALUES('" + cname + "','" + ln + "','" + dt + "','" + sta + "')";
                     pst = conn.prepareStatement(insert);
                     pst.execute();
-
+                    
                 }
-            } else {
+            } else{
 
-                String st1 = "completed";
+                String st1 = "pending_payment";
                 String j1 = "SELECT creditor_name,lorry_number,date,status FROM creditor_details WHERE status='" + st1 + "' AND creditor_name='" + n + "' AND date='" + addDate + "' ";
                 pst = conn.prepareStatement(j1);
                 rs = pst.executeQuery();
@@ -609,9 +680,10 @@ public class MainPage extends javax.swing.JFrame {
                     if (rs.next()) {
                         String cn = rs.getString("name");
                         String dtt = rs.getString("date");
-                        String update = "UPDATE set_status SET status='" + "completed" + "' WHERE name='" + cn + "' AND date='" + dtt + "'";
+                        String update = "UPDATE set_status SET status='" + "pending_payment" + "' WHERE name='" + cn + "' AND date='" + dtt + "'";
                         pst = conn.prepareStatement(update);
                         pst.execute();
+                        
                     } else {
                         String insert = "INSERT INTO set_status(name,lorry_number,date,status)VALUES('" + cname + "','" + ln + "','" + dt + "','" + sta + "')";
                         pst = conn.prepareStatement(insert);
@@ -620,12 +692,13 @@ public class MainPage extends javax.swing.JFrame {
                     }
                 }
             }
+           
 
             fetchCreditordat();
 
         } catch (Exception e) {
 
-            System.out.println(e);
+            JOptionPane.showMessageDialog(this, e);
         }
 
     }
@@ -790,7 +863,6 @@ public class MainPage extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
-        jLabel11 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
@@ -831,6 +903,7 @@ public class MainPage extends javax.swing.JFrame {
         jComboBox4 = new javax.swing.JComboBox<>();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel11 = new javax.swing.JLabel();
         p3 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -891,6 +964,9 @@ public class MainPage extends javax.swing.JFrame {
         jLabel113 = new javax.swing.JLabel();
         jLabel114 = new javax.swing.JLabel();
         jLabel115 = new javax.swing.JLabel();
+        jTextField57 = new javax.swing.JTextField();
+        jLabel122 = new javax.swing.JLabel();
+        jLabel123 = new javax.swing.JLabel();
         p4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -914,7 +990,6 @@ public class MainPage extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jRadioButton9 = new javax.swing.JRadioButton();
         jRadioButton10 = new javax.swing.JRadioButton();
-        jButton17 = new javax.swing.JButton();
         Category = new javax.swing.JLabel();
         jTextField21 = new javax.swing.JTextField();
         jButton20 = new javax.swing.JButton();
@@ -936,6 +1011,9 @@ public class MainPage extends javax.swing.JFrame {
         jTextField22 = new javax.swing.JTextField();
         jButton57 = new javax.swing.JButton();
         jButton58 = new javax.swing.JButton();
+        jButton60 = new javax.swing.JButton();
+        jLabel121 = new javax.swing.JLabel();
+        jTextField58 = new javax.swing.JTextField();
         p5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane9 = new javax.swing.JScrollPane();
@@ -1119,7 +1197,6 @@ public class MainPage extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1280, 720));
-        setPreferredSize(new java.awt.Dimension(1280, 720));
         setSize(new java.awt.Dimension(1280, 720));
 
         mainPanel.setBackground(new java.awt.Color(255, 51, 51));
@@ -1718,7 +1795,6 @@ public class MainPage extends javax.swing.JFrame {
                         .addGap(100, 100, 100))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11)
                             .addComponent(txtCreditorName, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1727,12 +1803,12 @@ public class MainPage extends javax.swing.JFrame {
                             .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel53)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jcategory, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton11))
-                            .addComponent(jLabel53))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton11)))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jkg, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel54))
@@ -1752,71 +1828,58 @@ public class MainPage extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel59)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jTextField33)
                                 .addGap(40, 40, 40))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel110)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField48)
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel111)
-                                .addGap(0, 0, 0)
-                                .addComponent(jTextField47, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel112)
-                                .addGap(0, 0, 0)
-                                .addComponent(jTextField49, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton42))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton21)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())))
+                        .addComponent(jLabel110)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField48)
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel111)
+                        .addGap(0, 0, 0)
+                        .addComponent(jTextField47, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel112)
+                        .addGap(0, 0, 0)
+                        .addComponent(jTextField49, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton42)
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton21)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(13, Short.MAX_VALUE)
+                        .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(7, 7, 7)
-                                .addComponent(jLabel11)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel1))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel15)
-                                        .addComponent(jLabel53))
-                                    .addComponent(jLabel54))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtCreditorName, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jcategory, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jkg, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton11)))
-                        .addGap(22, 22, 22)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel15)
+                                .addComponent(jLabel53))
+                            .addComponent(jLabel54))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCreditorName, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcategory, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jkg, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton11))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1862,18 +1925,19 @@ public class MainPage extends javax.swing.JFrame {
                         .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButton21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField48, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField47, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton42, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField49, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel110)
-                    .addComponent(jLabel111)
-                    .addComponent(jLabel112))
-                .addGap(17, 17, 17))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton42, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel110)
+                        .addComponent(jLabel111)
+                        .addComponent(jLabel112))
+                    .addComponent(jTextField47, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                    .addComponent(jTextField48)
+                    .addComponent(jTextField49, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        p2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+        p2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 350));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("Category");
@@ -2015,7 +2079,8 @@ public class MainPage extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(3).setHeaderValue("Title 4");
         }
 
-        p2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 373, 1049, 311));
+        p2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 374, 1049, 310));
+        p2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 30, 30, 30));
 
         rightPanel.add(p2, "card3");
 
@@ -2130,7 +2195,7 @@ public class MainPage extends javax.swing.JFrame {
                 jRadioButton1ActionPerformed(evt);
             }
         });
-        jPanel4.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 62, 103, -1));
+        jPanel4.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 103, -1));
 
         detor.add(jRadioButton2);
         jRadioButton2.setText("Deliver/Detor");
@@ -2140,7 +2205,7 @@ public class MainPage extends javax.swing.JFrame {
                 jRadioButton2ActionPerformed(evt);
             }
         });
-        jPanel4.add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(148, 62, 99, -1));
+        jPanel4.add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 99, -1));
 
         detor.add(jRadioButton3);
         jRadioButton3.setText("Direct Customer");
@@ -2150,7 +2215,7 @@ public class MainPage extends javax.swing.JFrame {
                 jRadioButton3ActionPerformed(evt);
             }
         });
-        jPanel4.add(jRadioButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 103, -1, -1));
+        jPanel4.add(jRadioButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
 
         detor.add(jRadioButton4);
         jRadioButton4.setText("Shop");
@@ -2160,7 +2225,7 @@ public class MainPage extends javax.swing.JFrame {
                 jRadioButton4ActionPerformed(evt);
             }
         });
-        jPanel4.add(jRadioButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(148, 103, 99, -1));
+        jPanel4.add(jRadioButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(149, 110, 90, -1));
 
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -2224,7 +2289,7 @@ public class MainPage extends javax.swing.JFrame {
 
         jLabel85.setEditable(false);
         jLabel85.setBorder(javax.swing.BorderFactory.createTitledBorder("Invoice NUmber"));
-        jPanel4.add(jLabel85, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 177, 42));
+        jPanel4.add(jLabel85, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 212, 177, 60));
 
         jButton39.setText("Add");
         jButton39.addActionListener(new java.awt.event.ActionListener() {
@@ -2240,11 +2305,11 @@ public class MainPage extends javax.swing.JFrame {
                 jButton41ActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton41, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 300, -1, 30));
+        jPanel4.add(jButton41, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 300, 110, 40));
 
         jLabel84.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel84.setText("Bill Amount :");
-        jPanel4.add(jLabel84, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 310, -1, -1));
+        jLabel84.setText("Cash                :");
+        jPanel4.add(jLabel84, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 280, -1, -1));
 
         jLabel86.setFont(new java.awt.Font("Iskoola Pota", 1, 14)); // NOI18N
         jLabel86.setText("0.0");
@@ -2325,7 +2390,7 @@ public class MainPage extends javax.swing.JFrame {
                 jButton45ActionPerformed(evt);
             }
         });
-        jPanel4.add(jButton45, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 301, 73, 30));
+        jPanel4.add(jButton45, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 301, 80, 40));
 
         jButton47.setText("Add");
         jButton47.addActionListener(new java.awt.event.ActionListener() {
@@ -2346,6 +2411,21 @@ public class MainPage extends javax.swing.JFrame {
         jLabel115.setFont(new java.awt.Font("Iskoola Pota", 1, 14)); // NOI18N
         jLabel115.setText("රු.");
         jPanel4.add(jLabel115, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 340, -1, -1));
+
+        jTextField57.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField57KeyReleased(evt);
+            }
+        });
+        jPanel4.add(jTextField57, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 280, 100, -1));
+
+        jLabel122.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel122.setText("Bill Amount     :");
+        jPanel4.add(jLabel122, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 310, -1, -1));
+
+        jLabel123.setFont(new java.awt.Font("Iskoola Pota", 1, 14)); // NOI18N
+        jLabel123.setText("රු.");
+        jPanel4.add(jLabel123, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 277, -1, 20));
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -2428,7 +2508,7 @@ public class MainPage extends javax.swing.JFrame {
                 jRadioButton8ActionPerformed(evt);
             }
         });
-        jPanel5.add(jRadioButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(292, 25, -1, -1));
+        jPanel5.add(jRadioButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(302, 25, 60, -1));
 
         jLabel32.setText("Name");
         jPanel5.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 305, -1, -1));
@@ -2437,6 +2517,7 @@ public class MainPage extends javax.swing.JFrame {
         jLabel33.setText("Mobile Number");
         jPanel5.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 373, -1, -1));
 
+        jTextField18.setForeground(new java.awt.Color(255, 0, 0));
         jTextField18.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTextField18KeyReleased(evt);
@@ -2479,7 +2560,7 @@ public class MainPage extends javax.swing.JFrame {
         jPanel5.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 444, 1030, 243));
 
         jLabel36.setText("Description");
-        jPanel5.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 310, -1, -1));
+        jPanel5.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 340, -1, -1));
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -2491,7 +2572,7 @@ public class MainPage extends javax.swing.JFrame {
         });
         jScrollPane8.setViewportView(jTextArea1);
 
-        jPanel5.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 330, 201, 105));
+        jPanel5.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 365, 201, 70));
 
         returnD.add(jRadioButton9);
         jRadioButton9.setText("Damage");
@@ -2500,14 +2581,6 @@ public class MainPage extends javax.swing.JFrame {
         returnD.add(jRadioButton10);
         jRadioButton10.setText("Reusable");
         jPanel5.add(jRadioButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 380, -1, -1));
-
-        jButton17.setText("ADD");
-        jButton17.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton17ActionPerformed(evt);
-            }
-        });
-        jPanel5.add(jButton17, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 330, 67, 42));
 
         Category.setText("Category");
         jPanel5.add(Category, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 305, -1, -1));
@@ -2530,15 +2603,15 @@ public class MainPage extends javax.swing.JFrame {
                 jButton56ActionPerformed(evt);
             }
         });
-        jPanel5.add(jButton56, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 390, 67, -1));
+        jPanel5.add(jButton56, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 410, 67, -1));
 
         jLabel117.setFont(new java.awt.Font("Iskoola Pota", 0, 14)); // NOI18N
         jLabel117.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel117.setText("Dealer Type");
-        jPanel5.add(jLabel117, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 410, 117, -1));
+        jPanel5.add(jLabel117, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 410, 90, -1));
 
         deleteReturn.add(jRadioButton20);
-        jRadioButton20.setText("Descrease");
+        jRadioButton20.setText("Half Return");
         jRadioButton20.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButton20ActionPerformed(evt);
@@ -2547,8 +2620,8 @@ public class MainPage extends javax.swing.JFrame {
         jPanel5.add(jRadioButton20, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 340, -1, -1));
 
         deleteReturn.add(jRadioButton21);
-        jRadioButton21.setText("Delete");
-        jPanel5.add(jRadioButton21, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 380, 71, -1));
+        jRadioButton21.setText("Full Return");
+        jPanel5.add(jRadioButton21, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 380, 80, -1));
 
         jLabel120.setText("New quantity");
         jPanel5.add(jLabel120, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 310, -1, -1));
@@ -2557,6 +2630,11 @@ public class MainPage extends javax.swing.JFrame {
         jTextField56.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTextField56MouseClicked(evt);
+            }
+        });
+        jTextField56.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField56ActionPerformed(evt);
             }
         });
         jTextField56.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -2684,6 +2762,20 @@ public class MainPage extends javax.swing.JFrame {
         );
 
         jPanel5.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 310, 260, 130));
+
+        jButton60.setText("ADD");
+        jButton60.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton60ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButton60, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 333, 67, 60));
+
+        jLabel121.setFont(new java.awt.Font("Iskoola Pota", 0, 14)); // NOI18N
+        jLabel121.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel121.setText("ID");
+        jPanel5.add(jLabel121, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 310, 50, -1));
+        jPanel5.add(jTextField58, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 310, 160, 30));
 
         javax.swing.GroupLayout p4Layout = new javax.swing.GroupLayout(p4);
         p4.setLayout(p4Layout);
@@ -2865,7 +2957,7 @@ public class MainPage extends javax.swing.JFrame {
                                     .addComponent(jLabel42)
                                     .addComponent(jLabel43)
                                     .addComponent(jLabel81)))
-                            .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addGap(55, 55, 55)
@@ -2882,7 +2974,7 @@ public class MainPage extends javax.swing.JFrame {
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton19)
                             .addComponent(jButton40))))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout p5Layout = new javax.swing.GroupLayout(p5);
@@ -4418,9 +4510,11 @@ public class MainPage extends javax.swing.JFrame {
         rightPanel.add(p2);
         rightPanel.repaint();
         rightPanel.revalidate();
-
+        jButton3.setBackground(Color.white);
+        jButton1.setBackground(Color.yellow);
         int row = jTable2.getSelectedRow();
         String name1 = jTable2.getValueAt(row, 1).toString();
+        jcategory.removeAllItems();
         try {
 
             Date fDate = new SimpleDateFormat("yyyy-MM-dd").parse((String) jTable2.getValueAt(row, 3).toString());
@@ -4429,8 +4523,9 @@ public class MainPage extends javax.swing.JFrame {
             String s = "SELECT * FROM creditor_table WHERE date ='" + fda + "' AND creditor_name='" + name1 + "'";
             pst = conn.prepareStatement(s);
             rs = pst.executeQuery();
+            
             jTable1.setModel(DbUtils.resultSetToTableModel(rs));
-            fetchCatInProduct();
+            
             jTable1.getColumnModel().getColumn(1).setMinWidth(170);
             jTable1.getColumnModel().getColumn(1).setMaxWidth(170);
 
@@ -4471,6 +4566,17 @@ public class MainPage extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
+        try {
+            String sd = "SELECT * FROM creditor_table WHERE creditor_name='" + name1 + "'";
+            pst = conn.prepareStatement(sd);
+            rs = pst.executeQuery();
+            if(rs.next()){
+            jTextField3.setText(rs.getString("lorry_number"));
+            }
+        } catch (Exception e) {
+        }
+        fetchCatInProduct();
+        txtCreditorName.setText(name1);
     }//GEN-LAST:event_jTable2MouseClicked
     public void getProductdata() {
         try {
@@ -4653,20 +4759,26 @@ public class MainPage extends javax.swing.JFrame {
         jButton24.setBackground(Color.white);
         jButton25.setBackground(Color.white);
         jButton32.setBackground(Color.white);
+        
+        
+        jTextField17.setEnabled(false);
+      jTextField18.setEnabled(false);
+       jTextField19.setEnabled(false);
+       jTextField20.setEnabled(false);
+       
+       jTextField21.setEnabled(false);
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        try {
-            rightPanel.removeAll();
-            rightPanel.add(p1);
-            rightPanel.repaint();
-            rightPanel.revalidate();
-            fetchCreditordat();
+        rightPanel.removeAll();
+        rightPanel.add(p1);
+        rightPanel.repaint();
+        rightPanel.revalidate();
+        //fetchCreditordat();
+        
+        
 //        String creditorName=txtCreditorName.getText();
 //        getCreditorData(creditorName,date);
-        } catch (SQLException ex) {
-            Logger.getLogger(MainPage.class.getName()).log(Level.SEVERE, null, ex);
-        }
         jButton3.setBackground(Color.yellow);
         jButton1.setBackground(Color.white);
         jButton13.setBackground(Color.white);
@@ -4688,8 +4800,7 @@ public class MainPage extends javax.swing.JFrame {
         rightPanel.revalidate();
         jcategory.removeAllItems();
         txtCreditorName.requestFocus();
-        fetchCatInProduct();
-        jTable1.getColumnModel().getColumn(1).setMinWidth(170);
+       jTable1.getColumnModel().getColumn(1).setMinWidth(170);
         jTable1.getColumnModel().getColumn(1).setMaxWidth(170);
 
         jButton3.setBackground(Color.white);
@@ -4702,6 +4813,9 @@ public class MainPage extends javax.swing.JFrame {
         jButton24.setBackground(Color.white);
         jButton25.setBackground(Color.white);
         jButton32.setBackground(Color.white);
+         fetchCatInProduct();
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTable1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyReleased
@@ -4958,7 +5072,7 @@ public class MainPage extends javax.swing.JFrame {
                     } else {
                         price = txtPrice.getText();
                         toprice = jTextField4.getText();
-                        status = "completed";
+                        status = "pending_payment";
                     }
 
                     //get quantity
@@ -5141,6 +5255,13 @@ public class MainPage extends javax.swing.JFrame {
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, e);
                 }
+//                 try {
+//                            String sql = "UPDATE arius_creditor_amount SET arius_amount=arius_amount-'" + b + "' WHERE name='" + txtCreditorName.getText() + "'";
+//                            pst = conn.prepareStatement(sql);
+//                            pst.execute();
+//                        } catch (Exception e) {
+//                            JOptionPane.showMessageDialog(this, e);
+//                        }
                 deleteSetStatus(creditorname, dat);
                 fetchData();
                 fetchProductData(creditorname, dat);
@@ -5169,8 +5290,128 @@ public class MainPage extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String creditorName = txtCreditorName.getText();
+            String creditorName = txtCreditorName.getText();
+        String lorryNum = jTextField3.getText();
+        
+        String nquantiy = jTextField2.getText();
+        Date dat2 = jDateChooser1.getDate();
+        
+        String b = jLabel11.getText();
+        boolean check = jr2.isSelected();
+        String testQuq = txtQuantity.getText();
+        String qg=jTextField2.getText();
+        boolean subcat=jkg.getSelectedItem().equals("");
+        if (dat2 == null || creditorName.equals("") || lorryNum.equals("") || nquantiy.equals("")||subcat==true) {
+            JOptionPane.showMessageDialog(this, "Please fill the empty fields");
+
+        } else if (!b.equals("")) {
+            JOptionPane.showMessageDialog(this, "Can not add same data again and again. If you want to add a new data then press" + "'CANCEL'" + "button to RESET fields.");
+        } else if (check == true) {
+            if (testQuq.equals("")) {
+                JOptionPane.showMessageDialog(this, "Please fill the empty fields");
+            } else {
+                int msg = JOptionPane.showConfirmDialog(this, "Do you want to add this product ?");
+                
+                 
+                if (msg == 0) {
+                        //loader start here    
+                        JDialog dialog = createLoadingDialog();
+                        SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+
+                            @Override
+                            protected Void doInBackground() throws Exception {
+                                SwingUtilities.invokeLater(() -> {
+                                    dialog.setVisible(true);
+                                });
+
+                                 addCreditorAndProduct1();
+
+                                return null;
+                            }
+
+                            @Override
+                            protected void done() {
+
+                                 SwingUtilities.invokeLater(() -> {
+                                if (dialog != null) {
+                                    dialog.dispose();
+                                    JOptionPane.showMessageDialog(null, "Product Added");
+                                }
+                                });
+                            }
+                        };
+                        worker.execute(); // Execute the SwingWorker
+                        //loader start here  
+                   
+
+                }
+            }
+        } else {
+        int msg = JOptionPane.showConfirmDialog(this, "Do you want to add this product ?");
+            
+       
+            if (msg == 0) {
+            //loader start here    
+                        JDialog dialog = createLoadingDialog();
+                        SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+
+                            @Override
+                            protected Void doInBackground() throws Exception {
+                                SwingUtilities.invokeLater(() -> {
+                                    dialog.setVisible(true);
+                                });
+
+                               addCreditorAndProduct2();
+
+                                return null;
+                            }
+
+                            @Override
+                            protected void done() {
+
+                                 SwingUtilities.invokeLater(() -> {
+                                if (dialog != null) {
+                                    dialog.dispose();
+                                    JOptionPane.showMessageDialog(null, "Product Added");
+                                }
+                                });
+                            }
+                        };
+                        worker.execute(); // Execute the SwingWorker
+                        //loader start here  
+           
+            }
+        
+        }
+
+
+
+
+
+
+
+
+
+
+  
+    }//GEN-LAST:event_jButton2ActionPerformed
+   //loader dialogd
+    private JDialog createLoadingDialog() {
+    JDialog dialog = new JDialog(this, "Loading...", true);
+    JLabel label = new JLabel("Loading... Please wait.");
+    dialog.add(label);
+    dialog.setSize(200, 100);
+    dialog.setLocationRelativeTo(this);
+    dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); // Prevent closing the dialog
+    return dialog;
+}
+
+
+public void addCreditorAndProduct1(){
+
+     String creditorName = txtCreditorName.getText();
         String lorryNum = jTextField3.getText();
         String tokg = jTextField5.getText();
         String toprice = null;
@@ -5198,7 +5439,7 @@ public class MainPage extends javax.swing.JFrame {
             price = txtPrice.getText();
             toprice = jTextField4.getText();
             bil_num = jTextField33.getText();
-            status = "completed";
+            status = "pending_payment";
         }
 
         //get quantity
@@ -5214,21 +5455,9 @@ public class MainPage extends javax.swing.JFrame {
        
         String getBIll = jTextField33.getText();
         String subcat=jkg.getSelectedItem().toString();
-        if (dat2 == null || creditorName.equals("") || lorryNum.equals("") || nquantiy.equals("")||subcat==null) {
-            JOptionPane.showMessageDialog(this, "Please fill the empty fields");
-
-        } else if (!b.equals("")) {
-            JOptionPane.showMessageDialog(this, "Can not add same data again and again. If you want to add a new data then press" + "'CANCEL'" + "button to RESET fields.");
-        } else if (check == true) {
-            if (testQuq.equals("")) {
-                JOptionPane.showMessageDialog(this, "Please fill the empty fields");
-            } else {
-                int msg = JOptionPane.showConfirmDialog(this, "Do you want to add this product ?");
-                 SimpleDateFormat g = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat g = new SimpleDateFormat("yyyy-MM-dd");
                 String date = g.format(jDateChooser1.getDate());
-                if (msg == 0) {
-                        
-                    try {
+try {
 
                         String s = "INSERT INTO creditor_table(creditor_name,lorry_number,category,kg,quantiy,total_kg,date,bill_number,price,total_price,status)"
                                 + "VALUES('" + creditorName + "','" + lorryNum + "','" + category + "','" + kg + "','" + nquantiy + "','" + tokg + "','" + date + "','" + jTextField33.getText() + "'," + price + "','" + toprice + "','" + status + "')";
@@ -5244,7 +5473,14 @@ public class MainPage extends javax.swing.JFrame {
                                 String sq = "INSERT INTO creditor_details(creditor_name,lorry_number,date,status,id)VALUES('" + creditorName + "','" + lorryNum + "','" + date + "','" + status + "','" + id1 + "')";
 
                                 pst = conn.prepareStatement(sq);
-                                pst.execute();
+                                //pst.execute();
+                                int rowsAffected = pst.executeUpdate();
+                                if(rowsAffected>0){
+                                    System.out.println("creditor added");
+                                }else{
+                                    System.out.println("creditor Not added");
+                                }
+                                
                             }
                         }
 
@@ -5311,9 +5547,22 @@ public class MainPage extends javax.swing.JFrame {
                     String cred = "creditor";
                     double tpp = Double.parseDouble(toprice);
                     insertDataStock(cred, category, kg, nquantiy, tokg, price, tpp, move, cdate, getUser);
-                    JOptionPane.showMessageDialog(this, "Product added");
+                     int rowcount = jTable1.getRowCount();
+                DefaultTableModel df = (DefaultTableModel) jTable1.getModel();
+                double tot = 0.00;
+                String val = "";
+                for (int i = 0; i < rowcount; i++) {
+                    val = (String) df.getValueAt(i, 10);
+                    tot = tot + Double.parseDouble(val);
+
+                }
+                jTextField48.setText(String.valueOf(tot));
+                Double tarius = tot + Double.parseDouble(jTextField47.getText());
+                toCreditorArius = tarius;
+                jTextField49.setText(String.valueOf(tarius));
+                    //JOptionPane.showMessageDialog(this, "Product added");
                     txtCreditorName.requestFocus();
-                    showCeditorNames();
+                    showCeditorNames2();
                     jTextField2.setText("");
                     jTextField5.setText("");
                     jTextField4.setText("");
@@ -5322,16 +5571,60 @@ public class MainPage extends javax.swing.JFrame {
                     txtQuantity.setText("");
                     txtPrice.setText("");
 
-                }
-            }
-        } else {
 
-            int msg = JOptionPane.showConfirmDialog(this, "Do you want to add this product ?");
+}
+//add creditor and product data
+    public void addCreditorAndProduct2(){
+    String creditorName = txtCreditorName.getText();
+        String lorryNum = jTextField3.getText();
+        String tokg = jTextField5.getText();
+        String toprice = null;
+        String nquantiy = jTextField2.getText();
+        Date dat2 = jDateChooser1.getDate();
+        String p = txtPrice.getText();
+        String b = jLabel11.getText();
+        boolean check = jr2.isSelected();
+        String testQuq = txtQuantity.getText();
+        String bil_num = "";
+
+        String category = jcategory.getSelectedItem().toString();
+
+        String price = null;
+        String kg = null;
+        String status = null;
+
+        //get price
+        if (p.equals("")) {
+            price = "0.00";
+            toprice = "0.00";
+            status = "pending";
+            bil_num = "null";
+        } else {
+            price = txtPrice.getText();
+            toprice = jTextField4.getText();
+            bil_num = jTextField33.getText();
+            status = "pending_payment";
+        }
+
+        //get quantity
+        boolean yes = txtQuantity.isEnabled();
+        if (yes == true) {
+            kg = txtQuantity.getText();
+        } else {
+            kg = jkg.getSelectedItem().toString();
+        }
+
+        int categoryindex = jcategory.getSelectedIndex();
+        int qtyindex = jcategory.getSelectedIndex();
+       
+        String getBIll = jTextField33.getText();
+        String subcat=jkg.getSelectedItem().toString();
+       
+            
  SimpleDateFormat g = new SimpleDateFormat("yyyy-MM-dd");
         String date = g.format(jDateChooser1.getDate());
-            if (msg == 0) {
-
-                try {
+            
+ try {
 
                     String s = "INSERT INTO creditor_table(creditor_name,lorry_number,category,kg,quantiy,total_kg,date,bill_number,price,total_price,status)VALUES('" + creditorName + "','" + lorryNum + "','" + category + "','" + kg + "','" + nquantiy + "','" + tokg + "','" + date + "','"+jTextField33.getText()+"','" + price + "','" + toprice + "','" + status + "')";
 
@@ -5346,7 +5639,13 @@ public class MainPage extends javax.swing.JFrame {
                             String sq = "INSERT INTO creditor_details(creditor_name,lorry_number,date,status,id)VALUES('" + creditorName + "','" + lorryNum + "','" + date + "','" + status + "','" + id1 + "')";
 
                             pst = conn.prepareStatement(sq);
-                            pst.execute();
+                            //pst.execute();
+                            int rowsAffected = pst.executeUpdate();
+                                if(rowsAffected>0){
+                                    System.out.println("creditor added");
+                                }else{
+                                    System.out.println("creditor Not added");
+                                }
                         }
                     }
 
@@ -5412,9 +5711,22 @@ public class MainPage extends javax.swing.JFrame {
                 String cred = "creditor";
                 double tpp = Double.parseDouble(toprice);
                 insertDataStock(cred, category, kg, nquantiy, tokg, price, tpp, move, cdate, getUser);
-                JOptionPane.showMessageDialog(this, "Product added");
+                 int rowcount = jTable1.getRowCount();
+                DefaultTableModel df = (DefaultTableModel) jTable1.getModel();
+                double tot = 0.00;
+                String val = "";
+                for (int i = 0; i < rowcount; i++) {
+                    val = (String) df.getValueAt(i, 10);
+                    tot = tot + Double.parseDouble(val);
+
+                }
+                jTextField48.setText(String.valueOf(tot));
+                Double tarius = tot + Double.parseDouble(jTextField47.getText());
+                toCreditorArius = tarius;
+                jTextField49.setText(String.valueOf(tarius));
+                //JOptionPane.showMessageDialog(this, "Product added");
                 txtCreditorName.requestFocus();
-                showCeditorNames();
+                showCeditorNames2();
                 jTextField2.setText("");
                 jTextField5.setText("");
                 jTextField4.setText("");
@@ -5423,11 +5735,12 @@ public class MainPage extends javax.swing.JFrame {
                 txtQuantity.setText("");
                 txtPrice.setText("");
 
-            }
-        }
-
-    }//GEN-LAST:event_jButton2ActionPerformed
-
+               
+          
+        
+    
+    
+    }
     private void txtPriceKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPriceKeyReleased
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
@@ -5791,13 +6104,19 @@ public class MainPage extends javax.swing.JFrame {
             jButton47.setVisible(true);
             jButton39.setVisible(false);
             try {
-                String sql = "SELECT DISTINCT name as Names_of_customers FROM  arius_amount WHERE dealer='Deliver/Detor'";
+                String sql = "SELECT DISTINCT name as Names_of_customers,lorry_number,route FROM deliver";
                 pst = conn.prepareStatement(sql);
                 rs = pst.executeQuery();
                 jTable24.setModel(DbUtils.resultSetToTableModel(rs));
+                jTable24.getColumnModel().getColumn(1).setMinWidth(0);
+        jTable24.getColumnModel().getColumn(1).setMaxWidth(0);
+        jTable24.getColumnModel().getColumn(2).setMinWidth(0);
+        jTable24.getColumnModel().getColumn(2).setMaxWidth(0);
+                
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e);
             }
+           
             try {
                 String select = "SELECT * FROM detor ORDER BY id DESC";
                 pst = conn.prepareStatement(select);
@@ -5813,10 +6132,14 @@ public class MainPage extends javax.swing.JFrame {
             jButton47.setVisible(false);
             jButton39.setVisible(true);
             try {
-                String sql = "SELECT DISTINCT name as Names_of_customers FROM  arius_amount WHERE dealer='Deliver/Detor'";
+                String sql = "SELECT DISTINCT name as Names_of_customers,lorry_number,route FROM deliver";
                 pst = conn.prepareStatement(sql);
                 rs = pst.executeQuery();
                 jTable24.setModel(DbUtils.resultSetToTableModel(rs));
+                jTable24.getColumnModel().getColumn(1).setMinWidth(0);
+        jTable24.getColumnModel().getColumn(1).setMaxWidth(0);
+        jTable24.getColumnModel().getColumn(2).setMinWidth(0);
+        jTable24.getColumnModel().getColumn(2).setMaxWidth(0);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e);
             }
@@ -5838,7 +6161,7 @@ public class MainPage extends javax.swing.JFrame {
             jButton47.setVisible(true);
             jButton39.setVisible(false);
             try {
-                String sql = "SELECT DISTINCT name as Names_of_customers FROM  arius_amount WHERE dealer='Customer'";
+                String sql = "SELECT DISTINCT name as Names_of_customers FROM customer";
                 pst = conn.prepareStatement(sql);
                 rs = pst.executeQuery();
                 jTable24.setModel(DbUtils.resultSetToTableModel(rs));
@@ -5859,7 +6182,7 @@ public class MainPage extends javax.swing.JFrame {
             jButton39.setVisible(true);
             jTable3.setVisible(true);
             try {
-                String sql = "SELECT DISTINCT name as Names_of_customers FROM  arius_amount WHERE dealer='Customer'";
+                String sql = "SELECT DISTINCT name as Names_of_customers FROM customer";
                 pst = conn.prepareStatement(sql);
                 rs = pst.executeQuery();
                 jTable24.setModel(DbUtils.resultSetToTableModel(rs));
@@ -6214,8 +6537,15 @@ public class MainPage extends javax.swing.JFrame {
                         }
                         String cred = "Salt";
                         getSalesData(cred);
-                                                           insertDataToSales_Bill_list(jLabel85.getText(),cred,jTextField7.getText(),jLabel86.getText());
-                        addOrUpdateariusTable(cred, jTextField7.getText(), cdate, jLabel90.getText());
+                        insertDataToSales_Bill_list(jLabel85.getText(),cred,jTextField7.getText(),jLabel86.getText());
+                        //check if there is cash,arius amount and send data to arius table
+                        String h=jLabel90.getText();
+                        if(h.equals("0.0")||h.equals("")||h.equals("0")){
+
+                        }else{//send arius data
+                             addOrUpdateariusTable(cred, jTextField7.getText(), cdate, jLabel90.getText());
+                        }
+                       
                         printBill();
                         invID();
                         DefaultTableModel df1 = (DefaultTableModel) jTable7.getModel();
@@ -6468,7 +6798,7 @@ public class MainPage extends javax.swing.JFrame {
                         }//loop end here
                         String cred = "Shop";
                         getSalesData(cred);
-                                   insertDataToSales_Bill_list(jLabel85.getText(),cred,"Shop",jLabel86.getText());
+                         insertDataToSales_Bill_list(jLabel85.getText(),cred,"Shop",jLabel86.getText());
                         addOrUpdateariusTable(cred, "Shop", cdate, jLabel90.getText());
                         printBill();
                         invID();
@@ -6489,6 +6819,21 @@ public class MainPage extends javax.swing.JFrame {
 
         }
         //getTotalQuantity();
+        String ch=jTextField57.getText();
+        if(ch.equals("0")||ch.equals("")){
+        
+           
+        }else{
+            try {
+                String ce="INSERT INTO cash_in_hand(name,Date,cash_in,Arius_amont)VALUES('"+jTextField7.getText()+"','"+cdate+"','"+jTextField57.getText()+"','"+jLabel90.getText()+"')";
+                pst=conn.prepareStatement(ce);
+                pst.execute();
+                jTextField57.setText("");
+                jTextField7.setText("");
+            } catch (Exception e) {
+                 JOptionPane.showMessageDialog(this, e);
+            }
+        }
     }//GEN-LAST:event_jButton16ActionPerformed
     public void getDataByClickRadioBtn() {
         boolean detorq = jRadioButton5.isSelected();
@@ -6593,294 +6938,6 @@ public class MainPage extends javax.swing.JFrame {
         }
 
     }
-    private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
-        String name = jTextField17.getText();
-        String mn = jTextField18.getText();
-        String kg = jTextField19.getText();
-        String qua1=jTextField56.getText();
-        String qua = "";
-        String lu=jTextField50.getText();
-        String des = jTextArea1.getText();
-        String cat = jTextField21.getText();
-
-        boolean detorq = jRadioButton5.isSelected();
-        boolean deliver = jRadioButton6.isSelected();
-        boolean customer = jRadioButton7.isSelected();
-        boolean shop = jRadioButton8.isSelected();
-
-        
-        String cred = "";
-        if (detorq == true) {
-            cred = "Detor";
-        } else if (deliver == true) {
-            cred = "Deliver";
-        } else if (customer == true) {
-            cred = "Customer";
-        } else if (shop == true) {
-            cred = "Shop";
-        }
-
-        String s = "";
-        
-        boolean b = jRadioButton9.isSelected();
-
-        
-
-        if (name.equals("")||des.equals("")||cat.equals("")||mn.equals("")) {
-
-            JOptionPane.showMessageDialog(this, "Fill the fields");
-        } else {
-            
-           
-            try {
-                if (b == true) {
-                    s = "damage";
-                    lu="0";
-                   
-                } else {
-                    s = "reusable";
-                    lu=jTextField50.getText();
-                }
-                 if(qua1.equals("")||qua1.equals("0")){
-                                        qua="0";
-                                }else{
-                                        qua = jTextField56.getText();
-                                 }
-                if (s.equals("reusable")) {
-                                //add quantity back to store(product properties table)
-                                
-                                
-                                try {
-
-                                    String q = "SELECT id FROM product_sales WHERE category_name='" + jTextField21.getText() + "'";
-                                    pst = conn.prepareStatement(q);
-                                    rs = pst.executeQuery();
-                                    if (rs.next()) {
-                                        int id = rs.getInt("id");
-
-                                        String quaUpdate = "UPDATE product_properties SET quantity=quantity+'" + qua + "',rest_of_quantity=rest_of_quantity+'" +lu+ "',total_quantity=total_quantity+'" + jTextField22.getText() + "' WHERE p_id='" + id + "' AND type_of_kg='" + kg + "'";
-                                        pst = conn.prepareStatement(quaUpdate);
-                                        pst.execute();
-                                        
-                                    
-                                    }
-                                            String getLusevalue=jTextField50.getText();
-                                        if(getLusevalue.equals("0")||getLusevalue.equals("")){
-                                        
-                                        }else{
-                                                //add loose to luse table
-                                                try {
-
-                                                    String luuseUpdate = "INSERT INTO luuse(cat_name,type_of_kg,quantity,luuse_kg,total_luuse,date,move)"
-                                                            + "VALUES('" + cat + "','" + kg + "','" + "0" + "','" + jTextField50.getText() + "','" +lu+ "','" + cdate+ "','" + "IN" + "')";
-                                                    pst1 = conn.prepareStatement(luuseUpdate);
-                                                    pst1.execute();
-
-                                                } catch (Exception e) {
-                                                }
-                                        }
-                                    } catch (Exception e) {
-                                        JOptionPane.showMessageDialog(this, e);
-                                    }
-                                //insert data to return table
-                                    String inser = "INSERT INTO returntable(name,mobile,category,kg,quantity,total_kg,status,date,descr)"
-                                            + "VALUES('" + name + "','" + mn + "','" + cat + "','" + kg + "','" + qua + "','" + jTextField22.getText() + "','" + s + "','" + cdate + "','" + des + "')";
-                                    pst = conn.prepareStatement(inser);
-                                    pst.execute();
-
-                              //calculate the amount
-                                   double latotal=Double.parseDouble(jLabel116.getText());
-                                double total=0.0;
-
-                                int ro=jTable6.getSelectedRow();
-                                double p=Double.parseDouble(jTable6.getValueAt(ro, 11).toString());
-                                int tkg=Integer.parseInt(jTextField22.getText());
-                                total=total+(p*tkg);
-                                latotal=latotal+total;
-                                jLabel116.setText(String.valueOf(latotal));  
-                                jLabel119.setText(String.valueOf(latotal));  
-                                
-                            //update the arius table
-                                try {
-                                    String updateArius="UPDATE arius_amount SET arius_amount=arius_amount-'"+jLabel116.getText()+"' WHERE dealer='"+jLabel117.getText()+"' AND name='"+jTextField17.getText()+"'";
-                                    pst=conn.prepareStatement(updateArius);
-                                    pst.execute();
-                                } catch (Exception e) {
-                                    JOptionPane.showMessageDialog(this, e);
-                                }
-                                boolean decrease=jRadioButton20.isSelected();
-                                String bv="";
-                                String saleCat="";
-                                if(decrease==true){
-                                 //update sale list table 
-                                    bv=jTable6.getValueAt(ro, 1).toString();
-                                    String qty=jTextField20.getText();
-                                    saleCat=jTextField21.getText();
-                                    int newqty=Integer.parseInt(qty.replaceAll("[^0-9]", "")); 
-                                    int nq=Integer.parseInt(jTextField56.getText());
-                                    int t=newqty-nq;
-                             
-   
-
-                                        try {
-                                            String updateSale_list="UPDATE sales_list SET quantity='"+"L"+t+"',total_kg=total_kg-'"+jTextField22.getText()+"' WHERE type_kg='"+jTextField19.getText()+"' AND bill='"+bv+"' AND category='"+saleCat+"'";
-                                            pst1=conn.prepareStatement(updateSale_list);
-                                            pst1.execute();
-                                        } catch (Exception e) {
-                                            JOptionPane.showMessageDialog(this, e);
-                                        }
-                                }else{
-                                
-                                    try {
-                                        String dele="DELETE FROM sales_list WHERE type_kg='"+jTextField19.getText()+"' AND bill='"+bv+"' AND category='"+saleCat+"'";
-                                        pst1=conn.prepareStatement(dele);
-                                        pst1.execute();
-                                    } catch (Exception e) {
-                                        JOptionPane.showMessageDialog(this, e);
-                                    }
-                                
-                                
-                                }
-                             
-                            //generate sale list data aftre done updates 
-                             try {
-                                    int r = jTable5.getSelectedRow();
-                                    String bil = jTable5.getValueAt(r, 0).toString();
-                                    String dealer = jTable5.getValueAt(r, 1).toString();
-                                    String namew = jTable5.getValueAt(r, 2).toString();
-
-                                    String sa = "SELECT * FROM sales_list WHERE bill='" + bil + "' AND dealer='" + dealer + "' AND dealer_name='" + namew + "'";
-                                    pst = conn.prepareStatement(sa);
-                                    rs = pst.executeQuery();
-                                    jTable6.setModel(DbUtils.resultSetToTableModel(rs));
-
-                                    jTable6.getColumnModel().getColumn(0).setMinWidth(0);
-                                    jTable6.getColumnModel().getColumn(0).setMaxWidth(0);
-
-                                } catch (Exception e) {
-                                }
-                             String dqty=jTextField56.getText();
-                             String tq="";
-                             if(dqty.equals("")||dqty.equals("0")){
-                                   tq=cat+"/Luuse";
-                                 
-                            }else{
-                             tq=cat;
-                             }
-                                String getUser = jLabel20.getText();
-                                String move = "IN";
-                                String price = "0";
-                                String totalP = "0";
-                                double tpp = Double.parseDouble(totalP);
-                                insertDataStock(cred, tq, kg, qua, jTextField22.getText(), price, tpp, move, cdate, getUser);
-               
-
-                } else {
-                   
-                     //calculate the amount
-                                   double latotal=Double.parseDouble(jLabel116.getText());
-                                double total=0.0;
-
-                                int ro=jTable6.getSelectedRow();
-                                double p=Double.parseDouble(jTable6.getValueAt(ro, 11).toString());
-                                int tkg=Integer.parseInt(jTextField22.getText());
-                                total=total+(p*tkg);
-                                latotal=latotal+total;
-                                jLabel116.setText(String.valueOf(latotal));  
-                                jLabel119.setText(String.valueOf(latotal));  
-                                
-                            //update the arius table
-                                try {
-                                    String updateArius="UPDATE arius_amount SET arius_amount=arius_amount-'"+jLabel116.getText()+"' WHERE dealer='"+jLabel117.getText()+"' AND name='"+jTextField17.getText()+"'";
-                                    pst=conn.prepareStatement(updateArius);
-                                    pst.execute();
-                                } catch (Exception e) {
-                                    JOptionPane.showMessageDialog(this, e);
-                                }
-                                boolean decrease=jRadioButton20.isSelected();
-                                String bv="";
-                                String saleCat="";
-                                if(decrease==true){
-                                 //update sale list table 
-                                    bv=jTable6.getValueAt(ro, 1).toString();
-                                    String qty=jTextField20.getText();
-                                    saleCat=jTextField21.getText();
-                                    int newqty=Integer.parseInt(qty.replaceAll("[^0-9]", "")); 
-                                    int nq=Integer.parseInt(jTextField56.getText());
-                                    int t=newqty-nq;
-                             
-   
-
-                                        try {
-                                            String updateSale_list="UPDATE sales_list SET quantity='"+"L"+t+"',total_kg=total_kg-'"+jTextField22.getText()+"' WHERE type_kg='"+jTextField19.getText()+"' AND bill='"+bv+"' AND category='"+saleCat+"'";
-                                            pst1=conn.prepareStatement(updateSale_list);
-                                            pst1.execute();
-                                        } catch (Exception e) {
-                                            JOptionPane.showMessageDialog(this, e);
-                                        }
-                                }else{
-                                
-                                    try {
-                                        String dele="DELETE FROM sales_list WHERE type_kg='"+jTextField19.getText()+"' AND bill='"+bv+"' AND category='"+saleCat+"'";
-                                        pst1=conn.prepareStatement(dele);
-                                        pst1.execute();
-                                    } catch (Exception e) {
-                                        JOptionPane.showMessageDialog(this, e);
-                                    }
-                                
-                                
-                                }
-                    
-                    
-                    
-                    
-                    
-                    String inser = "INSERT INTO returntable(name,mobile,category,kg,quantity,total_kg,status,date,descr)"
-                            + "VALUES('" + name + "','" + mn + "','" + cat + "','" + kg + "','" + qua + "','" + jTextField22.getText() + "','" + s + "','" + cdate + "','" + des + "')";
-                    pst = conn.prepareStatement(inser);
-                    pst.execute();
-                    
-                    //generate sale list data aftre done updates 
-                             try {
-                                    int r = jTable5.getSelectedRow();
-                                    String bil = jTable5.getValueAt(r, 0).toString();
-                                    String dealer = jTable5.getValueAt(r, 1).toString();
-                                    String namew = jTable5.getValueAt(r, 2).toString();
-
-                                    String sa = "SELECT * FROM sales_list WHERE bill='" + bil + "' AND dealer='" + dealer + "' AND dealer_name='" + namew + "'";
-                                    pst = conn.prepareStatement(sa);
-                                    rs = pst.executeQuery();
-                                    jTable6.setModel(DbUtils.resultSetToTableModel(rs));
-
-                                    jTable6.getColumnModel().getColumn(0).setMinWidth(0);
-                                    jTable6.getColumnModel().getColumn(0).setMaxWidth(0);
-
-                                } catch (Exception e) {
-                                }
-                }
-
-                JOptionPane.showMessageDialog(this, "added data to return");
-                getDataFromReturnTable();
-
-                jTextField17.setText("");
-                jTextField18.setText("");
-                jTextField19.setText("");
-                jTextField20.setText("");
-                jTextArea1.setText("");
-                jTextField21.setText("");
-                jTextArea1.setText("Write Here");
-                jTextField22.setText("");
-                jLabel116.setText("0.0");
-                jTextField56.setText("0");
-        jTextField22.setText("0");
-        jTextField50.setText("0");
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e);
-            }
-            
-        }
-    }//GEN-LAST:event_jButton17ActionPerformed
-
     private void jTextArea1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextArea1MouseClicked
         jTextArea1.setText("");
     }//GEN-LAST:event_jTextArea1MouseClicked
@@ -7079,6 +7136,9 @@ public class MainPage extends javax.swing.JFrame {
         jr1.setSelected(true);
         txtQuantity.setEnabled(false);
         txtQuantity.setEditable(false);
+        jTextField48.setText("");
+        jTextField47.setText("0");
+        jTextField49.setText("0");
     }//GEN-LAST:event_jButton21ActionPerformed
 
     private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
@@ -8114,6 +8174,7 @@ public class MainPage extends javax.swing.JFrame {
                         double b = Double.parseDouble(jLabel88.getText());
                         ariusTotalwithBillamout = totalq + b;
                         jLabel90.setText(String.valueOf(ariusTotalwithBillamout));
+                        toArius=ariusTotalwithBillamout;
 
                         try {
 
@@ -8181,6 +8242,7 @@ public class MainPage extends javax.swing.JFrame {
                         Double b = Double.parseDouble(jLabel88.getText());
                         ariusTotalwithBillamout = totalq + b;
                         jLabel90.setText(String.valueOf(ariusTotalwithBillamout));
+                        toArius=ariusTotalwithBillamout;
                     }
 
                     try {
@@ -8390,6 +8452,8 @@ jCheckBox1.setSelected(false);
         boolean shop = jRadioButton4.isSelected();
         String n = jTable24.getValueAt(r, 0).toString();
         jTextField7.setText(n);
+        jTextField9.setText(jTable24.getValueAt(r, 1).toString());
+        jComboBox2.setSelectedItem(jTable24.getValueAt(r, 2).toString());
         String newAriusamount = "0";
         String dealer = "";
         if (detorq == true) {
@@ -8424,8 +8488,7 @@ jCheckBox1.setSelected(false);
                 }
 
             }
-            
-            
+              
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
@@ -8434,11 +8497,17 @@ jCheckBox1.setSelected(false);
 
     private void jButton42ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton42ActionPerformed
         String creditorname = txtCreditorName.getText();
-        SimpleDateFormat g = new SimpleDateFormat("yyyy-MM-dd");
+        
+        Date df=jDateChooser1.getDate();
+        
+        if(creditorname.equals("")||df==null){
+            JOptionPane.showMessageDialog(this, "No creditor Selected");
+        }else{
+            SimpleDateFormat g = new SimpleDateFormat("yyyy-MM-dd");
         String fdate = g.format(jDateChooser1.getDate());
-        try {
+         try {
             setCreditorAriusAmount(creditorname, fdate, jTextField49.getText());
-            JOptionPane.showMessageDialog(this, "send data to arius table");
+            JOptionPane.showMessageDialog(this, "sent data to arius table");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
@@ -8479,6 +8548,8 @@ jCheckBox1.setSelected(false);
         jr1.setSelected(true);
         txtQuantity.setEnabled(false);
         txtQuantity.setEditable(false);
+        }
+       
     }//GEN-LAST:event_jButton42ActionPerformed
 
     private void jButton44ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton44ActionPerformed
@@ -8500,6 +8571,7 @@ jCheckBox1.setSelected(false);
 
     private void jTable6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable6MouseClicked
         int r = jTable6.getSelectedRow();
+        String id = jTable6.getValueAt(r, 0).toString();
         String ty = jTable6.getValueAt(r, 2).toString();
         String name = jTable6.getValueAt(r, 3).toString();
         String cat = jTable6.getValueAt(r, 7).toString();
@@ -8507,7 +8579,7 @@ jCheckBox1.setSelected(false);
         String kg = jTable6.getValueAt(r, 8).toString();
         String qua = jTable6.getValueAt(r, 9).toString();
         String tkg = jTable6.getValueAt(r, 10).toString();
-        
+        jLabel121.setText(id);
        
         jTextField20.setText(qua);
         
@@ -8966,8 +9038,9 @@ jCheckBox1.setSelected(false);
       jTextField18.setText("");
        jTextField19.setText("");
        jTextField20.setText("");
-       jTextArea1.setText("");
+       
        jTextField21.setText("");
+       jTextArea1.setText("");
        jTextArea1.setText("Write Here");
        jTextField22.setText("");
        jLabel116.setText("0.0");
@@ -8975,6 +9048,7 @@ jLabel119.setText("0.0");
         jTextField56.setText("0");
         jTextField22.setText("0");
         jTextField50.setText("0");
+        jLabel121.setText("ID");
 
 
  
@@ -9039,14 +9113,34 @@ jLabel119.setText("0.0");
 
     private void jTextField56KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField56KeyReleased
        if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+           
+          
            jTextField22.setText("");
+           jTextField58.setText(""); 
+           
         }
        
        int ty=Integer.parseInt(jTextField19.getText());
        int newQty=Integer.parseInt(jTextField56.getText());
        
        int total=ty*newQty;
+       totalInReturn=total;
        jTextField22.setText(String.valueOf(total));
+       
+        try {
+                                 int ro=jTable6.getSelectedRow();
+                                    String bv=jTable6.getValueAt(ro, 1).toString();
+                                             //calculate the amount
+                                double latotal=Double.parseDouble(jLabel116.getText());
+                                double totalr=0.0;
+                                double p=Double.parseDouble(jTable6.getValueAt(ro, 11).toString());
+                                int tkg=Integer.parseInt(jTextField22.getText());
+                                totalr=totalr+(p*tkg);
+                                latotal=latotal+totalr;
+                               
+                                jTextField58.setText(String.valueOf(latotal)); 
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_jTextField56KeyReleased
 
     private void jTextField56MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField56MouseClicked
@@ -9075,7 +9169,20 @@ jLabel119.setText("0.0");
     jTextField22.setText(String.valueOf(luuse+tkg));
      }
         
-
+      try {
+                                 int ro=jTable6.getSelectedRow();
+                                    String bv=jTable6.getValueAt(ro, 1).toString();
+                                             //calculate the amount
+                                double latotal=Double.parseDouble(jLabel116.getText());
+                                double totalr=0.0;
+                                double p=Double.parseDouble(jTable6.getValueAt(ro, 11).toString());
+                                int tkg=Integer.parseInt(jTextField22.getText());
+                                totalr=totalr+(p*tkg);
+                                latotal=latotal+totalr;
+                               
+                                jLabel119.setText(String.valueOf(latotal)); 
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_jButton57ActionPerformed
 
     private void jButton58ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton58ActionPerformed
@@ -9095,9 +9202,441 @@ jLabel119.setText("0.0");
              jTextField22.setText(String.valueOf(total));
      
      }  
-        
+        try {
+                                 int ro=jTable6.getSelectedRow();
+                                    String bv=jTable6.getValueAt(ro, 1).toString();
+                                             //calculate the amount
+                                double latotal=Double.parseDouble(jLabel116.getText());
+                                double totalr=0.0;
+                                double p=Double.parseDouble(jTable6.getValueAt(ro, 11).toString());
+                                int tkg=Integer.parseInt(jTextField22.getText());
+                                totalr=totalr+(p*tkg);
+                                latotal=latotal+totalr;
+                               
+                                jLabel119.setText(String.valueOf(latotal)); 
+        } catch (Exception e) {
+        } 
         
     }//GEN-LAST:event_jButton58ActionPerformed
+
+    private void jButton60ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton60ActionPerformed
+       String name = jTextField17.getText();
+        String mn = jTextField18.getText();
+        String kg = jTextField19.getText();
+        String Return_stockValue1="";
+        String Return_stockValue2="";
+        String quacheck=jTextField56.getText();
+        String qua = "";
+        String luusecheck=jTextField50.getText();
+        String lu="";
+        String quaReturn="";
+        String quaReturn2="";
+        String des = jTextArea1.getText();
+        String cat = jTextField21.getText();
+        
+        
+        String bv="";
+                 String saleCat="";
+                
+                    saleCat=jTextField21.getText();
+        boolean detorq = jRadioButton5.isSelected();
+        boolean deliver = jRadioButton6.isSelected();
+        boolean customer = jRadioButton7.isSelected();
+        boolean shop = jRadioButton8.isSelected();
+
+
+        String cred = "";
+        if (detorq == true) {
+            cred = "Detor";
+        } else if (deliver == true) {
+            cred = "Deliver";
+        } else if (customer == true) {
+            cred = "Customer";
+        } else if (shop == true) {
+            cred = "Shop";
+        }
+
+        String s = "";
+        
+        boolean b = jRadioButton10.isSelected();
+
+                    if(quacheck.equals("0")||quacheck.equals("")){
+                        qua="0";
+
+                    }else{
+                        qua=jTextField56.getText();
+                        Return_stockValue1="1";
+
+
+                    } 
+                    if(luusecheck.equals("")||luusecheck.equals("0")){
+                        lu="0";
+                    }else{
+                        lu=jTextField50.getText();
+                        Return_stockValue2="1";
+                        
+                    }
+                    String f=jLabel121.getText();
+                   
+        if (f.equals("ID")||f.equals("")) {
+
+            JOptionPane.showMessageDialog(this, "Select the bill and its' items");
+        } else {
+                            int ro=jTable6.getSelectedRow();
+                             bv=jTable6.getValueAt(ro, 1).toString();
+                                             //calculate the amount
+                                double latotal=Double.parseDouble(jLabel116.getText());
+                                double total=0.0;
+                                double p=Double.parseDouble(jTable6.getValueAt(ro, 11).toString());
+                                int tkg=Integer.parseInt(jTextField22.getText());
+                                total=total+(p*tkg);
+                                latotal=latotal+total;
+                                jLabel116.setText(String.valueOf(latotal));  
+                                jLabel119.setText(String.valueOf(latotal)); 
+                                
+                                //resusable section start here
+            if (b==true) {
+                s="reusable";
+                boolean decrease=jRadioButton20.isSelected();
+                 
+                 
+                 
+                 if(decrease==true){
+                    JOptionPane.showMessageDialog(this, "reusable/decrease section"+qua+".."+lu);
+                    
+                     //check if the qty contains only numbers or number with letters(ex: 10 OR L10)
+                    String qq=jTextField20.getText();
+                    
+                    String qty=jTextField20.getText();
+                    
+                    int newqty=Integer.parseInt(qty.replaceAll("[^0-9]", "")); 
+                    int nq=Integer.parseInt(lu);
+                    int t=newqty-nq;
+                    if(qq.matches("[0-9]+")){
+                                    try {
+                                            String updateSale_list="UPDATE sales_list SET quantity=quantity-'"+jTextField56.getText()+"',total_kg=total_kg-'"+jTextField22.getText()+"' WHERE type_kg='"+jTextField19.getText()+"' AND bill='"+bv+"' AND category='"+saleCat+"'";
+                                            pst1=conn.prepareStatement(updateSale_list);
+                                            pst1.execute();
+                                        } catch (Exception e) {
+                                            JOptionPane.showMessageDialog(this, e);
+                                        }
+                                    quaReturn=qua;
+                     }else{
+                                    
+                                    try {
+                                            String updateSale_list="UPDATE sales_list SET quantity='"+"L"+t+"',total_kg=total_kg-'"+t+"' WHERE type_kg='"+jTextField19.getText()+"' AND bill='"+bv+"' AND category='"+saleCat+"'";
+                                            pst1=conn.prepareStatement(updateSale_list);
+                                            pst1.execute();
+                                        } catch (Exception e) {
+                                            JOptionPane.showMessageDialog(this, e);
+                                        }
+                                    quaReturn="L"+jTextField50.getText();
+                    }
+                    
+                     //add quantity back to store(product properties table)
+                            
+                                try {
+
+                                    String q = "SELECT id FROM product_sales WHERE category_name='" + jTextField21.getText() + "'";
+                                    pst = conn.prepareStatement(q);
+                                    rs = pst.executeQuery();
+                                    if (rs.next()) {
+                                        int id = rs.getInt("id");
+
+                                        String quaUpdate = "UPDATE product_properties SET quantity=quantity+'" + qua + "',rest_of_quantity=rest_of_quantity+'" +lu+ "',total_quantity=total_quantity+'" + jTextField22.getText() + "' WHERE p_id='" + id + "' AND type_of_kg='" + kg + "'";
+                                        pst = conn.prepareStatement(quaUpdate);
+                                        pst.execute();
+                                        
+                                    
+                                    }
+                                       String getLusevalue=jTextField50.getText();
+                                        if(getLusevalue.equals("0")||getLusevalue.equals("")){
+                                        
+                                        }else{
+                                            
+                                                //add loose to luse table
+                                                try {
+
+                                                    String luuseUpdate = "INSERT INTO luuse(cat_name,type_of_kg,quantity,luuse_kg,total_luuse,date,move)"
+                                                            + "VALUES('" + cat + "','" + kg + "','" + "0" + "','" + jTextField50.getText() + "','" +lu+ "','" + cdate+ "','" + "IN" + "')";
+                                                    pst1 = conn.prepareStatement(luuseUpdate);
+                                                    pst1.execute();
+
+                                                } catch (Exception e) {
+                                                }
+                                        }
+                                    } catch (Exception e) {
+                                        JOptionPane.showMessageDialog(this, e);
+                                    }
+                                
+                                
+                
+                        
+                         
+
+                 }else{
+                        JOptionPane.showMessageDialog(this, "reusable/delete section"+qua+".."+lu);
+                        //delete data from sale list
+                        //calculate the amount
+                                
+                                total=total+(p*tkg);
+                                latotal=latotal+total;
+                                jLabel116.setText(String.valueOf(latotal));  
+                                jLabel119.setText(String.valueOf(latotal)); 
+                                try {
+                                        String dele="DELETE FROM sales_list WHERE id='"+jLabel121.getText()+"'";
+                                        pst1=conn.prepareStatement(dele);
+                                        pst1.execute();
+                                    } catch (Exception e) {
+                                        JOptionPane.showMessageDialog(this, e);
+                                    }
+                                
+                                 //add quantity back to store(product properties table)
+                            
+                                try {
+
+                                    String q = "SELECT id FROM product_sales WHERE category_name='" + jTextField21.getText() + "'";
+                                    pst = conn.prepareStatement(q);
+                                    rs = pst.executeQuery();
+                                    if (rs.next()) {
+                                        int id = rs.getInt("id");
+
+                                        String quaUpdate = "UPDATE product_properties SET quantity=quantity+'" + qua + "',rest_of_quantity=rest_of_quantity+'" +lu+ "',total_quantity=total_quantity+'" + jTextField22.getText() + "' WHERE p_id='" + id + "' AND type_of_kg='" + kg + "'";
+                                        pst = conn.prepareStatement(quaUpdate);
+                                        pst.execute();
+                                        
+                                    
+                                    }
+                                       String getLusevalue=jTextField50.getText();
+                                        if(getLusevalue.equals("0")||getLusevalue.equals("")){
+                                        
+                                        }else{
+                                            
+                                                //add loose to luse table
+                                                try {
+
+                                                    String luuseUpdate = "INSERT INTO luuse(cat_name,type_of_kg,quantity,luuse_kg,total_luuse,date,move)"
+                                                            + "VALUES('" + cat + "','" + kg + "','" + "0" + "','" + jTextField50.getText() + "','" +lu+ "','" + cdate+ "','" + "IN" + "')";
+                                                    pst1 = conn.prepareStatement(luuseUpdate);
+                                                    pst1.execute();
+
+                                                } catch (Exception e) {
+                                                }
+                                        }
+                                    } catch (Exception e) {
+                                        JOptionPane.showMessageDialog(this, e);
+                                    }
+                 }
+                 
+                 //send data to return checkReturn_stockValue
+                 String qq=jTextField20.getText();
+                 if(qq.matches("[0-9]+")){
+                 
+                 quaReturn2=qua;
+                 }else{
+                 quaReturn2="L"+jTextField50.getText();
+                 }
+                             int ee=Integer.parseInt(jTextField50.getText());
+                             String See=String.valueOf(ee);
+                             String StotalInReturn=String.valueOf(totalInReturn);
+                             if(Return_stockValue2.equals("1")&& Return_stockValue1.equals("1")){
+                              
+//                             sendReturn(name, mn, cat, kg, jTextField56.getText(), s, des,totalInReturn);  
+//                             sendReturn(name, mn, cat, kg, jTextField50.getText(), s, des,ee);  
+                                String getUser = jLabel20.getText();
+                                String move = "IN";
+                                String price = "0";
+                                String totalP = "0";
+                                double tpp = Double.parseDouble(totalP);
+                                insertDataStock(cred, cat, kg, quaReturn2, StotalInReturn, price, tpp, move, cdate, getUser);
+                                
+                                insertDataStock(cred, cat+"/luuse", kg, "L"+See, See, price, tpp, move, cdate, getUser);
+                             }else{
+                                    if(quacheck.equals("")||quacheck.equals("0")){
+                                        quaReturn2=lu;
+//                                        sendReturn(name, mn, cat, kg, quaReturn, s, des,ee); 
+                                String getUser = jLabel20.getText();
+                                String move = "IN";
+                                String price = "0";
+                                String totalP = "0";
+                                double tpp = Double.parseDouble(totalP);
+                                insertDataStock(cred, cat+"/luuse", kg, "L"+quaReturn2, See, price, tpp, move, cdate, getUser);
+                                    }else{
+//                                        sendReturn(name, mn, cat, kg, quaReturn, s, des,totalInReturn); 
+                                String getUser = jLabel20.getText();
+                                String move = "IN";
+                                String price = "0";
+                                String totalP = "0";
+                                double tpp = Double.parseDouble(totalP);
+                                insertDataStock(cred, cat, kg, quaReturn2, StotalInReturn, price, tpp, move, cdate, getUser);
+                                    }
+                               
+                                      
+                                
+                             }
+                           
+             
+             
+               //update arius
+            updateAriusReturnsec(jLabel116.getText(),jLabel117.getText(),jTextField17.getText());
+             //reusable section end here
+            //damage section start here
+            }else{
+            //damage section
+             s="damage";
+                boolean decrease=jRadioButton20.isSelected();
+                if(decrease==true){
+                        JOptionPane.showMessageDialog(this, "damage/decrease section"+qua+".."+lu);
+                        //check if the qty contains only numbers or number with letters(ex: 10 OR L10)
+                    String qq=jTextField20.getText();
+                    
+                    String qty=jTextField20.getText();
+                    
+                    int newqty=Integer.parseInt(qty.replaceAll("[^0-9]", "")); 
+                    int nq=Integer.parseInt(lu);
+                    int t=newqty-nq;
+                    if(qq.matches("[0-9]+")){
+                                    try {
+                                            String updateSale_list="UPDATE sales_list SET quantity=quantity-'"+jTextField56.getText()+"',total_kg=total_kg-'"+jTextField22.getText()+"' WHERE type_kg='"+jTextField19.getText()+"' AND bill='"+bv+"' AND category='"+saleCat+"'";
+                                            pst1=conn.prepareStatement(updateSale_list);
+                                            pst1.execute();
+                                        } catch (Exception e) {
+                                            JOptionPane.showMessageDialog(this, e);
+                                        }
+                                quaReturn=qua;
+                     }else{
+                                    
+                                    try {
+                                            String updateSale_list="UPDATE sales_list SET quantity='"+"L"+t+"',total_kg=total_kg-'"+t+"' WHERE type_kg='"+jTextField19.getText()+"' AND bill='"+bv+"' AND category='"+saleCat+"'";
+                                            pst1=conn.prepareStatement(updateSale_list);
+                                            pst1.execute();
+                                        } catch (Exception e) {
+                                            JOptionPane.showMessageDialog(this, e);
+                                        }
+                                quaReturn="L"+jTextField50.getText();
+                    }
+                   
+                 }else{
+                        JOptionPane.showMessageDialog(this, "damage/delete section"+qua+".."+lu);
+                         //delete data from sale list
+                                try {
+                                        String dele="DELETE FROM sales_list WHERE id='"+jLabel121.getText()+"'";
+                                        pst1=conn.prepareStatement(dele);
+                                        pst1.execute();
+                                    } catch (Exception e) {
+                                        JOptionPane.showMessageDialog(this, e);
+                                    }
+                 }
+                //update arius
+            updateAriusReturnsec(jLabel116.getText(),jLabel117.getText(),jTextField17.getText());
+            }
+            //damage section end here
+               //generate sale list data aftre done updates 
+                             try {
+                                    int r = jTable5.getSelectedRow();
+                                    String bil = jTable5.getValueAt(r, 0).toString();
+                                    String dealer = jTable5.getValueAt(r, 1).toString();
+                                    String namew = jTable5.getValueAt(r, 2).toString();
+
+                                    String sa = "SELECT * FROM sales_list WHERE bill='" + bil + "' AND dealer='" + dealer + "' AND dealer_name='" + namew + "'";
+                                    pst = conn.prepareStatement(sa);
+                                    rs = pst.executeQuery();
+                                    jTable6.setModel(DbUtils.resultSetToTableModel(rs));
+
+                                    jTable6.getColumnModel().getColumn(0).setMinWidth(0);
+                                    jTable6.getColumnModel().getColumn(0).setMaxWidth(0);
+
+                                } catch (Exception e) {
+                                }
+                             
+                            
+                             //send data to return checkReturn_stockValue
+                             int ee=Integer.parseInt(jTextField50.getText());
+                             if(Return_stockValue2.equals("1")&& Return_stockValue1.equals("1")){
+                              
+                             sendReturn(name, mn, cat, kg, jTextField56.getText(), s, des,totalInReturn);  
+                             sendReturn(name, mn, cat, kg, jTextField50.getText(), s, des,ee);  
+                             }else{
+                                    if(quacheck.equals("")||quacheck.equals("0")){
+                                        quaReturn=lu;
+                                        sendReturn(name, mn, cat, kg, quaReturn, s, des,ee);    
+                                    }else{
+                                        sendReturn(name, mn, cat, kg, quaReturn, s, des,totalInReturn);  
+                                    }
+                               
+                                      
+                                
+                             }
+        }
+        jLabel116.setText("0.0");
+        jTextField17.setText("");
+      jTextField18.setText("");
+       jTextField19.setText("");
+       jTextField20.setText("");
+       
+       jLabel121.setText("ID");
+       jTextField21.setText("");
+    jLabel117.setText("Dealer Type");
+       jTextArea1.setText("Write Here");
+      
+    }//GEN-LAST:event_jButton60ActionPerformed
+/*
+    
+    
+    
+    
+    
+    
+    */
+
+
+
+
+
+//send data to return
+    public void sendReturn(String name,String mn,String cat,String kg,String quaReturn,String s,String des,int totkg){
+    
+                             try {
+                         String inser = "INSERT INTO returntable(name,mobile,category,kg,quantity,total_kg,status,date,descr)"
+                                            + "VALUES('" + name + "','" + mn + "','" + cat + "','" + kg + "','" + quaReturn + "','" + totkg + "','" + s + "','" + cdate + "','" + des + "')";
+                                    pst = conn.prepareStatement(inser);
+                                    pst.execute();
+                     } catch (Exception e) {
+                         JOptionPane.showMessageDialog(this, e);
+                     }
+    
+    }
+ //update arius in return section
+    public void updateAriusReturnsec(String amount,String dealer,String dename){
+    
+       
+                            //update the arius table
+                                try {
+                                    
+                                    String updateArius="UPDATE arius_amount SET arius_amount=arius_amount-'"+amount+"' WHERE dealer='"+dealer+"' AND name='"+dename+"'";
+                                    pst=conn.prepareStatement(updateArius);
+                                    pst.execute();
+                                    
+                                } catch (Exception e) {
+                                    JOptionPane.showMessageDialog(this, e);
+                                }
+    
+    
+    }
+    private void jTextField56ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField56ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField56ActionPerformed
+
+    private void jTextField57KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField57KeyReleased
+       if(evt.getKeyCode()==KeyEvent.VK_BACK_SPACE){
+       jLabel90.setText(String.valueOf(toArius));
+       } 
+        int cash=Integer.parseInt(jTextField57.getText());
+        double ttt=0.0;
+        
+        ttt=toArius-cash;
+        jLabel90.setText(String.valueOf(ttt));
+    }//GEN-LAST:event_jTextField57KeyReleased
     private void displayAriusAmountdebit(String selectedName) {
         //        Cash/Banking Section
         try {
@@ -9206,7 +9745,7 @@ jLabel119.setText("0.0");
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nibas".equals(info.getName())) {
+                if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -9250,7 +9789,6 @@ jLabel119.setText("0.0");
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton16;
-    private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
@@ -9297,6 +9835,7 @@ jLabel119.setText("0.0");
     private javax.swing.JButton jButton57;
     private javax.swing.JButton jButton58;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton60;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
@@ -9343,6 +9882,9 @@ jLabel119.setText("0.0");
     private javax.swing.JLabel jLabel119;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel120;
+    private javax.swing.JLabel jLabel121;
+    private javax.swing.JLabel jLabel122;
+    private javax.swing.JLabel jLabel123;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -9570,6 +10112,8 @@ jLabel119.setText("0.0");
     private javax.swing.JTextField jTextField54;
     private javax.swing.JTextField jTextField55;
     private javax.swing.JTextField jTextField56;
+    private javax.swing.JTextField jTextField57;
+    private javax.swing.JTextField jTextField58;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
