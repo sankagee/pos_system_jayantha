@@ -2769,7 +2769,7 @@ public class MainPage extends javax.swing.JFrame {
                 jButton60ActionPerformed(evt);
             }
         });
-        jPanel5.add(jButton60, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 333, 67, 60));
+        jPanel5.add(jButton60, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 340, 67, 60));
 
         jLabel121.setFont(new java.awt.Font("Iskoola Pota", 0, 14)); // NOI18N
         jLabel121.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
