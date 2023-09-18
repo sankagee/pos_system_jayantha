@@ -58,6 +58,9 @@ public class MainPage extends javax.swing.JFrame {
     PreparedStatement pst1 = null;
     ResultSet rs = null;
     ResultSet rs1 = null;
+    
+    PreparedStatement pst3 = null;
+    ResultSet rs3 = null;
     String creditorId = null;
     String pid = null;
     String ctime = "";
@@ -91,6 +94,7 @@ public class MainPage extends javax.swing.JFrame {
         jRadioButton9.setSelected(true);
         jTextField48.setEditable(false);
         jTextField47.setEditable(false);
+        jRadioButton22.setSelected(true);
         jButton3.setBackground(Color.yellow);
         jButton3.setBackground(Color.yellow);
         jButton1.setBackground(Color.white);
@@ -820,6 +824,7 @@ public class MainPage extends javax.swing.JFrame {
         returnD = new javax.swing.ButtonGroup();
         credit_or_cash = new javax.swing.ButtonGroup();
         deleteReturn = new javax.swing.ButtonGroup();
+        reusableORdemage = new javax.swing.ButtonGroup();
         mainPanel = new javax.swing.JPanel();
         leftPanel = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
@@ -1199,7 +1204,15 @@ public class MainPage extends javax.swing.JFrame {
         jTable20 = new javax.swing.JTable();
         jDateChooser7 = new com.toedter.calendar.JDateChooser();
         jButton48 = new javax.swing.JButton();
+        jRadioButton22 = new javax.swing.JRadioButton();
+        jRadioButton23 = new javax.swing.JRadioButton();
         tp2 = new javax.swing.JPanel();
+        jDateChooser3 = new com.toedter.calendar.JDateChooser();
+        jButton59 = new javax.swing.JButton();
+        jComboBox5 = new javax.swing.JComboBox<>();
+        jScrollPane27 = new javax.swing.JScrollPane();
+        jTable26 = new javax.swing.JTable();
+        jLabel125 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1280, 720));
@@ -4401,7 +4414,7 @@ public class MainPage extends javax.swing.JFrame {
         });
 
         jButton34.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton34.setText("Report 2");
+        jButton34.setText("Deliver Report");
         jButton34.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton34ActionPerformed(evt);
@@ -4423,10 +4436,10 @@ public class MainPage extends javax.swing.JFrame {
             topmenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(topmenuLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(topmenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton33)
-                    .addComponent(jButton34))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGroup(topmenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton34, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(jButton33, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         tmenu.setLayout(new java.awt.CardLayout());
@@ -4453,6 +4466,22 @@ public class MainPage extends javax.swing.JFrame {
             }
         });
 
+        reusableORdemage.add(jRadioButton22);
+        jRadioButton22.setText("Reusable");
+        jRadioButton22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton22ActionPerformed(evt);
+            }
+        });
+
+        reusableORdemage.add(jRadioButton23);
+        jRadioButton23.setText("Demage");
+        jRadioButton23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton23ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout tp1Layout = new javax.swing.GroupLayout(tp1);
         tp1.setLayout(tp1Layout);
         tp1Layout.setHorizontalGroup(
@@ -4460,6 +4489,11 @@ public class MainPage extends javax.swing.JFrame {
             .addGroup(tp1Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addGroup(tp1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tp1Layout.createSequentialGroup()
+                        .addComponent(jRadioButton22)
+                        .addGap(10, 10, 10)
+                        .addComponent(jRadioButton23)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(tp1Layout.createSequentialGroup()
                         .addComponent(jDateChooser7, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -4472,26 +4506,85 @@ public class MainPage extends javax.swing.JFrame {
         tp1Layout.setVerticalGroup(
             tp1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tp1Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addGap(5, 5, 5)
+                .addGroup(tp1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton22)
+                    .addComponent(jRadioButton23))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(tp1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jDateChooser7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton48))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane21, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
+                .addComponent(jScrollPane21, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
                 .addGap(240, 240, 240))
         );
 
         tmenu.add(tp1, "card2");
 
+        jDateChooser3.setDateFormatString("yyyy-MM-dd");
+        jDateChooser3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jDateChooser3MouseClicked(evt);
+            }
+        });
+
+        jButton59.setText("SET");
+        jButton59.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton59ActionPerformed(evt);
+            }
+        });
+
+        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select route", "Tissa,Kataragama", "Hambantota", "Weeraketiya" }));
+        jComboBox5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox5ActionPerformed(evt);
+            }
+        });
+
+        jTable26.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane27.setViewportView(jTable26);
+
+        jLabel125.setBorder(javax.swing.BorderFactory.createTitledBorder("Total Bill Amount"));
+
         javax.swing.GroupLayout tp2Layout = new javax.swing.GroupLayout(tp2);
         tp2.setLayout(tp2Layout);
         tp2Layout.setHorizontalGroup(
             tp2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1144, Short.MAX_VALUE)
+            .addGroup(tp2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(tp2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane27, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 785, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, tp2Layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(49, 49, 49)
+                        .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton59))
+                    .addComponent(jLabel125, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(349, Short.MAX_VALUE))
         );
         tp2Layout.setVerticalGroup(
             tp2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 666, Short.MAX_VALUE)
+            .addGroup(tp2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(tp2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton59)
+                    .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane27, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel125, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(97, Short.MAX_VALUE))
         );
 
         tmenu.add(tp2, "card3");
@@ -7534,9 +7627,15 @@ try {
         rightPanel.add(p10);
         rightPanel.repaint();
         rightPanel.revalidate();
-
+boolean reuse=jRadioButton22.isSelected();
+        String sts="";
+        if(reuse==true){
+        sts="reusable";
+        }else{
+        sts="damage";
+        }
         try {
-            String sql = "SELECT name,mobile,category,kg,total_kg,status,date,descr FROM returntable WHERE status='" + "damage" + "' ORDER BY date desc";
+            String sql = "SELECT name,mobile,category,kg,total_kg,status,date,descr FROM returntable WHERE status='" + sts + "' ORDER BY date desc";
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
             jTable20.setModel(DbUtils.resultSetToTableModel(rs));
@@ -7574,6 +7673,22 @@ try {
         tmenu.add(tp2);
         tmenu.repaint();
         tmenu.revalidate();
+            TableColumnModel cm = jTable26.getTableHeader().getColumnModel();
+        while (cm.getColumnCount() > 0) {
+            cm.removeColumn(cm.getColumn(0));
+        }
+        cm.addColumn(new TableColumn(0, 100));
+        cm.getColumn(0).setHeaderValue("Bill Number");
+
+        cm.addColumn(new TableColumn(1, 100));
+        cm.getColumn(1).setHeaderValue("Delear");
+
+        cm.addColumn(new TableColumn(2, 100));
+        cm.getColumn(2).setHeaderValue("Dealer Name");
+
+        cm.addColumn(new TableColumn(3, 100));
+        cm.getColumn(3).setHeaderValue("Total bill amount");
+        jLabel125.setText("");
     }//GEN-LAST:event_jButton34ActionPerformed
 
     private void jButton36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton36ActionPerformed
@@ -8809,9 +8924,15 @@ jCheckBox1.setSelected(false);
     private void jButton48ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton48ActionPerformed
         SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
         String fdate = d.format(jDateChooser7.getDate());
-
+        boolean reuse=jRadioButton22.isSelected();
+        String sts="";
+        if(reuse==true){
+        sts="reusable";
+        }else{
+        sts="damage";
+        }
         try {
-            String sql = "SELECT name,mobile,category,kg,total_kg,status,date,descr FROM returntable WHERE status='" + "damage" + "' AND date='" + fdate + "' ORDER BY date desc";
+            String sql = "SELECT name,mobile,category,kg,total_kg,status,date,descr FROM returntable WHERE status='" + sts + "' AND date='" + fdate + "' ORDER BY date desc";
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
             jTable20.setModel(DbUtils.resultSetToTableModel(rs));
@@ -9739,6 +9860,187 @@ jLabel119.setText("0.0");
         jLabel90.setText(String.valueOf(t));
         jTextField57.setText("");
     }//GEN-LAST:event_jButton17ActionPerformed
+
+    private void jButton59ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton59ActionPerformed
+        Date u=jDateChooser3.getDate();
+        if(u==null){
+        JOptionPane.showMessageDialog(this, "add the date");
+        }else{
+         TableColumnModel cm = jTable26.getTableHeader().getColumnModel();
+        while (cm.getColumnCount() > 0) {
+            cm.removeColumn(cm.getColumn(0));
+        }
+        cm.addColumn(new TableColumn(0, 100));
+        cm.getColumn(0).setHeaderValue("Bill Number");
+
+        cm.addColumn(new TableColumn(1, 100));
+        cm.getColumn(1).setHeaderValue("Delear");
+
+        cm.addColumn(new TableColumn(2, 100));
+        cm.getColumn(2).setHeaderValue("Dealer Name");
+
+        cm.addColumn(new TableColumn(3, 100));
+        cm.getColumn(3).setHeaderValue("Total bill amount");
+        
+        String billnum="";
+        String dealer="";
+        String dealerName="";
+        String billA="";
+        DefaultTableModel df=(DefaultTableModel)jTable26.getModel();
+        df.setRowCount(0);
+        try {
+                SimpleDateFormat di = new SimpleDateFormat("yyyy-MM-dd");
+                String f = di.format(jDateChooser3.getDate());
+            String getRoute=jComboBox5.getSelectedItem().toString();
+            String getBill="SELECT DISTINCT bill FROM sales_list WHERE route='"+getRoute+"' AND date='"+f+"'";
+            pst=conn.prepareStatement(getBill);
+            rs=pst.executeQuery();
+                while(rs.next()){
+
+                 String bill=rs.getString("bill");
+                String getData="SELECT * FROM set_sales WHERE bill_number='"+bill+"'";
+                pst1=conn.prepareStatement(getData);
+                rs1=pst1.executeQuery();
+                    while(rs1.next()){
+                           billnum=rs1.getString("bill_number");
+                           dealer=rs1.getString("dealer");
+                           dealerName=rs1.getString("dealer_name");
+                           
+                           
+                            String getTotalbillamount="SELECT bil_amount FROM sales_bill_list WHERE bil_num='"+billnum+"' AND date='"+f+"'";
+                            pst3=conn.prepareStatement(getTotalbillamount);
+                            rs3=pst3.executeQuery();
+                             while(rs3.next()){
+                                 billA=rs3.getString("bil_amount");
+                           df.addRow(new Object[]{
+                               billnum,
+                               dealer,
+                               dealerName,
+                               billA
+                               
+                            });
+                          }
+                              
+                    }
+
+                }
+              //jLabel125  
+           int er=jTable26.getRowCount();
+           double tot=0.0;
+           for(int i=0;i<er;i++){
+           
+           String bila=(String)jTable26.getValueAt(i, 3).toString();
+           double dbila=Double.parseDouble(bila);
+           tot=tot+dbila;
+           
+           }
+           jLabel125.setText(String.valueOf(tot));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
+
+        }
+      
+    }//GEN-LAST:event_jButton59ActionPerformed
+
+    private void jDateChooser3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jDateChooser3MouseClicked
+        
+    }//GEN-LAST:event_jDateChooser3MouseClicked
+
+    private void jComboBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox5ActionPerformed
+                TableColumnModel cm = jTable26.getTableHeader().getColumnModel();
+        while (cm.getColumnCount() > 0) {
+            cm.removeColumn(cm.getColumn(0));
+        }
+        cm.addColumn(new TableColumn(0, 100));
+        cm.getColumn(0).setHeaderValue("Bill Number");
+
+        cm.addColumn(new TableColumn(1, 100));
+        cm.getColumn(1).setHeaderValue("Delear");
+
+        cm.addColumn(new TableColumn(2, 100));
+        cm.getColumn(2).setHeaderValue("Dealer Name");
+
+        cm.addColumn(new TableColumn(3, 100));
+        cm.getColumn(3).setHeaderValue("Total bill amount");
+        
+        String billnum="";
+        String dealer="";
+        String dealerName="";
+        String billA="";
+        DefaultTableModel df=(DefaultTableModel)jTable26.getModel();
+        df.setRowCount(0);
+        try {
+            String getRoute=jComboBox5.getSelectedItem().toString();
+            String getBill="SELECT DISTINCT bill FROM sales_list WHERE route='"+getRoute+"'";
+            pst=conn.prepareStatement(getBill);
+            rs=pst.executeQuery();
+                while(rs.next()){
+
+                 String bill=rs.getString("bill");
+                String getData="SELECT * FROM set_sales WHERE bill_number='"+bill+"'";
+                pst1=conn.prepareStatement(getData);
+                rs1=pst1.executeQuery();
+                    while(rs1.next()){
+                           billnum=rs1.getString("bill_number");
+                           dealer=rs1.getString("dealer");
+                           dealerName=rs1.getString("dealer_name");
+                           
+                           
+                            String getTotalbillamount="SELECT bil_amount FROM sales_bill_list WHERE bil_num='"+billnum+"'";
+                            pst3=conn.prepareStatement(getTotalbillamount);
+                            rs3=pst3.executeQuery();
+                             while(rs3.next()){
+                                 billA=rs3.getString("bil_amount");
+                           df.addRow(new Object[]{
+                               billnum,
+                               dealer,
+                               dealerName,
+                               billA
+                               
+                            });
+                          }
+                              
+                    }
+
+                }
+              //jLabel125  
+           int er=jTable26.getRowCount();
+           double tot=0.0;
+           for(int i=0;i<er;i++){
+           
+           String bila=(String)jTable26.getValueAt(i, 3).toString();
+           double dbila=Double.parseDouble(bila);
+           tot=tot+dbila;
+           
+           }
+           jLabel125.setText(String.valueOf(tot));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
+    }//GEN-LAST:event_jComboBox5ActionPerformed
+
+    private void jRadioButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton22ActionPerformed
+        
+        try {
+            String sql = "SELECT name,mobile,category,kg,total_kg,status,date,descr FROM returntable WHERE status='" + "reusable" + "' ORDER BY date desc";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            jTable20.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jRadioButton22ActionPerformed
+
+    private void jRadioButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton23ActionPerformed
+        
+        try {
+            String sql = "SELECT name,mobile,category,kg,total_kg,status,date,descr FROM returntable WHERE status='" + "damage" + "' ORDER BY date desc";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            jTable20.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jRadioButton23ActionPerformed
     private void displayAriusAmountdebit(String selectedName) {
         //        Cash/Banking Section
         try {
@@ -9937,6 +10239,7 @@ jLabel119.setText("0.0");
     private javax.swing.JButton jButton56;
     private javax.swing.JButton jButton57;
     private javax.swing.JButton jButton58;
+    private javax.swing.JButton jButton59;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton60;
     private javax.swing.JButton jButton7;
@@ -9948,12 +10251,14 @@ jLabel119.setText("0.0");
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JComboBox<String> jComboBox5;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser10;
     private com.toedter.calendar.JDateChooser jDateChooser11;
     private com.toedter.calendar.JDateChooser jDateChooser12;
     private com.toedter.calendar.JDateChooser jDateChooser13;
     private com.toedter.calendar.JDateChooser jDateChooser2;
+    private com.toedter.calendar.JDateChooser jDateChooser3;
     private com.toedter.calendar.JDateChooser jDateChooser4;
     private com.toedter.calendar.JDateChooser jDateChooser5;
     private com.toedter.calendar.JDateChooser jDateChooser6;
@@ -9989,6 +10294,7 @@ jLabel119.setText("0.0");
     private javax.swing.JLabel jLabel122;
     private javax.swing.JLabel jLabel123;
     private javax.swing.JLabel jLabel124;
+    private javax.swing.JLabel jLabel125;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -10108,6 +10414,8 @@ jLabel119.setText("0.0");
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton20;
     private javax.swing.JRadioButton jRadioButton21;
+    private javax.swing.JRadioButton jRadioButton22;
+    private javax.swing.JRadioButton jRadioButton23;
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JRadioButton jRadioButton5;
@@ -10134,6 +10442,7 @@ jLabel119.setText("0.0");
     private javax.swing.JScrollPane jScrollPane24;
     private javax.swing.JScrollPane jScrollPane25;
     private javax.swing.JScrollPane jScrollPane26;
+    private javax.swing.JScrollPane jScrollPane27;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
@@ -10159,6 +10468,7 @@ jLabel119.setText("0.0");
     private javax.swing.JTable jTable23;
     private javax.swing.JTable jTable24;
     private javax.swing.JTable jTable25;
+    private javax.swing.JTable jTable26;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
     private javax.swing.JTable jTable5;
@@ -10249,6 +10559,7 @@ jLabel119.setText("0.0");
     private javax.swing.JPanel p9;
     private javax.swing.ButtonGroup returnD;
     private javax.swing.ButtonGroup returnRadio;
+    private javax.swing.ButtonGroup reusableORdemage;
     private javax.swing.JPanel rightPanel;
     private javax.swing.JPanel tbp1;
     private javax.swing.JPanel tbp2;
