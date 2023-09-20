@@ -9688,10 +9688,10 @@ public class MainPage extends javax.swing.JFrame {
 
     private void jButton35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton35ActionPerformed
         try{
-        String Field59Value = jTextField59.getText();
-        String Field34Value = jTextField34.getText();
-        String Field35Value = jTextField35.getText();
-        String Field36Value = jTextField36.getText();
+        String textField59Value = jTextField59.getText();
+        String textField34Value = jTextField34.getText();
+        String textField35Value = jTextField35.getText();
+        String textField36Value = jTextField36.getText();
         SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
         String chedate = d.format(jDateChooser3.getDate());  
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -9699,10 +9699,10 @@ public class MainPage extends javax.swing.JFrame {
         String sql = "INSERT INTO creditor_repayment (bill_no, total_balance, amount, cheque_number, cheque_date, issue_date) VALUES (?, ?, ?, ?, ? ,?)";
         PreparedStatement preparedStatement = conn.prepareStatement(sql);
            
-            preparedStatement.setString(1, Field59Value);
-            preparedStatement.setString(2, Field34Value);
-            preparedStatement.setString(3, Field35Value);
-            preparedStatement.setString(4, Field36Value);
+            preparedStatement.setString(1, textField59Value);
+            preparedStatement.setString(2, textField34Value);
+            preparedStatement.setString(3, textField35Value);
+            preparedStatement.setString(4, textField36Value);
             preparedStatement.setString(5, chedate);
             preparedStatement.setString(6, currentDate);
             pst = conn.prepareStatement(sql);
@@ -9711,7 +9711,7 @@ public class MainPage extends javax.swing.JFrame {
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e);
             }
-         
+         jTable19viewdata();
     }//GEN-LAST:event_jButton35ActionPerformed
     private void displayAriusAmountdebit(String selectedName) {
         //        Cash/Banking Section
