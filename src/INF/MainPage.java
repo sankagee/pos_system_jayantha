@@ -2142,11 +2142,14 @@ public class MainPage extends javax.swing.JFrame {
         jLabel24.setText("Date");
         jPanel4.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 210, -1, -1));
 
+        jTextField11.setEditable(false);
         jTextField11.setFont(new java.awt.Font("Iskoola Pota", 0, 12)); // NOI18N
         jPanel4.add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 300, 177, 37));
 
         jLabel25.setText("Category");
         jPanel4.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 280, -1, -1));
+
+        jTextField12.setEditable(false);
         jPanel4.add(jTextField12, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 230, 42, 37));
 
         jLabel26.setText("KG");
@@ -2162,6 +2165,7 @@ public class MainPage extends javax.swing.JFrame {
         });
         jPanel4.add(jTextField13, new org.netbeans.lib.awtextra.AbsoluteConstraints(857, 230, 80, 37));
 
+        jTextField14.setEditable(false);
         jTextField14.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTextField14KeyReleased(evt);
@@ -2263,6 +2267,7 @@ public class MainPage extends javax.swing.JFrame {
         jLabel31.setText("Total Price");
         jPanel4.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 280, -1, -1));
 
+        jTextField16.setEditable(false);
         jTextField16.setCaretColor(new java.awt.Color(255, 255, 255));
         jTextField16.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jPanel4.add(jTextField16, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 300, 77, 37));
@@ -2414,8 +2419,11 @@ public class MainPage extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTextField57KeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField57KeyTyped(evt);
+            }
         });
-        jPanel4.add(jTextField57, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 279, 130, 20));
+        jPanel4.add(jTextField57, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 270, 140, 30));
 
         jLabel122.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel122.setText("Bill Amount     :");
@@ -3031,7 +3039,7 @@ public class MainPage extends javax.swing.JFrame {
             }
         });
 
-        jTable25.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTable25.setFont(new java.awt.Font("Iskoola Pota", 0, 12)); // NOI18N
         jTable25.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -4108,6 +4116,11 @@ public class MainPage extends javax.swing.JFrame {
 
         jLabel62.setText("Cheque Amount");
 
+        jTextField35.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField35ActionPerformed(evt);
+            }
+        });
         jTextField35.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField35KeyTyped(evt);
@@ -4359,7 +4372,7 @@ public class MainPage extends javax.swing.JFrame {
                     .addComponent(jDateChooser7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton48))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane21, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                .addComponent(jScrollPane21, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
                 .addGap(240, 240, 240))
         );
 
@@ -4437,7 +4450,7 @@ public class MainPage extends javax.swing.JFrame {
         p10.setLayout(p10Layout);
         p10Layout.setHorizontalGroup(
             p10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(topmenu, javax.swing.GroupLayout.DEFAULT_SIZE, 1071, Short.MAX_VALUE)
+            .addComponent(topmenu, javax.swing.GroupLayout.DEFAULT_SIZE, 1144, Short.MAX_VALUE)
             .addComponent(tmenu, javax.swing.GroupLayout.DEFAULT_SIZE, 1071, Short.MAX_VALUE)
         );
         p10Layout.setVerticalGroup(
@@ -6548,6 +6561,19 @@ public class MainPage extends javax.swing.JFrame {
                             generateBill(jLabel85.getText(), item, ktype, qty, luuseqty, tkg, pp, tpp, jLabel86.getText(), jLabel88.getText(), jLabel90.getText(), jTextField7.getText());
                         }
                         String cred = "Salt";
+                        
+                        getSalesData(cred);
+                        insertDataToSales_Bill_list(jLabel85.getText(), cred, jTextField7.getText(), jLabel86.getText());
+                        //check if there is cash,arius amount and send data to arius table
+                        String h = jLabel90.getText();
+                        if (h.equals("0.0") || h.equals("") || h.equals("0")) {
+
+                        } else {//send arius data
+                            addOrUpdateariusTable(cred, jTextField7.getText(), cdate, jLabel90.getText());
+                        }
+
+                        printBill();
+                        invID();
                         String ch = jTextField57.getText();
                         if (ch.equals("0") || ch.equals("")) {
                             try {
@@ -6563,24 +6589,19 @@ public class MainPage extends javax.swing.JFrame {
                                 String ce = "INSERT INTO cash_in_hand(name,Date,cash_in,Arius_amont)VALUES('" + jTextField7.getText() + "','" + cdate + "','" + jTextField57.getText() + "','" + jLabel90.getText() + "')";
                                 pst = conn.prepareStatement(ce);
                                 pst.execute();
+                                String labelText = jLabel90.getText();
+                                if (!labelText.equals("0") || !labelText.equals("")) {
+                                    String cresa = "INSERT INTO credit_today(name,bill_num,Date,amount,dealer)VALUES('" + jTextField7.getText() + "','" + jLabel85.getText() + "','" + cdate + "','" + jLabel90.getText() + "','" + cred + "')";
+                                    pst = conn.prepareStatement(cresa);
+                                    System.err.println("pst" + pst);
+                                    pst.execute();
+                                }
                                 jTextField57.setText("");
                                 jTextField7.setText("");
                             } catch (Exception e) {
                                 JOptionPane.showMessageDialog(this, e);
                             }
                         }
-                        getSalesData(cred);
-                        insertDataToSales_Bill_list(jLabel85.getText(), cred, jTextField7.getText(), jLabel86.getText());
-                        //check if there is cash,arius amount and send data to arius table
-                        String h = jLabel90.getText();
-                        if (h.equals("0.0") || h.equals("") || h.equals("0")) {
-
-                        } else {//send arius data
-                            addOrUpdateariusTable(cred, jTextField7.getText(), cdate, jLabel90.getText());
-                        }
-
-                        printBill();
-                        invID();
                         DefaultTableModel df1 = (DefaultTableModel) jTable7.getModel();
                         int rowCount = jTable7.getRowCount();
                         //df1.setRowCount(0);
@@ -6663,6 +6684,12 @@ public class MainPage extends javax.swing.JFrame {
                             generateBill(jLabel85.getText(), item, ktype, qty, luuseqty, tkg, pp, tpp, jLabel86.getText(), jLabel88.getText(), jLabel90.getText(), jTextField7.getText());
                         }//loop end here
                         String cred = "Deliver/Detor";
+                        
+                        getSalesData(cred);
+                        insertDataToSales_Bill_list(jLabel85.getText(), cred, jTextField7.getText(), jLabel86.getText());
+                        addOrUpdateariusTable(cred, jTextField7.getText(), cdate, jLabel90.getText());
+                        printBill();
+                        invID();
                         String ch = jTextField57.getText();
                         if (ch.equals("0") || ch.equals("")) {
                             try {
@@ -6678,17 +6705,19 @@ public class MainPage extends javax.swing.JFrame {
                                 String ce = "INSERT INTO cash_in_hand(name,Date,cash_in,Arius_amont)VALUES('" + jTextField7.getText() + "','" + cdate + "','" + jTextField57.getText() + "','" + jLabel90.getText() + "')";
                                 pst = conn.prepareStatement(ce);
                                 pst.execute();
+                                String labelText = jLabel90.getText();
+                                if (!labelText.equals("0") || !labelText.equals("")) {
+                                    String cresa = "INSERT INTO credit_today(name,bill_num,Date,amount,dealer)VALUES('" + jTextField7.getText() + "','" + jLabel85.getText() + "','" + cdate + "','" + jLabel90.getText() + "','" + cred + "')";
+                                    pst = conn.prepareStatement(cresa);
+                                    System.err.println("pst" + pst);
+                                    pst.execute();
+                                }
                                 jTextField57.setText("");
                                 jTextField7.setText("");
                             } catch (Exception e) {
                                 JOptionPane.showMessageDialog(this, e);
                             }
                         }
-                        getSalesData(cred);
-                        insertDataToSales_Bill_list(jLabel85.getText(), cred, jTextField7.getText(), jLabel86.getText());
-                        addOrUpdateariusTable(cred, jTextField7.getText(), cdate, jLabel90.getText());
-                        printBill();
-                        invID();
                         DefaultTableModel df1 = (DefaultTableModel) jTable7.getModel();
                         int rowCount = jTable7.getRowCount();
                         //df1.setRowCount(0);
@@ -6767,6 +6796,11 @@ public class MainPage extends javax.swing.JFrame {
                             generateBill(jLabel85.getText(), item, ktype, qty, luuseqty, tkg, pp, tpp, jLabel86.getText(), jLabel88.getText(), jLabel90.getText(), jTextField7.getText());
                         }//loop end here
                         String cred = "Customer";
+                        getSalesData(cred);
+                        insertDataToSales_Bill_list(jLabel85.getText(), cred, jTextField7.getText(), jLabel86.getText());
+                        addOrUpdateariusTable(cred, jTextField7.getText(), cdate, jLabel90.getText());
+                        printBill();
+                        invID();
                         String ch = jTextField57.getText();
                         if (ch.equals("0") || ch.equals("")) {
                             try {
@@ -6782,17 +6816,19 @@ public class MainPage extends javax.swing.JFrame {
                                 String ce = "INSERT INTO cash_in_hand(name,Date,cash_in,Arius_amont)VALUES('" + jTextField7.getText() + "','" + cdate + "','" + jTextField57.getText() + "','" + jLabel90.getText() + "')";
                                 pst = conn.prepareStatement(ce);
                                 pst.execute();
+                                String labelText = jLabel90.getText();
+                                if (!labelText.equals("0") || !labelText.equals("")) {
+                                    String cresa = "INSERT INTO credit_today(name,bill_num,Date,amount,dealer)VALUES('" + jTextField7.getText() + "','" + jLabel85.getText() + "','" + cdate + "','" + jLabel90.getText() + "','" + cred + "')";
+                                    pst = conn.prepareStatement(cresa);
+                                    System.err.println("pst" + pst);
+                                    pst.execute();
+                                }
                                 jTextField57.setText("");
                                 jTextField7.setText("");
                             } catch (Exception e) {
                                 JOptionPane.showMessageDialog(this, e);
                             }
                         }
-                        getSalesData(cred);
-                        insertDataToSales_Bill_list(jLabel85.getText(), cred, jTextField7.getText(), jLabel86.getText());
-                        addOrUpdateariusTable(cred, jTextField7.getText(), cdate, jLabel90.getText());
-                        printBill();
-                        invID();
                         DefaultTableModel df1 = (DefaultTableModel) jTable7.getModel();
                         int rowCount = jTable7.getRowCount();
                         //df1.setRowCount(0);
@@ -6871,7 +6907,12 @@ public class MainPage extends javax.swing.JFrame {
 
                             generateBill(jLabel85.getText(), item, ktype, qty, luuseqty, tkg, pp, tpp, jLabel86.getText(), jLabel88.getText(), jLabel90.getText(), jTextField7.getText());
                         }//loop end here
-                        String cred = "Shop";
+                        String cred = "Shop";              
+                        getSalesData(cred);
+                        insertDataToSales_Bill_list(jLabel85.getText(), cred, "Shop", jLabel86.getText());
+                        addOrUpdateariusTable(cred, "Shop", cdate, jLabel90.getText());
+                        printBill();
+                        invID();
                         String ch = jTextField57.getText();
                         if (ch.equals("0") || ch.equals("")) {
                             try {
@@ -6887,17 +6928,19 @@ public class MainPage extends javax.swing.JFrame {
                                 String ce = "INSERT INTO cash_in_hand(name,Date,cash_in,Arius_amont)VALUES('" + jTextField7.getText() + "','" + cdate + "','" + jTextField57.getText() + "','" + jLabel90.getText() + "')";
                                 pst = conn.prepareStatement(ce);
                                 pst.execute();
+                                String labelText = jLabel90.getText();
+                                if (!labelText.equals("0") || !labelText.equals("")) {
+                                    String cresa = "INSERT INTO credit_today(name,bill_num,Date,amount,dealer)VALUES('" + jTextField7.getText() + "','" + jLabel85.getText() + "','" + cdate + "','" + jLabel90.getText() + "','" + cred + "')";
+                                    pst = conn.prepareStatement(cresa);
+                                    System.err.println("pst" + pst);
+                                    pst.execute();
+                                }
                                 jTextField57.setText("");
                                 jTextField7.setText("");
                             } catch (Exception e) {
                                 JOptionPane.showMessageDialog(this, e);
                             }
                         }
-                        getSalesData(cred);
-                        insertDataToSales_Bill_list(jLabel85.getText(), cred, "Shop", jLabel86.getText());
-                        addOrUpdateariusTable(cred, "Shop", cdate, jLabel90.getText());
-                        printBill();
-                        invID();
                         DefaultTableModel df1 = (DefaultTableModel) jTable7.getModel();
                         int rowCount = jTable7.getRowCount();
                         //df1.setRowCount(0);
@@ -8590,12 +8633,23 @@ public class MainPage extends javax.swing.JFrame {
                 if (newAriusamount == null) {
 
                     jLabel88.setText("0.0");
+                    
                 } else {
 
                     jLabel88.setText(String.valueOf(amount));
-
+                   
                 }
+                    String labelText88 = jLabel88.getText();
 
+                    if (labelText88.equals("0.0")) {
+                         jTextField57.setEnabled(true);
+                         System.out.println("labelText88"+labelText88);
+                          System.out.println("false");
+                    } else if (!labelText88.equals("0.0")) {
+                        jTextField57.setEnabled(false);
+                        System.out.println("labelText88"+labelText88);
+                         System.out.println("true");
+                    }
             }
 
         } catch (Exception e) {
@@ -8740,6 +8794,7 @@ public class MainPage extends javax.swing.JFrame {
         jTextField9.setText("");
         jTextField15.setText("");
         jTextField16.setText("");
+        jTextField57.setText("");
         jCheckBox1.setSelected(false);
         jCheckBox2.setSelected(false);
         jTextField12.setText("");
@@ -9956,6 +10011,14 @@ public class MainPage extends javax.swing.JFrame {
             jButton42.setEnabled(true); // Disable the button
         }
     }//GEN-LAST:event_jTextField33KeyReleased
+
+    private void jTextField35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField35ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField35ActionPerformed
+
+    private void jTextField57KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField57KeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField57KeyTyped
     private void jTable19viewdata() {
         try {
             String sq = "SELECT * FROM creditor_repay";
