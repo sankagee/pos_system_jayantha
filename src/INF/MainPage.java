@@ -1581,6 +1581,9 @@ public class MainPage extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtPriceKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPriceKeyTyped(evt);
+            }
         });
 
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -3386,7 +3389,7 @@ public class MainPage extends javax.swing.JFrame {
                                         .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(tbp2Layout.createSequentialGroup()
                                 .addGroup(tbp2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane15, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane15, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
                                     .addGroup(tbp2Layout.createSequentialGroup()
                                         .addComponent(jTextField63, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -5823,11 +5826,9 @@ public class MainPage extends javax.swing.JFrame {
 
         // Check if the text is empty
         if (txtPrice.getText().isEmpty()) {
-            jButton5.setEnabled(false);
-            jButton2.setEnabled(true);// Enable the button
+            jButton5.setEnabled(false);// Enable the button
         } else {
             jButton5.setEnabled(true); // Disable the button
-            jButton2.setEnabled(false);
         }
     }//GEN-LAST:event_txtPriceKeyReleased
 
@@ -10090,6 +10091,10 @@ String dealerty = jTable11.getValueAt(row, 1).toString();
     private void jTextField63KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField63KeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField63KeyTyped
+
+    private void txtPriceKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPriceKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPriceKeyTyped
     private void jTable19viewdata() {
         try {
             String sq = "SELECT * FROM creditor_repay";
