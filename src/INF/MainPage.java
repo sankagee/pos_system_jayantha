@@ -8843,7 +8843,7 @@ String dealerty = jTable11.getValueAt(row, 1).toString();
         jButton43.setEnabled(false);
         jComboBox2.setSelectedIndex(0);
         jTextField45.setText("");
-
+        jTextField57.setEnabled(true);
         jLabel86.setText("0.0");
         jLabel88.setText("0.0");
         jLabel90.setText("0.0");
