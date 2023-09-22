@@ -5380,34 +5380,10 @@ public class MainPage extends javax.swing.JFrame {
                 int msg = JOptionPane.showConfirmDialog(this, "Do you want to add this product ?");
 
                 if (msg == 0) {
-                    //loader start here    
-                    JDialog dialog = createLoadingDialog();
-                    SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
-
-                        @Override
-                        protected Void doInBackground() throws Exception {
-                            SwingUtilities.invokeLater(() -> {
-                                dialog.setVisible(true);
-                            });
+                    
 
                             addCreditorAndProduct1();
 
-                            return null;
-                        }
-
-                        @Override
-                        protected void done() {
-
-                            SwingUtilities.invokeLater(() -> {
-                                if (dialog != null) {
-                                    dialog.dispose();
-                                    JOptionPane.showMessageDialog(null, "Product Added");
-                                }
-                            });
-                        }
-                    };
-                    worker.execute(); // Execute the SwingWorker
-                    //loader start here  
 
                 }
             }
@@ -5415,34 +5391,11 @@ public class MainPage extends javax.swing.JFrame {
             int msg = JOptionPane.showConfirmDialog(this, "Do you want to add this product ?");
 
             if (msg == 0) {
-                //loader start here    
-                JDialog dialog = createLoadingDialog();
-                SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
-
-                    @Override
-                    protected Void doInBackground() throws Exception {
-                        SwingUtilities.invokeLater(() -> {
-                            dialog.setVisible(true);
-                        });
+                
 
                         addCreditorAndProduct2();
 
-                        return null;
-                    }
-
-                    @Override
-                    protected void done() {
-
-                        SwingUtilities.invokeLater(() -> {
-                            if (dialog != null) {
-                                dialog.dispose();
-                                JOptionPane.showMessageDialog(null, "Product Added");
-                            }
-                        });
-                    }
-                };
-                worker.execute(); // Execute the SwingWorker
-                //loader start here  
+                    
 
             }
 
