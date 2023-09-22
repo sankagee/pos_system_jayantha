@@ -1008,10 +1008,8 @@ public class MainPage extends javax.swing.JFrame {
         jPanel10 = new javax.swing.JPanel();
         jLabel91 = new javax.swing.JLabel();
         jTextField50 = new javax.swing.JTextField();
-        jLabel119 = new javax.swing.JLabel();
         jLabel116 = new javax.swing.JLabel();
         jLabel55 = new javax.swing.JLabel();
-        jLabel118 = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
         jTextField22 = new javax.swing.JTextField();
         jButton57 = new javax.swing.JButton();
@@ -2682,19 +2680,12 @@ public class MainPage extends javax.swing.JFrame {
             }
         });
 
-        jLabel119.setFont(new java.awt.Font("Iskoola Pota", 0, 14)); // NOI18N
-        jLabel119.setText("0.0");
-        jLabel119.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
         jLabel116.setFont(new java.awt.Font("Iskoola Pota", 0, 14)); // NOI18N
         jLabel116.setText("0.0");
         jLabel116.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel55.setFont(new java.awt.Font("Iskoola Pota", 1, 12)); // NOI18N
         jLabel55.setText("රු.");
-
-        jLabel118.setFont(new java.awt.Font("Iskoola Pota", 1, 12)); // NOI18N
-        jLabel118.setText("රු.");
 
         jLabel39.setText("Total Kg");
 
@@ -2741,13 +2732,9 @@ public class MainPage extends javax.swing.JFrame {
                             .addComponent(jLabel39)
                             .addComponent(jTextField22, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel118)
-                            .addComponent(jLabel55))
+                        .addComponent(jLabel55)
                         .addGap(7, 7, 7)
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel119, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel116, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jLabel116, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
@@ -2770,15 +2757,12 @@ public class MainPage extends javax.swing.JFrame {
                                 .addComponent(jButton57)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton58, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel118, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                                 .addComponent(jLabel55, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addComponent(jLabel119)
-                                .addGap(1, 1, 1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel116, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
@@ -3455,11 +3439,9 @@ public class MainPage extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addGroup(tbp2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tbp2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane16, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tbp2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(tbp2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -4341,7 +4323,7 @@ public class MainPage extends javax.swing.JFrame {
             .addGroup(topmenuLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(topmenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton34, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                    .addComponent(jButton34, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                     .addComponent(jButton33, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -8790,6 +8772,7 @@ String dealerty = jTable11.getValueAt(row, 1).toString();
         jTextField18.setText(mn);
         jTextField19.setText(kg);
         jLabel117.setText(ty);
+        jLabel116.setText("0.0");
 
     }//GEN-LAST:event_jTable6MouseClicked
 
@@ -9174,7 +9157,7 @@ String dealerty = jTable11.getValueAt(row, 1).toString();
         jTextArea1.setText("Write Here");
         jTextField22.setText("");
         jLabel116.setText("0.0");
-        jLabel119.setText("0.0");
+        //jLabel119.setText("0.0");
         jTextField56.setText("0");
         jTextField22.setText("0");
         jTextField50.setText("0");
@@ -9307,7 +9290,7 @@ String dealerty = jTable11.getValueAt(row, 1).toString();
             totalr = totalr + (p * tkg);
             latotal = latotal + totalr;
 
-            jLabel119.setText(String.valueOf(latotal));
+            //jLabel119.setText(String.valueOf(latotal));
         } catch (Exception e) {
         }
     }//GEN-LAST:event_jButton57ActionPerformed
@@ -9340,7 +9323,7 @@ String dealerty = jTable11.getValueAt(row, 1).toString();
             totalr = totalr + (p * tkg);
             latotal = latotal + totalr;
 
-            jLabel119.setText(String.valueOf(latotal));
+           // jLabel119.setText(String.valueOf(latotal));
         } catch (Exception e) {
         }
 
@@ -9416,7 +9399,7 @@ String dealerty = jTable11.getValueAt(row, 1).toString();
             total = total + (p * tkg);
             latotal = latotal + total;
             jLabel116.setText(String.valueOf(latotal));
-            jLabel119.setText(String.valueOf(latotal));
+            //jLabel119.setText(String.valueOf(latotal));
 
             //resusable section start here
             if (b == true) {
@@ -9424,7 +9407,7 @@ String dealerty = jTable11.getValueAt(row, 1).toString();
                 boolean decrease = jRadioButton20.isSelected();
 
                 if (decrease == true) {
-                    JOptionPane.showMessageDialog(this, "reusable/decrease section" + qua + ".." + lu);
+                    //JOptionPane.showMessageDialog(this, "reusable/decrease section" + qua + ".." + lu);
 
                     //check if the qty contains only numbers or number with letters(ex: 10 OR L10)
                     String qq = jTextField20.getText();
@@ -9436,7 +9419,7 @@ String dealerty = jTable11.getValueAt(row, 1).toString();
                     int t = newqty - nq;
                     if (qq.matches("[0-9]+")) {
                         try {
-                            String updateSale_list = "UPDATE sales_list SET quantity=quantity-'" + jTextField56.getText() + "',total_kg=total_kg-'" + jTextField22.getText() + "' WHERE type_kg='" + jTextField19.getText() + "' AND bill='" + bv + "' AND category='" + saleCat + "'";
+                            String updateSale_list = "UPDATE sales_list SET quantity=quantity-'" + jTextField56.getText() + "',total_kg=total_kg-'" + jTextField22.getText() + "',total_price='"+jTextField58.getText()+"' WHERE type_kg='" + jTextField19.getText() + "' AND bill='" + bv + "' AND category='" + saleCat + "'";
                             pst1 = conn.prepareStatement(updateSale_list);
                             pst1.execute();
                         } catch (Exception e) {
@@ -9446,7 +9429,7 @@ String dealerty = jTable11.getValueAt(row, 1).toString();
                     } else {
 
                         try {
-                            String updateSale_list = "UPDATE sales_list SET quantity='" + "L" + t + "',total_kg=total_kg-'" + t + "' WHERE type_kg='" + jTextField19.getText() + "' AND bill='" + bv + "' AND category='" + saleCat + "'";
+                            String updateSale_list = "UPDATE sales_list SET quantity='" + "L" + t + "',total_kg=total_kg-'" + t + "' ,total_price='"+jTextField58.getText()+"' WHERE type_kg='" + jTextField19.getText() + "' AND bill='" + bv + "' AND category='" + saleCat + "'";
                             pst1 = conn.prepareStatement(updateSale_list);
                             pst1.execute();
                         } catch (Exception e) {
@@ -9490,14 +9473,14 @@ String dealerty = jTable11.getValueAt(row, 1).toString();
                     }
 
                 } else {
-                    JOptionPane.showMessageDialog(this, "reusable/delete section" + qua + ".." + lu);
+                    //JOptionPane.showMessageDialog(this, "reusable/delete section" + qua + ".." + lu);
                     //delete data from sale list
                     //calculate the amount
 
                     total = total + (p * tkg);
                     latotal = latotal + total;
                     jLabel116.setText(String.valueOf(latotal));
-                    jLabel119.setText(String.valueOf(latotal));
+                    //jLabel119.setText(String.valueOf(latotal));
                     try {
                         String dele = "DELETE FROM sales_list WHERE id='" + jLabel121.getText() + "'";
                         pst1 = conn.prepareStatement(dele);
@@ -9587,7 +9570,7 @@ String dealerty = jTable11.getValueAt(row, 1).toString();
                 }
 
                 //update arius
-                updateAriusReturnsec(jLabel116.getText(), jLabel117.getText(), jTextField17.getText());
+                updateAriusReturnsec(jTextField58.getText(), jLabel117.getText(), jTextField17.getText());
                 //reusable section end here
                 //damage section start here
             } else {
@@ -9595,7 +9578,7 @@ String dealerty = jTable11.getValueAt(row, 1).toString();
                 s = "damage";
                 boolean decrease = jRadioButton20.isSelected();
                 if (decrease == true) {
-                    JOptionPane.showMessageDialog(this, "damage/decrease section" + qua + ".." + lu);
+                    //JOptionPane.showMessageDialog(this, "damage/decrease section" + qua + ".." + lu);
                     //check if the qty contains only numbers or number with letters(ex: 10 OR L10)
                     String qq = jTextField20.getText();
 
@@ -9606,7 +9589,7 @@ String dealerty = jTable11.getValueAt(row, 1).toString();
                     int t = newqty - nq;
                     if (qq.matches("[0-9]+")) {
                         try {
-                            String updateSale_list = "UPDATE sales_list SET quantity=quantity-'" + jTextField56.getText() + "',total_kg=total_kg-'" + jTextField22.getText() + "' WHERE type_kg='" + jTextField19.getText() + "' AND bill='" + bv + "' AND category='" + saleCat + "'";
+                            String updateSale_list = "UPDATE sales_list SET quantity=quantity-'" + jTextField56.getText() + "',total_kg=total_kg-'" + jTextField22.getText() + "',total_price='"+jTextField58.getText()+"' WHERE type_kg='" + jTextField19.getText() + "' AND bill='" + bv + "' AND category='" + saleCat + "'";
                             pst1 = conn.prepareStatement(updateSale_list);
                             pst1.execute();
                         } catch (Exception e) {
@@ -9616,7 +9599,7 @@ String dealerty = jTable11.getValueAt(row, 1).toString();
                     } else {
 
                         try {
-                            String updateSale_list = "UPDATE sales_list SET quantity='" + "L" + t + "',total_kg=total_kg-'" + t + "' WHERE type_kg='" + jTextField19.getText() + "' AND bill='" + bv + "' AND category='" + saleCat + "'";
+                            String updateSale_list = "UPDATE sales_list SET quantity='" + "L" + t + "',total_kg=total_kg-'" + t + "',total_price='"+jTextField58.getText()+"' WHERE type_kg='" + jTextField19.getText() + "' AND bill='" + bv + "' AND category='" + saleCat + "'";
                             pst1 = conn.prepareStatement(updateSale_list);
                             pst1.execute();
                         } catch (Exception e) {
@@ -9626,7 +9609,7 @@ String dealerty = jTable11.getValueAt(row, 1).toString();
                     }
 
                 } else {
-                    JOptionPane.showMessageDialog(this, "damage/delete section" + qua + ".." + lu);
+                    //JOptionPane.showMessageDialog(this, "damage/delete section" + qua + ".." + lu);
                     //delete data from sale list
                     try {
                         String dele = "DELETE FROM sales_list WHERE id='" + jLabel121.getText() + "'";
@@ -9637,7 +9620,7 @@ String dealerty = jTable11.getValueAt(row, 1).toString();
                     }
                 }
                 //update arius
-                updateAriusReturnsec(jLabel116.getText(), jLabel117.getText(), jTextField17.getText());
+                updateAriusReturnsec(jTextField58.getText(), jLabel117.getText(), jTextField17.getText());
             }
             //damage section end here
             //generate sale list data aftre done updates 
@@ -9674,7 +9657,7 @@ String dealerty = jTable11.getValueAt(row, 1).toString();
 
             }
         }
-        jLabel116.setText("0.0");
+        
         jTextField17.setText("");
         jTextField18.setText("");
         jTextField19.setText("");
@@ -10343,8 +10326,6 @@ String dealerty = jTable11.getValueAt(row, 1).toString();
     private javax.swing.JLabel jLabel115;
     private javax.swing.JLabel jLabel116;
     private javax.swing.JLabel jLabel117;
-    private javax.swing.JLabel jLabel118;
-    private javax.swing.JLabel jLabel119;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel120;
     private javax.swing.JLabel jLabel121;
