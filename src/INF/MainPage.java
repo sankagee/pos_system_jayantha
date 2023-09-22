@@ -9255,6 +9255,7 @@ String dealerty = jTable11.getValueAt(row, 1).toString();
 
     private void jTextField56MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField56MouseClicked
         jTextField56.setText("");
+        jTextField22.setText("");
     }//GEN-LAST:event_jTextField56MouseClicked
 
     private void jTextField22MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField22MouseClicked
