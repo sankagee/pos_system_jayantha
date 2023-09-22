@@ -9290,7 +9290,7 @@ String dealerty = jTable11.getValueAt(row, 1).toString();
             int tkg = Integer.parseInt(jTextField22.getText());
             totalr = totalr + (p * tkg);
             latotal = latotal + totalr;
-
+            jTextField58.setText(String.valueOf(latotal));
             //jLabel119.setText(String.valueOf(latotal));
         } catch (Exception e) {
         }
@@ -9323,7 +9323,7 @@ String dealerty = jTable11.getValueAt(row, 1).toString();
             int tkg = Integer.parseInt(jTextField22.getText());
             totalr = totalr + (p * tkg);
             latotal = latotal + totalr;
-
+            jTextField58.setText(String.valueOf(latotal));
            // jLabel119.setText(String.valueOf(latotal));
         } catch (Exception e) {
         }
